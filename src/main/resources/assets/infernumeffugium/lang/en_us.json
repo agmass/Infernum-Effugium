@@ -1,5 +1,7 @@
 {
   "item.infernumeffugium.bedrock_sickles": "Bedrock Sickle",
   "block.infernumeffugium.bedrock_ladder": "Bedrock Ladder",
-  "block.infernumeffugium.bedrock_bricks": "Bedrock Bricks"
+  "block.infernumeffugium.bedrock_bricks": "Bedrock Bricks",
+  "block.infernumeffugium.corrupted_bedrock_bricks": "Corrupted Bedrock Bricks",
+  "block.infernumeffugium.chiseled_bedrock": "Chiseled Bedrock"
 }

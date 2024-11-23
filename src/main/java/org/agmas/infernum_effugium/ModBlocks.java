@@ -23,6 +23,16 @@ public class ModBlocks {
             "bedrock_bricks",
             true
     );
+    public static final Block CORRUPTED_BEDROCK_BRICKS = register(
+            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            "corrupted_bedrock_bricks",
+            true
+    );
+    public static final Block CHISELED_BEDROCK = register(
+            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            "chiseled_bedrock",
+            true
+    );
 
 
     public static Block register(Block block, String name, boolean shouldRegisterItem) {
