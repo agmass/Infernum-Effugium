@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "infernumeffugium:ruinedcity",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 33,
+    "separation": 8,
+    "salt": 6761920
+  }
+}

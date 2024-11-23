@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "infernum_effugium",
+  "version": "${version}",
+  "name": "Infernum Effugium",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "LGPL-3.0",
+  "icon": "assets/infernum_effugium/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "org.agmas.infernum_effugium.client.Infernum_effugiumClient"
+    ],
+    "main": [
+      "org.agmas.infernum_effugium.Infernum_effugium"
+    ]
+  },
+  "mixins": [
+    "infernum_effugium.mixins.json",
+    {
+      "config": "infernum_effugium.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

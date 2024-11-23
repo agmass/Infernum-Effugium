@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.agmas.infernum_effugium.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "BonusAttackDamageForThisOldStupidFuckingVersionMixin",
+    "SickleKnockbackMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
