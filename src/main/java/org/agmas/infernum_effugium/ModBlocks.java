@@ -10,6 +10,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import org.agmas.infernum_effugium.block.BedrockDispenser;
+import org.agmas.infernum_effugium.block.DeadBedrockBush;
 
 public class ModBlocks {
 
@@ -31,6 +33,21 @@ public class ModBlocks {
     public static final Block CHISELED_BEDROCK = register(
             new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "chiseled_bedrock",
+            true
+    );
+    public static final Block BEDROCK_DISPENSER = register(
+            new BedrockDispenser(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            "bedrock_dispenser",
+            true
+    );
+    public static final Block ROCKY_BUSH = register(
+            new DeadBedrockBush(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
+            "rocky_bush",
+            true
+    );
+    public static final Block ROCKY_BUSH_BUT_ITS_ACTUALLY_A_DISPENSER = register(
+            new BedrockDispenser(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
+            "rocky_bush_but_its_actually_a_dispenser",
             true
     );
 

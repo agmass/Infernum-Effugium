@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "infernumeffugium:block/bedrock_dispenser_front",
+    "side": "infernumeffugium:block/bedrock_bricks",
+    "top": "infernumeffugium:block/bedrock_bricks"
+  }
+}

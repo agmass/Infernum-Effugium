@@ -6,13 +6,24 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.item.BedrockSickle;
+import org.agmas.infernum_effugium.item.PebbleItem;
 
 public class ModItems {
 
     public static final Item BEDROCK_SICKLES = register(
-            new BedrockSickle(new FabricItemSettings().fireproof()),
+            new BedrockSickle(new FabricItemSettings().fireproof(), 3),
             "bedrock_sickles"
     );
+    public static final Item BLACKSTONE_PEBBLE = register(
+            new PebbleItem(new FabricItemSettings()),
+            "blackstone_pebble"
+    );
+
+    public static final Item NETHERITE_INFUSED_BEDROCK_SICKLES = register(
+            new BedrockSickle(new FabricItemSettings().fireproof(), 5),
+            "netherite_infused_bedrock_sickles"
+    );
+
 
     public static Item register(Item item, String id) {
         // Create the identifier for the item.

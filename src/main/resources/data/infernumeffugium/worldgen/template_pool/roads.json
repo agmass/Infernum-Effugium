@@ -47,6 +47,24 @@
       }
     },
     {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infernumeffugium:trap",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infernumeffugium:crate",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
       "weight": 10,
       "element": {
         "element_type": "minecraft:single_pool_element",
@@ -65,7 +83,16 @@
       }
     },
     {
-      "weight": 40,
+      "weight": 10,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infernumeffugium:bigbastion",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 20,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "infernumeffugium:grave",

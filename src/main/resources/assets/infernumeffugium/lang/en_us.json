@@ -1,7 +1,13 @@
 {
   "item.infernumeffugium.bedrock_sickles": "Bedrock Sickle",
+  "item.infernumeffugium.netherite_infused_bedrock_sickles": "Netherite-Infused Bedrock Sickle",
   "block.infernumeffugium.bedrock_ladder": "Bedrock Ladder",
+  "block.infernumeffugium.bedrock_dispenser": "Bedrock Dispenser",
+  "block.infernumeffugium.rocky_bush": "Rocky Bush",
+  "item.infernumeffugium.blackstone_pebble": "Blackstone Pebble",
+  "block.infernumeffugium.rocky_bush_but_its_actually_a_dispenser": "Rocky Bush (but it's actually a dispenser)",
   "block.infernumeffugium.bedrock_bricks": "Bedrock Bricks",
   "block.infernumeffugium.corrupted_bedrock_bricks": "Corrupted Bedrock Bricks",
-  "block.infernumeffugium.chiseled_bedrock": "Chiseled Bedrock"
+  "block.infernumeffugium.chiseled_bedrock": "Chiseled Bedrock",
+  "death.attack.pebble": "%1$s was pebbled"
 }

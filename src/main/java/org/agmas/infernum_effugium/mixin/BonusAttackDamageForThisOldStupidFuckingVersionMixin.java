@@ -14,8 +14,8 @@ public class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
     private float injected(float amount) {
         ItemStack itemStack = me().getStackInHand(Hand.MAIN_HAND);
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);
-        if (itemStack.getItem() instanceof BedrockSickle && itemStack2.getItem() instanceof BedrockSickle) {
-            return 7.5f;
+        if (!itemStack.getItem().equals(itemStack2.getItem()) && (itemStack.getItem() instanceof BedrockSickle)) {
+            return 0;
         }
         return amount;
     }

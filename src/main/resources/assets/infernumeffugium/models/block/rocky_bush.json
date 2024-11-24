@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "infernumeffugium:block/rocky_bush"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "infernumeffugium:item/netherite_infused_bedrock_sickles"
+  }
+}
