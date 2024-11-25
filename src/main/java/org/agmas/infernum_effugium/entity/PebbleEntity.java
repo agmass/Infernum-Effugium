@@ -24,7 +24,7 @@ import java.util.Random;
 
 public class PebbleEntity extends ThrownItemEntity {
 
-    public static final RegistryKey<DamageType> PEBBLE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Infernum_effugium.MOD_ID, "pebble"));
+    public static final RegistryKey<DamageType> PEBBLE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Infernum_effugium.MOD_ID, "pebble"));
 
     public PebbleEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);

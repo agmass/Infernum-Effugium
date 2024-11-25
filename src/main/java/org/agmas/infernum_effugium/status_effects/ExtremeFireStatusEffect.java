@@ -22,10 +22,11 @@ public class ExtremeFireStatusEffect extends StatusEffect {
 
     // Called when the effect is applied
     @Override
-    public void applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.timeUntilRegen = 0;
         entity.removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
         entity.damage(entity.getDamageSources().magic(), 1);
         entity.setFireTicks(5);
+        return true;
     }
 }

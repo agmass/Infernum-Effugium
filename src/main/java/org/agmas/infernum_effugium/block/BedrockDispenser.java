@@ -16,7 +16,7 @@ public class BedrockDispenser extends DispenserBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (!world.isClient) {
             if (player instanceof ServerPlayerEntity spe) {
                 if (spe.interactionManager.isSurvivalLike()) {
@@ -24,6 +24,7 @@ public class BedrockDispenser extends DispenserBlock {
                 }
             }
         }
-        return super.onUse(state, world, pos, player, hand, hit);
+        return super.onUse(state, world, pos, player, hit);
     }
+
 }

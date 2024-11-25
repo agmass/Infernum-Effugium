@@ -1,7 +1,7 @@
 package org.agmas.infernum_effugium;
 
 import net.minecraft.block.*;
-import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -21,39 +21,39 @@ public class ModBlocks {
             true
     );
     public static final Block BEDROCK_BRICKS = register(
-            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "bedrock_bricks",
             true
     );
     public static final Block CORRUPTED_BEDROCK_BRICKS = register(
-            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "corrupted_bedrock_bricks",
             true
     );
     public static final Block CHISELED_BEDROCK = register(
-            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "chiseled_bedrock",
             true
     );
     public static final Block BEDROCK_DISPENSER = register(
-            new BedrockDispenser(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
+            new BedrockDispenser(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "bedrock_dispenser",
             true
     );
     public static final Block ROCKY_BUSH = register(
-            new DeadBedrockBush(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
+            new DeadBedrockBush(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
             "rocky_bush",
             true
     );
     public static final Block ROCKY_BUSH_BUT_ITS_ACTUALLY_A_DISPENSER = register(
-            new BedrockDispenser(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
+            new BedrockDispenser(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
             "rocky_bush_but_its_actually_a_dispenser",
             true
     );
 
 
     public static Block register(Block block, String name, boolean shouldRegisterItem) {
-        Identifier id = new Identifier(Infernum_effugium.MOD_ID, name);
+        Identifier id = Identifier.of(Infernum_effugium.MOD_ID, name);
 
         if (shouldRegisterItem) {
             BlockItem blockItem = new BlockItem(block, new Item.Settings());

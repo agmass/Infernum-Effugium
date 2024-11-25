@@ -1,7 +1,10 @@
 package org.agmas.infernum_effugium.item;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.component.type.AttributeModifierSlot;
+import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -21,8 +25,13 @@ import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 public class InfernumMaceItem extends SwordItem {
 
     public InfernumMaceItem(Settings settings, int attackDamage) {
-        super(ToolMaterials.DIAMOND, attackDamage, -3.5F, settings);
+        super(ToolMaterials.DIAMOND, settings);
     }
+
+    public static AttributeModifiersComponent createAttributeModifiers() {
+        return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, 5.0, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, -3.4000000953674316, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
+    }
+
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
@@ -40,7 +49,7 @@ public class InfernumMaceItem extends SwordItem {
                     totalDamage = 22.0F + spe.fallDistance - 8.0F;
                 }
 
-                target.addStatusEffect(new StatusEffectInstance(Infernum_effugium.EXTREME_FIRE, (int) totalDamage, 0));
+                target.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(Infernum_effugium.EXTREME_FIRE), (int) totalDamage, 0));
 
                 for (int i = 0; i < spe.fallDistance*2; i++) {
                     MagmaPebbleEntity pebbleEntity = new MagmaPebbleEntity(target.getWorld(), attacker);

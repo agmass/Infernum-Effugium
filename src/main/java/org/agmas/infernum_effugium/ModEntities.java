@@ -14,17 +14,17 @@ public class ModEntities {
 
     public static final EntityType<PebbleEntity> PEBBLE = register(
             "pebble",
-            EntityType.Builder.<PebbleEntity>create(PebbleEntity::new, SpawnGroup.MISC).setDimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
+            EntityType.Builder.<PebbleEntity>create(PebbleEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
     );
     public static final EntityType<MagmaPebbleEntity> MAGMA_PEBBLE = register(
             "magmapebble",
-            EntityType.Builder.<MagmaPebbleEntity>create(MagmaPebbleEntity::new, SpawnGroup.MISC).setDimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
+            EntityType.Builder.<MagmaPebbleEntity>create(MagmaPebbleEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
     );
 
 
 
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> type) {
-        return Registry.register(Registries.ENTITY_TYPE, new Identifier(Infernum_effugium.MOD_ID, id), type.build(id));
+        return Registry.register(Registries.ENTITY_TYPE, Identifier.of(Infernum_effugium.MOD_ID, id), type.build(id));
     }
 
     public static void init() {}
