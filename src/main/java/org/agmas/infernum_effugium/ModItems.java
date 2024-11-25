@@ -6,6 +6,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.item.BedrockSickle;
+import org.agmas.infernum_effugium.item.InfernumMaceItem;
+import org.agmas.infernum_effugium.item.MagmaPebbleItem;
 import org.agmas.infernum_effugium.item.PebbleItem;
 
 public class ModItems {
@@ -17,6 +19,14 @@ public class ModItems {
     public static final Item BLACKSTONE_PEBBLE = register(
             new PebbleItem(new FabricItemSettings()),
             "blackstone_pebble"
+    );
+    public static final Item MAGMA_PEBBLE = register(
+            new MagmaPebbleItem(new FabricItemSettings()),
+            "magma_pebble"
+    );
+    public static final Item INFERNUM_MACE = register(
+            new InfernumMaceItem(new FabricItemSettings(), 2),
+            "infernum_mace"
     );
 
     public static final Item NETHERITE_INFUSED_BEDROCK_SICKLES = register(

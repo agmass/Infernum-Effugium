@@ -1,0 +1,6 @@
+{
+  "parent": "infernumeffugium:item/handheld_mace",
+  "textures": {
+    "layer0": "infernumeffugium:item/infernum_mace"
+  }
+}

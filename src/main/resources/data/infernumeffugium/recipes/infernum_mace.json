@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "N",
+    "/"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    },
+    "/": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "infernumeffugium:infernum_mace",
+    "count": 1
+  }
+}

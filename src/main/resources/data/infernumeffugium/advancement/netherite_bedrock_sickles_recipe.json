@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "infernumeffugium:netherite_infused_bedrock_sickles"
+    ]
+  },
+  "criteria": {
+    "has_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+          "item": "infernumeffugium:bedrock_sickles"
+        }]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick"
+    ]
+  ]
+}

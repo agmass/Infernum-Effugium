@@ -18,5 +18,6 @@ public class Infernum_effugiumClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ROCKY_BUSH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ROCKY_BUSH_BUT_ITS_ACTUALLY_A_DISPENSER, RenderLayer.getCutout());
         EntityRendererRegistry.register(ModEntities.PEBBLE, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntities.MAGMA_PEBBLE, FlyingItemEntityRenderer::new);
     }
 }

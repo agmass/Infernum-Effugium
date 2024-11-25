@@ -1,7 +1,6 @@
 package org.agmas.infernum_effugium.item;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.EggEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -10,11 +9,11 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
-import org.agmas.infernum_effugium.ModEntities;
+import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 
-public class PebbleItem extends Item {
-    public PebbleItem(Settings settings) {
+public class MagmaPebbleItem extends Item {
+    public MagmaPebbleItem(Settings settings) {
         super(settings);
     }
 
@@ -26,7 +25,7 @@ public class PebbleItem extends Item {
                 null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F)
         );
         if (!world.isClient) {
-            PebbleEntity pebbleEntity = new PebbleEntity(world, user);
+            MagmaPebbleEntity pebbleEntity = new MagmaPebbleEntity(world, user);
             pebbleEntity.setItem(itemStack);
             pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.75F, 1.0F);
             world.spawnEntity(pebbleEntity);

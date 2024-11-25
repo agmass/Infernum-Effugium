@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "infernumeffugium:blackstone_to_pebbles"
+    ]
+  },
+  "criteria": {
+    "has_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+          "item": "infernumeffugium:blackstone_pebble"
+        }]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick"
+    ]
+  ]
+}

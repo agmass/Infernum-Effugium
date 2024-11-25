@@ -36,6 +36,6 @@ public class DeadBedrockBush extends DeadBushBlock {
 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return floor.isIn(TagKey.of(RegistryKeys.BLOCK, new Identifier("infernumeffugium", "bedrock_blocks")));
+        return floor.isIn(TagKey.of(RegistryKeys.BLOCK, new Identifier("infernumeffugium", "bedrock_blocks"))) || super.canPlantOnTop(floor,world,pos);
     }
 }
