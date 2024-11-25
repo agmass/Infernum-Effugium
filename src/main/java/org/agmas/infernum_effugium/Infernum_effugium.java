@@ -1,9 +1,11 @@
 package org.agmas.infernum_effugium;
 
+import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -13,6 +15,7 @@ public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
     public static final StatusEffect EXTREME_FIRE = new ExtremeFireStatusEffect();
+    public static Identifier REGISTER_PACKET = Identifier.of("scythes", "register_packet");
 
 
 
@@ -20,6 +23,7 @@ public class Infernum_effugium implements ModInitializer {
     public void onInitialize() {
         ModBlocks.init();
         ModItems.initialize();
+        PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
         ModEntities.init();
         Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "extreme_fire"), EXTREME_FIRE);
 
@@ -31,6 +35,7 @@ public class Infernum_effugium implements ModInitializer {
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register((t)->{
             t.add(ModItems.BEDROCK_SICKLES);
+            t.add(ModItems.INFERNUM_MACE);
             t.add(ModItems.NETHERITE_INFUSED_BEDROCK_SICKLES);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register((t)->{

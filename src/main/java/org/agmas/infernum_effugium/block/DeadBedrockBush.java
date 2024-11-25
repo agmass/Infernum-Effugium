@@ -1,21 +1,28 @@
 package org.agmas.infernum_effugium.block;
 
+import eu.pb4.polymer.core.api.block.PolymerBlock;
+import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.DeadBushBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEntities;
 
-public class DeadBedrockBush extends DeadBushBlock {
+public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock {
     public DeadBedrockBush(Settings settings) {
         super(settings);
     }
@@ -37,5 +44,20 @@ public class DeadBedrockBush extends DeadBushBlock {
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
         return floor.isIn(TagKey.of(RegistryKeys.BLOCK, Identifier.of("infernumeffugium", "bedrock_blocks"))) || super.canPlantOnTop(floor,world,pos);
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(BlockState blockState) {
+        return Blocks.DEAD_BUSH.getDefaultState();
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
+        if (player == null) return Blocks.DEAD_BUSH.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return state;
+        } else {
+            return Blocks.DEAD_BUSH.getDefaultState();
+        }
     }
 }

@@ -1,5 +1,7 @@
 package org.agmas.infernum_effugium.entity;
 
+import eu.pb4.polymer.core.api.entity.PolymerEntity;
+import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -9,9 +11,11 @@ import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -22,7 +26,7 @@ import org.agmas.infernum_effugium.ModItems;
 
 import java.util.Random;
 
-public class PebbleEntity extends ThrownItemEntity {
+public class PebbleEntity extends ThrownItemEntity implements PolymerEntity {
 
     public static final RegistryKey<DamageType> PEBBLE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Infernum_effugium.MOD_ID, "pebble"));
 
@@ -73,5 +77,16 @@ public class PebbleEntity extends ThrownItemEntity {
     @Override
     protected Item getDefaultItem() {
         return ModItems.BLACKSTONE_PEBBLE;
+    }
+
+
+    @Override
+    public EntityType<?> getPolymerEntityType(ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return EntityType.EGG;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return ModEntities.PEBBLE;
+        } else {
+            return EntityType.EGG;
+        }
     }
 }

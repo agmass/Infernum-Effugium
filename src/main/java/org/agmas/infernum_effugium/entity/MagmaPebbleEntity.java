@@ -1,5 +1,7 @@
 package org.agmas.infernum_effugium.entity;
 
+import eu.pb4.polymer.core.api.entity.PolymerEntity;
+import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -8,9 +10,12 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
@@ -22,7 +27,7 @@ import org.agmas.infernum_effugium.ModItems;
 
 import java.util.Random;
 
-public class MagmaPebbleEntity extends PebbleEntity {
+public class MagmaPebbleEntity extends PebbleEntity implements PolymerEntity {
 
     public MagmaPebbleEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
@@ -57,5 +62,15 @@ public class MagmaPebbleEntity extends PebbleEntity {
     @Override
     protected Item getDefaultItem() {
         return ModItems.MAGMA_PEBBLE;
+    }
+
+    @Override
+    public EntityType<?> getPolymerEntityType(ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return EntityType.EGG;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return ModEntities.MAGMA_PEBBLE;
+        } else {
+            return EntityType.EGG;
+        }
     }
 }

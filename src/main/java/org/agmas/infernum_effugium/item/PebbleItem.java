@@ -1,19 +1,26 @@
 package org.agmas.infernum_effugium.item;
 
+import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EggEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtInt;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class PebbleItem extends Item {
+public class PebbleItem extends Item implements PolymerItem {
     public PebbleItem(Settings settings) {
         super(settings);
     }
@@ -38,5 +45,15 @@ public class PebbleItem extends Item {
         }
 
         return TypedActionResult.success(itemStack, world.isClient());
+    }
+
+    @Override
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return Items.BLACKSTONE_SLAB;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return this;
+        } else {
+            return Items.BLACKSTONE_SLAB;
+        }
     }
 }

@@ -1,12 +1,13 @@
 package org.agmas.infernum_effugium.status_effects;
 
+import eu.pb4.polymer.core.api.other.PolymerStatusEffect;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class ExtremeFireStatusEffect extends StatusEffect {
+public class ExtremeFireStatusEffect extends StatusEffect implements PolymerStatusEffect {
     public ExtremeFireStatusEffect() {
         // category: StatusEffectCategory - describes if the effect is helpful (BENEFICIAL), harmful (HARMFUL) or useless (NEUTRAL)
         // color: int - Color is the color assigned to the effect (in RGB)

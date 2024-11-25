@@ -1,5 +1,7 @@
 package org.agmas.infernum_effugium.item;
 
+import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
@@ -8,9 +10,8 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,8 +22,9 @@ import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
+import org.jetbrains.annotations.Nullable;
 
-public class InfernumMaceItem extends SwordItem {
+public class InfernumMaceItem extends SwordItem implements PolymerItem {
 
     public InfernumMaceItem(Settings settings, int attackDamage) {
         super(ToolMaterials.DIAMOND, settings);
@@ -97,5 +99,15 @@ public class InfernumMaceItem extends SwordItem {
                 * 0.7F
                 * (double)(player.fallDistance > 5.0F ? 2 : 1)
                 * (1.0 - attacked.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
+    }
+
+    @Override
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return Items.MACE;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return this;
+        } else {
+            return Items.MACE;
+        }
     }
 }
