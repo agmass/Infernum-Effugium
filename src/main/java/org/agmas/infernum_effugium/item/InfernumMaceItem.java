@@ -1,6 +1,7 @@
 package org.agmas.infernum_effugium.item;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -26,6 +27,9 @@ public class InfernumMaceItem extends SwordItem {
 
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.damage(1,attacker,(e)->{
+            e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+        });
         if (attacker instanceof ServerPlayerEntity spe) {
             if (shouldSetOnFire(spe)) {
                 target.setVelocity(new Vec3d(0, spe.fallDistance*0.075,0));
