@@ -10,6 +10,6 @@
     "item": "minecraft:netherite_ingot"
   },
   "result": {
-    "item": "infernumeffugium:netherite_infused_bedrock_sickles"
+    "id": "infernumeffugium:netherite_infused_bedrock_sickles"
   }
 }
