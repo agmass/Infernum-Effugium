@@ -16,8 +16,10 @@ import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
 
 public class TwoSidedPolymerBlockItem extends PolymerBlockItem implements PolymerKeepModel, PolymerClientDecoded {
+
     public TwoSidedPolymerBlockItem(Block block, Settings settings, Item item) {
         super(block, settings, item);
+
     }
 
     @Override

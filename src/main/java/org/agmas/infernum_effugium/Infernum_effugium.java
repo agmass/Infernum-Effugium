@@ -28,7 +28,7 @@ public class Infernum_effugium implements ModInitializer {
         ModEntities.init();
         Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "extreme_fire"), EXTREME_FIRE);
 
-        PolymerResourcePackUtils.addModAssets("infernumeffugium");
+        PolymerResourcePackUtils.addModAssets("infernum_effugium");
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((t)->{
             t.add(ModItems.BLACKSTONE_PEBBLE);
         });

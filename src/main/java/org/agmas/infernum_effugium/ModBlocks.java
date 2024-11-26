@@ -24,19 +24,19 @@ public class ModBlocks {
             Items.LADDER
     );
     public static final Block BEDROCK_BRICKS = register(
-            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
+            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS,"bedrock_bricks"),
             "bedrock_bricks",
             true,
             Items.DEEPSLATE_BRICKS
     );
     public static final Block CORRUPTED_BEDROCK_BRICKS = register(
-            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
+            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS,"corrupted_bedrock_bricks"),
             "corrupted_bedrock_bricks",
             true,
             Items.DEEPSLATE_BRICKS
     );
     public static final Block CHISELED_BEDROCK = register(
-            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
+            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS,"chiseled_bedrock"),
             "chiseled_bedrock",
             true,
             Items.BEDROCK

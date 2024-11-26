@@ -13,7 +13,7 @@ import org.agmas.infernum_effugium.item.PebbleItem;
 public class ModItems {
 
     public static final Item BEDROCK_SICKLES = register(
-            new BedrockSickle(new Item.Settings().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 3, -1)).fireproof(), ToolMaterials.DIAMOND),
+            new BedrockSickle(new Item.Settings().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 3, -1)).fireproof(), ToolMaterials.DIAMOND, "bedrock_sickles"),
             "bedrock_sickles"
     );
     public static final Item BLACKSTONE_PEBBLE = register(
@@ -30,7 +30,7 @@ public class ModItems {
     );
 
     public static final Item NETHERITE_INFUSED_BEDROCK_SICKLES = register(
-            new BedrockSickle(new Item.Settings().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -1)).fireproof(), ToolMaterials.NETHERITE),
+            new BedrockSickle(new Item.Settings().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -1)).fireproof(), ToolMaterials.NETHERITE, "netherite_infused_bedrock_sickles"),
             "netherite_infused_bedrock_sickles"
     );
 

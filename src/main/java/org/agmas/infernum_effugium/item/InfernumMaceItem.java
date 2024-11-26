@@ -4,7 +4,10 @@ import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
+import eu.pb4.polymer.resourcepack.api.PolymerModelData;
+import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.LivingEntity;
@@ -13,11 +16,14 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -28,8 +34,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class InfernumMaceItem extends SwordItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
+    PolymerModelData modelData;
     public InfernumMaceItem(Settings settings, int attackDamage) {
         super(ToolMaterials.DIAMOND, settings);
+        modelData = PolymerResourcePackUtils.requestModel(Items.MACE, Identifier.of(Infernum_effugium.MOD_ID, "item/infernum_mace"));
     }
 
     public static AttributeModifiersComponent createAttributeModifiers() {
@@ -95,6 +103,12 @@ public class InfernumMaceItem extends SwordItem implements PolymerItem, PolymerK
         return attacker.fallDistance > 1.5F && !attacker.isFallFlying();
     }
 
+    @Override
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, RegistryWrapper.WrapperLookup lookup, @Nullable ServerPlayerEntity player) {
+        var itemStack1 = PolymerItem.super.getPolymerItemStack(itemStack, tooltipType, lookup, player);
+        itemStack1.set(DataComponentTypes.CUSTOM_MODEL_DATA, modelData.asComponent());
+        return itemStack1;
+    }
 
     private static double getKnockback(PlayerEntity player, LivingEntity attacked, Vec3d distance) {
         return (3.5 - distance.length())
