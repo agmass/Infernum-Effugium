@@ -1,6 +1,8 @@
 package org.agmas.infernum_effugium.entity;
 
 import eu.pb4.polymer.core.api.entity.PolymerEntity;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -27,7 +29,7 @@ import org.agmas.infernum_effugium.ModItems;
 
 import java.util.Random;
 
-public class MagmaPebbleEntity extends PebbleEntity implements PolymerEntity {
+public class MagmaPebbleEntity extends PebbleEntity implements PolymerEntity, PolymerKeepModel, PolymerClientDecoded {
 
     public MagmaPebbleEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);

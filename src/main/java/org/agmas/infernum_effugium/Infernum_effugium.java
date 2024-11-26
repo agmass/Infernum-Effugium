@@ -1,6 +1,7 @@
 package org.agmas.infernum_effugium;
 
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
+import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.effect.StatusEffect;
@@ -15,7 +16,7 @@ public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
     public static final StatusEffect EXTREME_FIRE = new ExtremeFireStatusEffect();
-    public static Identifier REGISTER_PACKET = Identifier.of("scythes", "register_packet");
+    public static Identifier REGISTER_PACKET = Identifier.of("infernumeffugium", "register_packet");
 
 
 
@@ -27,6 +28,7 @@ public class Infernum_effugium implements ModInitializer {
         ModEntities.init();
         Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "extreme_fire"), EXTREME_FIRE);
 
+        PolymerResourcePackUtils.addModAssets("infernumeffugium");
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((t)->{
             t.add(ModItems.BLACKSTONE_PEBBLE);
         });

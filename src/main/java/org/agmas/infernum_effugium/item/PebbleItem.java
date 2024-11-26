@@ -1,6 +1,8 @@
 package org.agmas.infernum_effugium.item;
 
 import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EggEntity;
@@ -20,7 +22,7 @@ import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class PebbleItem extends Item implements PolymerItem {
+public class PebbleItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
     public PebbleItem(Settings settings) {
         super(settings);
     }

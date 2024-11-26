@@ -13,10 +13,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import org.agmas.infernum_effugium.block.BedrockDispenser;
-import org.agmas.infernum_effugium.block.BedrockDispenserBush;
-import org.agmas.infernum_effugium.block.DeadBedrockBush;
-import org.agmas.infernum_effugium.block.PolymerLadderBlock;
+import org.agmas.infernum_effugium.block.*;
 
 public class ModBlocks {
 
@@ -27,19 +24,19 @@ public class ModBlocks {
             Items.LADDER
     );
     public static final Block BEDROCK_BRICKS = register(
-            new SimplePolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
+            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
             "bedrock_bricks",
             true,
             Items.DEEPSLATE_BRICKS
     );
     public static final Block CORRUPTED_BEDROCK_BRICKS = register(
-            new SimplePolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
+            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
             "corrupted_bedrock_bricks",
             true,
             Items.DEEPSLATE_BRICKS
     );
     public static final Block CHISELED_BEDROCK = register(
-            new SimplePolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
+            new TwoSidedPolymerBlock(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never), Blocks.DEEPSLATE_BRICKS),
             "chiseled_bedrock",
             true,
             Items.BEDROCK
@@ -68,7 +65,7 @@ public class ModBlocks {
         Identifier id = Identifier.of(Infernum_effugium.MOD_ID, name);
 
         if (shouldRegisterItem) {
-            BlockItem blockItem = new PolymerBlockItem(block, new Item.Settings(), polyblock);
+            BlockItem blockItem = new TwoSidedPolymerBlockItem(block, new Item.Settings(), polyblock);
             Registry.register(Registries.ITEM, id, blockItem);
         }
 

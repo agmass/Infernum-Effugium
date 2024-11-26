@@ -1,6 +1,8 @@
 package org.agmas.infernum_effugium.item;
 
 import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -24,7 +26,7 @@ import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 import org.jetbrains.annotations.Nullable;
 
-public class InfernumMaceItem extends SwordItem implements PolymerItem {
+public class InfernumMaceItem extends SwordItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
     public InfernumMaceItem(Settings settings, int attackDamage) {
         super(ToolMaterials.DIAMOND, settings);

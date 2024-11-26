@@ -2,6 +2,8 @@ package org.agmas.infernum_effugium.block;
 
 import com.mojang.serialization.MapCodec;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -25,7 +27,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.block.blockEntities.BushBedrockDispenserBlockEntity;
 
-public class BedrockDispenserBush extends DispenserBlock implements PolymerBlock {
+public class BedrockDispenserBush extends DispenserBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
     public BedrockDispenserBush(Settings settings) {
         super(settings);
     }

@@ -1,6 +1,8 @@
 package org.agmas.infernum_effugium.block;
 
 import eu.pb4.polymer.core.api.block.PolymerBlock;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -22,7 +24,7 @@ import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 
-public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock {
+public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
     public DeadBedrockBush(Settings settings) {
         super(settings);
     }
