@@ -12,6 +12,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.block.BedrockDispenser;
 import org.agmas.infernum_effugium.block.DeadBedrockBush;
+import org.agmas.infernum_effugium.block.GreedVault;
 
 public class ModBlocks {
 
@@ -38,6 +39,11 @@ public class ModBlocks {
     public static final Block BEDROCK_DISPENSER = register(
             new BedrockDispenser(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "bedrock_dispenser",
+            true
+    );
+    public static final Block GREED_VAULT = register(
+            new GreedVault(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
+            "greed_vault",
             true
     );
     public static final Block ROCKY_BUSH = register(
