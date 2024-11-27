@@ -21,7 +21,7 @@ public class GreedVaultBlockEntity extends BlockEntity {
 
     public void resetItems() {
         itemsLeft.set(0, Items.ENCHANTED_GOLDEN_APPLE);
-        itemsLeft.set(1, Items.COBBLESTONE_WALL);
+        itemsLeft.set(1, Items.);
         itemsLeft.set(2, Items.BEACON);
         itemsLeft.set(3, Items.NETHERITE_BLOCK);
     }
