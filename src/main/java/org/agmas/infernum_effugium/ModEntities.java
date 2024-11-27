@@ -27,9 +27,9 @@ public class ModEntities {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of("tutorial", path), blockEntityType);
     }
 
-    public static final BlockEntityType<GreedVaultBlockEntity> GREED_VAULT = register(
+    public static final BlockEntityType<GreedVaultBlockEntity> GREED_VAULT = registerBlockEntity(
             "greed_vault",
-            BlockEntityType.Builder.create(GreedVaultBlockEntity::new, ModBlocks.GREED_VAULT).build()
+            BlockEntityType.Builder.create(GreedVaultBlockEntity::new, ModBlocks.GREED_VAULT).build(null)
     );
 
 
