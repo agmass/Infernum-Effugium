@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "infernumeffugium:block/greed_vault",
+      "y": 90
+    },
+    "facing=north": {
       "model": "infernumeffugium:block/greed_vault"
+    },
+    "facing=south": {
+      "model": "infernumeffugium:block/greed_vault",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "infernumeffugium:block/greed_vault",
+      "y": 270
     }
   }
 }

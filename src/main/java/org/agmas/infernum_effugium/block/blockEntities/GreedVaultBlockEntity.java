@@ -29,11 +29,10 @@ public class GreedVaultBlockEntity extends BlockEntity {
     }
     public GreedVaultBlockEntity(BlockPos pos, BlockState state) {
         super(ModEntities.GREED_VAULT, pos, state);
-        itemsLeft.add(Items.ENCHANTED_GOLDEN_APPLE);
+        itemsLeft.add(Items.BLAZE_ROD);
         itemsLeft.add(Items.GHAST_TEAR);
-        itemsLeft.add(Items.WITHER_SKELETON_SKULL);
-        itemsLeft.add(Items.BEACON);
-        itemsLeft.add(Items.NETHERITE_BLOCK);
+        itemsLeft.add(Items.NETHER_STAR);
+        itemsLeft.add(Items.NETHERITE_SCRAP);
     }
 
     public void resetItems() {

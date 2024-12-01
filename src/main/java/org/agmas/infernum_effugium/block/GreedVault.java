@@ -9,24 +9,39 @@ import net.minecraft.client.util.ParticleUtil;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class GreedVault extends BlockWithEntity {
+    public static final DirectionProperty FACING;
+
     public GreedVault(Settings settings) {
         super(settings);
+        this.setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
+    }
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return (BlockState)this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+    }
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(new Property[]{FACING});
     }
 
     @Override
@@ -42,7 +57,7 @@ public class GreedVault extends BlockWithEntity {
                     world.updateListeners(pos, state, state, 0);
                     if (greedVaultBlockEntity.currentStage >= greedVaultBlockEntity.itemsLeft.size()) {
                         world.setBlockState(pos, Blocks.AIR.getDefaultState());
-                        world.spawnEntity(new ItemEntity(world,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5,Items.BEDROCK.getDefaultStack(),0,0.35,0));
+                        world.spawnEntity(new ItemEntity(world,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5, ModItems.NETHER_PACT.getDefaultStack(),0,0.35,0));
                         world.playSoundAtBlockCenter(pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS,1,0.5f,true);
                     }
                 }
@@ -52,6 +67,10 @@ public class GreedVault extends BlockWithEntity {
         }
     }
 
+
+    static {
+        FACING = HorizontalFacingBlock.FACING;
+    }
 
 
     @Override

@@ -3,6 +3,7 @@ package org.agmas.infernum_effugium.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -16,9 +17,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.MobSpawnerLogic;
+import org.agmas.infernum_effugium.ModBlocks;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 
 @Environment(EnvType.CLIENT)
@@ -37,6 +40,12 @@ public class GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedV
         float g = 0.7f;
 
         matrixStack.scale(g, g, g);
+        if (greedVaultBlockEntity.getWorld().getBlockState(greedVaultBlockEntity.getPos()).getBlock().equals(ModBlocks.GREED_VAULT)) {
+            Direction direction = greedVaultBlockEntity.getWorld().getBlockState(greedVaultBlockEntity.getPos()).get(HorizontalFacingBlock.FACING);
+            if (direction.equals(Direction.WEST) || direction.equals(Direction.EAST)) {
+                matrixStack.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(-90));
+            }
+        }
         if (greedVaultBlockEntity.itemsLeft.size() > greedVaultBlockEntity.currentStage) {
             this.itemRenderer.renderItem(greedVaultBlockEntity.itemsLeft.get(greedVaultBlockEntity.currentStage).getDefaultStack(), ModelTransformationMode.FIXED, 0, 0, matrixStack, vertexConsumerProvider, greedVaultBlockEntity.getWorld(), 0);
 

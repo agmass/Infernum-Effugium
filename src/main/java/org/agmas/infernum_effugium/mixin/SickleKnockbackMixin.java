@@ -1,8 +1,10 @@
 package org.agmas.infernum_effugium.mixin;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import org.agmas.infernum_effugium.Infernum_effugium;
@@ -10,8 +12,10 @@ import org.agmas.infernum_effugium.item.BedrockSickle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
@@ -32,6 +36,15 @@ public abstract class SickleKnockbackMixin {
     private boolean injected2(LivingEntity instance, StatusEffect effect) {
         return instance.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || instance.hasStatusEffect(Infernum_effugium.NETHER_PACT);
     }
+
+    @Inject(method = "damage", at= @At(value = "INVOKE", target = "Lnet/minecraft/entity/LimbAnimator;setSpeed(F)V"))
+    public void fireaspect(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (source.getAttacker() instanceof LivingEntity le) {
+            if (le.hasStatusEffect(Infernum_effugium.NETHER_PACT)) {
+                me().setFireTicks(20*4);
+            }
+        }
+    }
     @Redirect(method = "takeKnockback", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isOnGround()Z"))
     private boolean injected(LivingEntity instance) {
         if (instance.getAttacker() != null) {
@@ -42,4 +55,7 @@ public abstract class SickleKnockbackMixin {
         return instance.isOnGround();
     }
 
+    LivingEntity me() {
+        return (LivingEntity) (Object) this;
+    }
 }

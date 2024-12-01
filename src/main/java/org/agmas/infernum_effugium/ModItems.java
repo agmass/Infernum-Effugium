@@ -5,10 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.agmas.infernum_effugium.item.BedrockSickle;
-import org.agmas.infernum_effugium.item.InfernumMaceItem;
-import org.agmas.infernum_effugium.item.MagmaPebbleItem;
-import org.agmas.infernum_effugium.item.PebbleItem;
+import org.agmas.infernum_effugium.item.*;
 
 public class ModItems {
 
@@ -21,7 +18,7 @@ public class ModItems {
             "blackstone_pebble"
     );
     public static final Item NETHER_PACT = register(
-            new Item(new FabricItemSettings()),
+            new NetherPactItem(new FabricItemSettings()),
             "nether_pact"
     );
     public static final Item MAGMA_PEBBLE = register(

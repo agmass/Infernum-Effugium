@@ -5,13 +5,16 @@
   "block.infernumeffugium.bedrock_dispenser": "Bedrock Dispenser",
   "block.infernumeffugium.rocky_bush": "Rocky Bush",
   "item.infernumeffugium.blackstone_pebble": "Blackstone Pebble",
+  "item.infernumeffugium.nether_pact": "Nether Pact",
   "item.infernumeffugium.infernum_mace": "Infernum Mace",
   "item.infernumeffugium.magma_pebble": "Magma Pebble",
   "block.infernumeffugium.rocky_bush_but_its_actually_a_dispenser": "Rocky Bush (but it's actually a dispenser)",
   "block.infernumeffugium.bedrock_bricks": "Bedrock Bricks",
+  "block.infernumeffugium.greed_vault": "Greed Vault",
   "block.infernumeffugium.corrupted_bedrock_bricks": "Corrupted Bedrock Bricks",
   "block.infernumeffugium.chiseled_bedrock": "Chiseled Bedrock",
   "death.attack.pebble": "%1$s was pebbled",
   "death.attack.pebble.player": "%1$s was pebbled by %2$s",
-  "effect.infernumeffugium.extreme_fire": "Extreme Fire"
+  "effect.infernumeffugium.extreme_fire": "Extreme Fire",
+  "effect.infernumeffugium.nether_pact": "Nether Pact"
 }

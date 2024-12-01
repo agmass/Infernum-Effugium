@@ -3,12 +3,16 @@
     {
       "structure": "infernumeffugium:ruinedcity",
       "weight": 1
+    },
+    {
+      "structure": "infernumeffugium:pact_tower",
+      "weight": 1
     }
   ],
   "placement": {
     "type": "minecraft:random_spread",
     "spacing": 36,
-    "separation": 20,
+    "separation": 10,
     "salt": 6761920
   }
 }

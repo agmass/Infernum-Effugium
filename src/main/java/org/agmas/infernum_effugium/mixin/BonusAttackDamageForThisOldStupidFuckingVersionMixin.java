@@ -3,6 +3,7 @@ package org.agmas.infernum_effugium.mixin;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.item.BedrockSickle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
