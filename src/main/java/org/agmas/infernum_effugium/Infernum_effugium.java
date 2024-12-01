@@ -8,11 +8,13 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.status_effects.ExtremeFireStatusEffect;
+import org.agmas.infernum_effugium.status_effects.NetherPactStatusEffect;
 
 public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
     public static final StatusEffect EXTREME_FIRE = new ExtremeFireStatusEffect();
+    public static final StatusEffect NETHER_PACT = new NetherPactStatusEffect();
 
 
 
@@ -22,6 +24,7 @@ public class Infernum_effugium implements ModInitializer {
         ModItems.initialize();
         ModEntities.init();
         Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "extreme_fire"), EXTREME_FIRE);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "nether_pact"), NETHER_PACT);
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((t)->{
             t.add(ModItems.BLACKSTONE_PEBBLE);

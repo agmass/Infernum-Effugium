@@ -1,8 +1,11 @@
 package org.agmas.infernum_effugium.mixin;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.item.BedrockSickle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,6 +27,10 @@ public abstract class SickleKnockbackMixin {
            return new Random().nextInt(0,100) < 50 ? Hand.MAIN_HAND : Hand.OFF_HAND;
         }
         return hand;
+    }
+    @Redirect(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/entity/effect/StatusEffect;)Z"))
+    private boolean injected2(LivingEntity instance, StatusEffect effect) {
+        return instance.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || instance.hasStatusEffect(Infernum_effugium.NETHER_PACT);
     }
     @Redirect(method = "takeKnockback", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isOnGround()Z"))
     private boolean injected(LivingEntity instance) {

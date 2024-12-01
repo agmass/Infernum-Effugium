@@ -42,7 +42,7 @@ public class ModBlocks {
             true
     );
     public static final Block GREED_VAULT = register(
-            new GreedVault(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
+            new GreedVault(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).nonOpaque().allowsSpawning(Blocks::never)),
             "greed_vault",
             true
     );

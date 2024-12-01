@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "infernumeffugium:block/greed_vault",
+    "side": "infernumeffugium:block/greed_vault_sides",
+    "top": "infernumeffugium:block/greed_vault_top"
+  }
+}

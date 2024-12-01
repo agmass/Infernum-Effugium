@@ -20,6 +20,10 @@ public class ModItems {
             new PebbleItem(new FabricItemSettings()),
             "blackstone_pebble"
     );
+    public static final Item NETHER_PACT = register(
+            new Item(new FabricItemSettings()),
+            "nether_pact"
+    );
     public static final Item MAGMA_PEBBLE = register(
             new MagmaPebbleItem(new FabricItemSettings()),
             "magma_pebble"
