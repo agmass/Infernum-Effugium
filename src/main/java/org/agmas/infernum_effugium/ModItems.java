@@ -35,6 +35,11 @@ public class ModItems {
             "netherite_infused_bedrock_sickles"
     );
 
+    public static final Item DEATH_WHISTLE = register(
+            new DeathWhistleItem(new FabricItemSettings()),
+            "death_whistle"
+    );
+
 
     public static Item register(Item item, String id) {
         // Create the identifier for the item.

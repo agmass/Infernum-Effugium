@@ -3,12 +3,18 @@ package org.agmas.infernum_effugium;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.agmas.infernum_effugium.status_effects.ExtremeFireStatusEffect;
@@ -19,7 +25,7 @@ public class Infernum_effugium implements ModInitializer {
     public static String MOD_ID = "infernumeffugium";
     public static final StatusEffect EXTREME_FIRE = new ExtremeFireStatusEffect();
     public static final StatusEffect NETHER_PACT = new NetherPactStatusEffect();
-
+    public static final Identifier NETHER_PACT_MODE = new Identifier(MOD_ID, "nether_pact_mode");
 
 
     @Override
@@ -29,6 +35,9 @@ public class Infernum_effugium implements ModInitializer {
         ModEntities.init();
         Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "extreme_fire"), EXTREME_FIRE);
         Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "nether_pact"), NETHER_PACT);
+
+        Registry.register(Registries.SOUND_EVENT, Identifier.of(MOD_ID, "whistle"),
+                SoundEvent.of(Identifier.of(MOD_ID, "whistle")));
 
         ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
             serverWorld.getPlayers().forEach((p)->{
