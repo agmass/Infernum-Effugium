@@ -10,6 +10,8 @@ import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEffects;
+import org.agmas.infernum_effugium.client.Infernum_effugiumClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,12 +22,12 @@ public class NetherSkinPlayerMixin {
 
     @Inject(method = "renderArm", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/PlayerEntityModel;setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", shift = At.Shift.AFTER), cancellable = true)
     public void visibilityMixin2(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci, @Local(argsOnly = true) AbstractClientPlayerEntity livingEntity) {
-        if (player.hasStatusEffect(RegistryEntry.of(Infernum_effugium.NETHER_PACT))) {
+        if (player.hasStatusEffect(ModEffects.NETHER_PACT)) {
             ci.cancel();
             arm.pitch = 0.0F;;
-            arm.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(player.getSkinTextures().texture())), light, OverlayTexture.DEFAULT_UV, 16761538);
+            arm.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntitySolid(player.getSkinTextures().texture())), light, OverlayTexture.DEFAULT_UV, Infernum_effugiumClient.netherSkinColor);
             sleeve.pitch = 0.0F;
-            sleeve.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(player.getSkinTextures().texture())), light, OverlayTexture.DEFAULT_UV, 16761538);
+            sleeve.render(matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(player.getSkinTextures().texture())), light, OverlayTexture.DEFAULT_UV, Infernum_effugiumClient.netherSkinColor);
         }
     }
 }

@@ -1,6 +1,8 @@
 package org.agmas.infernum_effugium.item;
 
 import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -24,7 +26,7 @@ import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
 
-public class DeathWhistleItem extends Item implements PolymerItem {
+public class DeathWhistleItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
     PolymerModelData modelData;
     public DeathWhistleItem(Settings settings) {

@@ -21,6 +21,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEffects;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +45,7 @@ public class NetherPactUpdates {
 
         server.execute(() -> {
             server.getPlayerManager().getPlayerList().forEach((p)->{
-                if (p.hasStatusEffect(Registries.STATUS_EFFECT.getEntry(Infernum_effugium.NETHER_PACT))) {
+                if (p.hasStatusEffect(ModEffects.NETHER_PACT)) {
                     PolymerServerNetworking.send(player.networkHandler,new NetherPactModePayload(p.getUuid(), true));
                 }
             });

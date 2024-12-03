@@ -29,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEffects;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 import org.jetbrains.annotations.Nullable;
@@ -67,7 +68,7 @@ public class InfernumMaceItem extends SwordItem implements PolymerItem, PolymerK
                     totalDamage = 22.0F + spe.fallDistance - 8.0F;
                 }
 
-                target.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(Infernum_effugium.EXTREME_FIRE), (int) totalDamage, 0));
+                target.addStatusEffect(new StatusEffectInstance(ModEffects.EXTREME_FIRE, (int) totalDamage, 0));
 
                 for (int i = 0; i < spe.fallDistance*2; i++) {
                     MagmaPebbleEntity pebbleEntity = new MagmaPebbleEntity(target.getWorld(), attacker);

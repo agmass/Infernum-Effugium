@@ -24,7 +24,7 @@ import org.agmas.infernum_effugium.ModBlocks;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 
 @Environment(EnvType.CLIENT)
-public class GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedVaultBlockEntity> {
+public class    GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedVaultBlockEntity> {
     private final ItemRenderer itemRenderer;
     ItemEntity entity;
 

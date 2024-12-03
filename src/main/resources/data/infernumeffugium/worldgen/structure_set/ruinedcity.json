@@ -3,6 +3,10 @@
     {
       "structure": "infernumeffugium:ruinedcity",
       "weight": 1
+    },
+    {
+      "structure": "infernumeffugium:pact_tower",
+      "weight": 1
     }
   ],
   "placement": {

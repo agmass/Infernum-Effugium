@@ -4,14 +4,20 @@ import eu.pb4.polymer.networking.api.PolymerNetworking;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.agmas.infernum_effugium.status_effects.ExtremeFireStatusEffect;
 import org.agmas.infernum_effugium.status_effects.NetherPactStatusEffect;
 import org.agmas.infernum_effugium.util.NetherPactUpdates;
@@ -19,15 +25,8 @@ import org.agmas.infernum_effugium.util.NetherPactUpdates;
 public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
-    public static final StatusEffect EXTREME_FIRE;
-    public static final StatusEffect NETHER_PACT;
     public static Identifier REGISTER_PACKET = Identifier.of("infernumeffugium", "register_packet");
 
-
-    static {
-        NETHER_PACT = Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "nether_pact"), new NetherPactStatusEffect());
-        EXTREME_FIRE = Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "extreme_fire"), new ExtremeFireStatusEffect());
-    }
 
     @Override
     public void onInitialize() {
@@ -36,7 +35,21 @@ public class Infernum_effugium implements ModInitializer {
         PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
         PolymerNetworking.registerS2CVersioned(NetherPactUpdates.NetherPactModePayload.ID, 1, NetherPactUpdates.NetherPactModePayload.CODEC);
         ModEntities.init();
+        ModEffects.init();
 
+
+        ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
+            serverWorld.getPlayers().forEach((p)->{
+                if (StateSaverAndLoader.getPlayerState(p).netherPacted) {
+                    if (!p.hasStatusEffect(ModEffects.NETHER_PACT)) {
+                        p.addStatusEffect(new StatusEffectInstance(ModEffects.NETHER_PACT, Integer.MAX_VALUE, 0));
+                    }
+                }
+                if (p.isTouchingWaterOrRain() && p.hasStatusEffect(ModEffects.NETHER_PACT)) {
+                    p.damage(p.getDamageSources().drown(), 1);
+                }
+            });
+        }));
 
         PolymerResourcePackUtils.addModAssets("infernum_effugium");
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((t)->{

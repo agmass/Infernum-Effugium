@@ -27,7 +27,7 @@ public class NetherPactStatusEffect extends StatusEffect implements PolymerStatu
     @Override
     public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
         if (entity instanceof PlayerEntity p) {
-            NetherPactUpdates.sendNetherModeUpdate(p);
+            NetherPactUpdates.sendHumanModeUpdate(p);
         }
         super.onEntityRemoval(entity, amplifier, reason);
     }

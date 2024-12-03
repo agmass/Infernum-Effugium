@@ -1,14 +1,26 @@
 package org.agmas.infernum_effugium.mixin;
 
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Hand;
+import org.agmas.infernum_effugium.ModEffects;
+import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.item.BedrockSickle;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
@@ -33,6 +45,37 @@ public abstract class SickleKnockbackMixin {
             }
         }
         return instance.isOnGround();
+    }
+
+
+    @Redirect(method = "damage", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;hasStatusEffect(Lnet/minecraft/registry/entry/RegistryEntry;)Z"))
+    private boolean injected2(LivingEntity instance, RegistryEntry<StatusEffect> effect) {
+        return instance.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || instance.hasStatusEffect(ModEffects.NETHER_PACT);
+    }
+
+    @Inject(method = "onDeath", at= @At(value = "HEAD"))
+    public void catWhistle(DamageSource damageSource, CallbackInfo ci) {
+        if (new Random().nextInt(0,10) == 0) {
+            if (damageSource.getAttacker() instanceof PlayerEntity pe) {
+                if (pe.getStackInHand(Hand.MAIN_HAND).getItem() instanceof BedrockSickle) {
+                    if (me() instanceof CatEntity) {
+                        me().getWorld().spawnEntity(new ItemEntity(me().getWorld(), me().getX(), me().getY(), me().getZ(), ModItems.DEATH_WHISTLE.getDefaultStack(), 0, 0, 0));
+                    }
+                }
+            }
+        }
+    }
+    @Inject(method = "damage", at= @At(value = "INVOKE", target = "Lnet/minecraft/entity/LimbAnimator;setSpeed(F)V"))
+    public void fireaspect(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (source.getAttacker() instanceof LivingEntity le) {
+            if (le.hasStatusEffect(ModEffects.NETHER_PACT)) {
+                me().setFireTicks(20*4);
+            }
+        }
+    }
+
+    LivingEntity me() {
+        return (LivingEntity) (Object) this;
     }
 
 }

@@ -1,6 +1,8 @@
 package org.agmas.infernum_effugium.item;
 
 import eu.pb4.polymer.core.api.item.PolymerItem;
+import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
+import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -22,10 +24,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEffects;
 import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.jetbrains.annotations.Nullable;
 
-public class NetherPactItem extends Item implements PolymerItem {
+public class NetherPactItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
 
     PolymerModelData modelData;
@@ -39,7 +42,7 @@ public class NetherPactItem extends Item implements PolymerItem {
         ItemStack itemStack = user.getStackInHand(hand);
 
         if (!world.isClient) {
-            user.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(Infernum_effugium.NETHER_PACT), Integer.MAX_VALUE, 0));
+            user.addStatusEffect(new StatusEffectInstance(ModEffects.NETHER_PACT, Integer.MAX_VALUE, 0));
             user.sendMessage(Text.literal("You have made a deal with hell.").formatted(Formatting.RED));
 
             StateSaverAndLoader.getPlayerState(user).netherPacted = true;

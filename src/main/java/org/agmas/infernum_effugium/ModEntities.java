@@ -56,7 +56,7 @@ public class ModEntities {
 
     public static void init() {
         PolymerEntityUtils.registerType(MAGMA_PEBBLE, PEBBLE);
-        PolymerBlockUtils.registerBlockEntity(BEDROCK_DISPENSER_BLOCK_ENTITY, BUSHBEDROCK_DISPENSER_BLOCK_ENTITY);
+        PolymerBlockUtils.registerBlockEntity(BEDROCK_DISPENSER_BLOCK_ENTITY, BUSHBEDROCK_DISPENSER_BLOCK_ENTITY, GREED_VAULT);
     }
 
 }
