@@ -1,9 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.agmas.infernum_effugium.mixin.client",
+  "package": "org.agmas.infernum_effugium.client.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "NetherSkinMixin",
+    "NetherSkinPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

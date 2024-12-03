@@ -41,6 +41,12 @@ public class ModBlocks {
             true,
             Items.BEDROCK
     );
+    public static final Block GREED_VAULT = register(
+            new GreedVault(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).nonOpaque().allowsSpawning(Blocks::never)),
+            "greed_vault",
+            true,
+            Items.VAULT
+    );
     public static final Block BEDROCK_DISPENSER = register(
             new BedrockDispenser(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "bedrock_dispenser",

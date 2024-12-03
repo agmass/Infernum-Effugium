@@ -14,6 +14,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.block.blockEntities.BedrockDispenserBlockEntity;
 import org.agmas.infernum_effugium.block.blockEntities.BushBedrockDispenserBlockEntity;
+import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 
@@ -27,6 +28,11 @@ public class ModEntities {
             "magmapebble",
             EntityType.Builder.<MagmaPebbleEntity>create(MagmaPebbleEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
     );
+    public static final BlockEntityType<GreedVaultBlockEntity> GREED_VAULT = blockEntityRegister(
+            "greed_vault",
+            BlockEntityType.Builder.create(GreedVaultBlockEntity::new, ModBlocks.GREED_VAULT).build(null)
+    );
+
 
 
     public static final BlockEntityType<BedrockDispenserBlockEntity> BEDROCK_DISPENSER_BLOCK_ENTITY = blockEntityRegister(

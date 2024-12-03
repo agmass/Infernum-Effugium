@@ -5,10 +5,7 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.agmas.infernum_effugium.item.BedrockSickle;
-import org.agmas.infernum_effugium.item.InfernumMaceItem;
-import org.agmas.infernum_effugium.item.MagmaPebbleItem;
-import org.agmas.infernum_effugium.item.PebbleItem;
+import org.agmas.infernum_effugium.item.*;
 
 public class ModItems {
 
@@ -33,6 +30,15 @@ public class ModItems {
             new BedrockSickle(new Item.Settings().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -1)).fireproof(), ToolMaterials.NETHERITE, "netherite_infused_bedrock_sickles"),
             "netherite_infused_bedrock_sickles"
     );
+    public static final Item DEATH_WHISTLE = register(
+            new DeathWhistleItem(new Item.Settings()),
+            "death_whistle"
+    );
+    public static final Item NETHER_PACT = register(
+            new NetherPactItem(new Item.Settings()),
+            "nether_pact"
+    );
+
 
 
     public static Item register(Item item, String id) {
