@@ -4,6 +4,7 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.util.NetherPactUpdates;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,5 +18,8 @@ public class SkinUpdateMixin {
     @Inject(method = "onPlayerConnect", at = @At("TAIL"))
     public void sendShellUpdate(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         NetherPactUpdates.refreskSkinsOnClient(player);
+        if (player.hasStatusEffect(Infernum_effugium.NETHER_PACT)) {
+            NetherPactUpdates.sendNetherModeUpdate(player);
+        }
     }
 }

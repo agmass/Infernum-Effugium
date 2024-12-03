@@ -63,6 +63,7 @@ public class GreedVault extends BlockWithEntity {
                     greedVaultBlockEntity.currentStage++;
                     greedVaultBlockEntity.markDirty();
                     world.updateListeners(pos, state, state, 0);
+                    player.getStackInHand(hand).decrement(1);
                     if (greedVaultBlockEntity.currentStage >= greedVaultBlockEntity.itemsLeft.size()) {
                         world.setBlockState(pos, Blocks.AIR.getDefaultState());
                         world.spawnEntity(new ItemEntity(world,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5, ModItems.NETHER_PACT.getDefaultStack(),0,0.35,0));
