@@ -33,6 +33,9 @@ public class InfernumMaceItem extends SwordItem {
         if (attacker instanceof ServerPlayerEntity spe) {
             if (shouldSetOnFire(spe)) {
                 target.setVelocity(new Vec3d(0, spe.fallDistance*0.075,0));
+                if (target instanceof ServerPlayerEntity serverPlayerEntity) {
+                    serverPlayerEntity.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(serverPlayerEntity));
+                }
 
 
                 float totalDamage;
