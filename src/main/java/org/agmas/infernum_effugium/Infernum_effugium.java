@@ -1,9 +1,12 @@
 package org.agmas.infernum_effugium;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -15,6 +18,8 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.agmas.infernum_effugium.status_effects.ExtremeFireStatusEffect;
@@ -39,6 +44,16 @@ public class Infernum_effugium implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, Identifier.of(MOD_ID, "whistle"),
                 SoundEvent.of(Identifier.of(MOD_ID, "whistle")));
 
+        ServerLivingEntityEvents.ALLOW_DEATH.register(((livingEntity, damageSource, v) -> {
+            if (damageSource.isOf(DamageTypes.FREEZE)) {
+                if (StateSaverAndLoader.getPlayerState(livingEntity).netherPacted) {
+                    livingEntity.sendMessage(Text.literal("You are no longer bound by the nether pact.").formatted(Formatting.BLUE));
+                    StateSaverAndLoader.getPlayerState(livingEntity).netherPacted = false;
+                    livingEntity.removeStatusEffect(Infernum_effugium.NETHER_PACT);
+                }
+            }
+            return true;
+        }));
 
         ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
             serverWorld.getPlayers().forEach((p)->{
