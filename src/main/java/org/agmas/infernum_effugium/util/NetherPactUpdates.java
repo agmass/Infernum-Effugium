@@ -1,7 +1,6 @@
 package org.agmas.infernum_effugium.util;
 
 import eu.pb4.polymer.core.impl.networking.C2SPackets;
-import eu.pb4.polymer.core.impl.networking.payloads.c2s.PolymerPickBlockC2SPayload;
 import eu.pb4.polymer.networking.api.ContextByteBuf;
 import eu.pb4.polymer.networking.api.PolymerNetworking;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;

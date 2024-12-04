@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(PlayerEntity.class)
 public class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
-    @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"), index = 1)
+    @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;sidedDamage(Lnet/minecraft/entity/damage/DamageSource;F)Z"), index = 1)
     private float injected(float amount) {
         ItemStack itemStack = me().getStackInHand(Hand.MAIN_HAND);
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);

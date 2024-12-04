@@ -6,15 +6,15 @@
     "/"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stone"
-    },
-    "N": {
-      "item": "minecraft:nether_star"
-    },
-    "/": {
-      "item": "minecraft:blaze_rod"
-    }
+    "#": [
+      "minecraft:stone"
+    ],
+    "N": [
+      "minecraft:nether_star"
+    ],
+    "/": [
+      "minecraft:blaze_rod"
+    ]
   },
   "result": {
     "id": "infernumeffugium:infernum_mace",

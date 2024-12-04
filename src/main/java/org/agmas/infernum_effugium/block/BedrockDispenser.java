@@ -28,6 +28,7 @@ import net.minecraft.world.event.GameEvent;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.block.blockEntities.BedrockDispenserBlockEntity;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 public class BedrockDispenser extends DispenserBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
     public BedrockDispenser(Settings settings) {
@@ -81,18 +82,16 @@ public class BedrockDispenser extends DispenserBlock implements PolymerBlock, Po
         }
     }
 
-    @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.DISPENSER.getDefaultState();
-    }
+
 
     @Override
-    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
-        if (player == null) return Blocks.DISPENSER.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return state;
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
+        if (packetContext.getPlayer() == null) return Blocks.DISPENSER.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return blockState;
         } else {
             return Blocks.DISPENSER.getDefaultState();
         }
     }
+
 }

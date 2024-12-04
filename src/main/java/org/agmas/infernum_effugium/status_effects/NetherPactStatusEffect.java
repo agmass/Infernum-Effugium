@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import org.agmas.infernum_effugium.util.NetherPactUpdates;
 
 public class NetherPactStatusEffect extends StatusEffect implements PolymerStatusEffect {
@@ -25,11 +26,11 @@ public class NetherPactStatusEffect extends StatusEffect implements PolymerStatu
     }
 
     @Override
-    public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
+    public void onEntityRemoval(ServerWorld world, LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
         if (entity instanceof PlayerEntity p) {
             NetherPactUpdates.sendHumanModeUpdate(p);
         }
-        super.onEntityRemoval(entity, amplifier, reason);
+        super.onEntityRemoval(world, entity, amplifier, reason);
     }
 
     @Override

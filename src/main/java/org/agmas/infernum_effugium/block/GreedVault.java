@@ -24,7 +24,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.text.Text;
@@ -40,9 +40,10 @@ import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 import org.jetbrains.annotations.Nullable;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 public class GreedVault extends BlockWithEntity implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
-    public static final DirectionProperty FACING;
+    public static final EnumProperty<Direction> FACING;
 
     public GreedVault(Settings settings) {
         super(settings);
@@ -113,17 +114,12 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
     }
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState, ServerPlayerEntity player) {
-        if (player == null) return Blocks.VAULT.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
+        if (packetContext.getPlayer() == null) return Blocks.VAULT.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return blockState;
         } else {
             return Blocks.VAULT.getDefaultState();
         }
-    }
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.VAULT.getDefaultState();
     }
 }

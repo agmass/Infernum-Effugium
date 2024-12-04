@@ -15,6 +15,7 @@ import net.minecraft.nbt.NbtInt;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -23,6 +24,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
     public DeadBedrockBush(Settings settings) {
@@ -37,7 +39,7 @@ public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, Poly
                 double d = Math.abs(entity.getX() - entity.lastRenderX);
                 double e = Math.abs(entity.getZ() - entity.lastRenderZ);
                 if (d >= 0.003F || e >= 0.003F) {
-                    entity.damage(world.getDamageSources().sweetBerryBush(), 2.0F);
+                    entity.damage((ServerWorld) world, world.getDamageSources().sweetBerryBush(), 2.0F);
                 }
             }
         }
@@ -48,16 +50,12 @@ public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, Poly
         return floor.isIn(TagKey.of(RegistryKeys.BLOCK, Identifier.of("infernumeffugium", "bedrock_blocks"))) || super.canPlantOnTop(floor,world,pos);
     }
 
-    @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.DEAD_BUSH.getDefaultState();
-    }
 
     @Override
-    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
-        if (player == null) return Blocks.DEAD_BUSH.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return state;
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
+        if (packetContext.getPlayer() == null) return Blocks.DEAD_BUSH.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return blockState;
         } else {
             return Blocks.DEAD_BUSH.getDefaultState();
         }

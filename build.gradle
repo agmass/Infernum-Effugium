@@ -37,10 +37,9 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation include("eu.pb4:polymer-core:0.9.17+1.21.1")
-    modImplementation include("eu.pb4:polymer-resource-pack:0.9.17+1.21.1")
-    modImplementation include("xyz.nucleoid:server-translations-api:2.3.1+1.21-pre2")
-    modImplementation include("eu.pb4:polymer-blocks:0.9.17+1.21.1")
+    modImplementation include("eu.pb4:polymer-core:0.10.2+1.21.3")
+    modImplementation include("eu.pb4:polymer-resource-pack:0.10.2+1.21.3")
+    modImplementation include("eu.pb4:polymer-blocks:0.10.2+1.21.3")
 }
 
 processResources {

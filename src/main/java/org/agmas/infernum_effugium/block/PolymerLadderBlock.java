@@ -16,6 +16,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 public class PolymerLadderBlock extends LadderBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
     public PolymerLadderBlock(Settings settings) {
@@ -23,17 +24,12 @@ public class PolymerLadderBlock extends LadderBlock implements PolymerBlock, Pol
     }
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.LADDER.getStateWithProperties(blockState);
-    }
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
-        if (player == null) return Blocks.LADDER.getStateWithProperties(state);
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return state;
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
+        if (packetContext.getPlayer() == null) return Blocks.LADDER.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return blockState;
         } else {
-            return Blocks.LADDER.getStateWithProperties(state);
+            return Blocks.LADDER.getDefaultState();
         }
     }
 }

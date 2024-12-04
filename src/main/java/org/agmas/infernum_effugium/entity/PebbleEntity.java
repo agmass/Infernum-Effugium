@@ -18,6 +18,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -25,6 +26,7 @@ import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.ModItems;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.Random;
 
@@ -36,12 +38,9 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
         super(entityType, world);
     }
     public PebbleEntity(World world, LivingEntity owner) {
-        super(ModEntities.PEBBLE, owner, world);
+        super(ModEntities.PEBBLE, world);
     }
 
-    public PebbleEntity(EntityType<? extends ThrownItemEntity> thrownItemEntityEntityType, LivingEntity owner, World world) {
-        super(thrownItemEntityEntityType,owner,world);
-    }
 
 
     @Override
@@ -65,14 +64,16 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        DamageSource damageSource = new DamageSource(
-                entityHitResult.getEntity().getEntityWorld().getRegistryManager()
-                        .get(RegistryKeys.DAMAGE_TYPE)
-                        .entryOf(PEBBLE_DAMAGE));
-        entityHitResult.getEntity().damage(damageSource, 1);
-        entityHitResult.getEntity().setVelocity(0,0,0);
-        entityHitResult.getEntity().velocityDirty = true;
-        entityHitResult.getEntity().velocityModified = true;
+        if (entityHitResult.getEntity().getEntityWorld() instanceof ServerWorld) {
+            DamageSource damageSource = new DamageSource(
+                    entityHitResult.getEntity().getEntityWorld().getRegistryManager()
+                            .getOrThrow(RegistryKeys.DAMAGE_TYPE)
+                            .getEntry(PEBBLE_DAMAGE.getValue()).get());
+            entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getEntityWorld(), damageSource, 1);
+            entityHitResult.getEntity().setVelocity(0, 0, 0);
+            entityHitResult.getEntity().velocityDirty = true;
+            entityHitResult.getEntity().velocityModified = true;
+        }
         super.onEntityHit(entityHitResult);
     }
 
@@ -82,10 +83,11 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
     }
 
 
+
     @Override
-    public EntityType<?> getPolymerEntityType(ServerPlayerEntity serverPlayerEntity) {
-        if (serverPlayerEntity == null) return EntityType.EGG;
-        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public EntityType<?> getPolymerEntityType(PacketContext packetContext) {
+        if (packetContext.getPlayer() == null) return EntityType.EGG;
+        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return ModEntities.PEBBLE;
         } else {
             return EntityType.EGG;

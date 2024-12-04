@@ -9,6 +9,7 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import org.agmas.infernum_effugium.ModEffects;
 import org.agmas.infernum_effugium.ModItems;
@@ -66,7 +67,7 @@ public abstract class SickleKnockbackMixin {
         }
     }
     @Inject(method = "damage", at= @At(value = "INVOKE", target = "Lnet/minecraft/entity/LimbAnimator;setSpeed(F)V"))
-    public void fireaspect(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+    public void fireaspect(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (source.getAttacker() instanceof LivingEntity le) {
             if (le.hasStatusEffect(ModEffects.NETHER_PACT)) {
                 me().setFireTicks(20*4);

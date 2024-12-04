@@ -6,6 +6,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 
 public class ExtremeFireStatusEffect extends StatusEffect implements PolymerStatusEffect {
     public ExtremeFireStatusEffect() {
@@ -21,12 +22,13 @@ public class ExtremeFireStatusEffect extends StatusEffect implements PolymerStat
         return true;
     }
 
+
     // Called when the effect is applied
     @Override
-    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         entity.timeUntilRegen = 0;
         entity.removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
-        entity.damage(entity.getDamageSources().magic(), 1);
+        entity.damage(world, entity.getDamageSources().magic(), 1);
         entity.setFireTicks(5);
         return true;
     }

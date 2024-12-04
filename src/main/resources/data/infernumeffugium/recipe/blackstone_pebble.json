@@ -5,9 +5,9 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "infernumeffugium:blackstone_pebble"
-    }
+    "#": [
+      "infernumeffugium:blackstone_pebble"
+    ]
   },
   "result": {
     "id": "minecraft:blackstone",

@@ -46,7 +46,7 @@ public class Infernum_effugium implements ModInitializer {
                     }
                 }
                 if (p.isTouchingWaterOrRain() && p.hasStatusEffect(ModEffects.NETHER_PACT)) {
-                    p.damage(p.getDamageSources().drown(), 1);
+                    p.damage(serverWorld, p.getDamageSources().drown(), 1);
                 }
             });
         }));

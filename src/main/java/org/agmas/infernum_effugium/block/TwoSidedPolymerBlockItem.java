@@ -14,6 +14,7 @@ import net.minecraft.nbt.NbtInt;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
+import xyz.nucleoid.packettweaker.PacketContext;
 
 public class TwoSidedPolymerBlockItem extends PolymerBlockItem implements PolymerKeepModel, PolymerClientDecoded {
 
@@ -23,12 +24,13 @@ public class TwoSidedPolymerBlockItem extends PolymerBlockItem implements Polyme
     }
 
     @Override
-    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
-        if (serverPlayerEntity == null) return super.getPolymerItem(itemStack,serverPlayerEntity);
-        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public Item getPolymerItem(ItemStack itemStack, PacketContext context) {
+        if (context.getPlayer() == null) return super.getPolymerItem(itemStack,context);
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
-            return super.getPolymerItem(itemStack,serverPlayerEntity);
+            return super.getPolymerItem(itemStack,context);
         }
     }
+
 }
