@@ -39,6 +39,7 @@ public class Infernum_effugium implements ModInitializer {
         Registry.register(Registries.SOUND_EVENT, Identifier.of(MOD_ID, "whistle"),
                 SoundEvent.of(Identifier.of(MOD_ID, "whistle")));
 
+
         ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
             serverWorld.getPlayers().forEach((p)->{
                 if (StateSaverAndLoader.getPlayerState(p).netherPacted) {
