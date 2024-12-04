@@ -64,6 +64,9 @@ public class Infernum_effugium implements ModInitializer {
             t.add(ModItems.INFERNUM_MACE);
             t.add(ModItems.NETHERITE_INFUSED_BEDROCK_SICKLES);
         });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register((t)->{
+            t.add(ModItems.DEATH_WHISTLE);
+        });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register((t)->{
             t.add(ModBlocks.CHISELED_BEDROCK);
             t.add(ModBlocks.BEDROCK_BRICKS);
