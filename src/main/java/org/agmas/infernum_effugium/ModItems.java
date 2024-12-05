@@ -24,7 +24,7 @@ public class ModItems {
             "magma_pebble"
     );
     public static final Item INFERNUM_MACE = register(
-            new InfernumMaceItem(new Item.Settings().registryKey(keyOf("infernum_mace")).useItemPrefixedTranslationKey().attributeModifiers(InfernumMaceItem.createAttributeModifiers()), 2),
+            new InfernumMaceItem(new Item.Settings().registryKey(keyOf("infernum_mace")).maxCount(1).useItemPrefixedTranslationKey().attributeModifiers(InfernumMaceItem.createAttributeModifiers()), 2),
             "infernum_mace"
     );
 

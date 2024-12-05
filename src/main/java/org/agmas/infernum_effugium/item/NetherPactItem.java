@@ -44,6 +44,7 @@ public class NetherPactItem extends Item implements PolymerItem, PolymerKeepMode
         if (!world.isClient) {
             user.addStatusEffect(new StatusEffectInstance(ModEffects.NETHER_PACT, Integer.MAX_VALUE, 0));
             user.sendMessage(Text.literal("You have made a deal with hell.").formatted(Formatting.RED), false);
+            user.sendMessage(Text.literal("Dying to powdered snow will clear you of your pact.").formatted(Formatting.RED), false);
 
             StateSaverAndLoader.getPlayerState(user).netherPacted = true;
             if (!user.getAbilities().creativeMode) {

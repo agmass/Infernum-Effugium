@@ -4,6 +4,9 @@
   "package": "org.agmas.infernum_effugium.client.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "LivingEntityRenderStateMixin",
+    "NetherSkinMixin",
+    "PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
