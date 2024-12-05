@@ -12,6 +12,7 @@ import org.agmas.infernum_effugium.item.BedrockSickle;
 import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.agmas.infernum_effugium.util.NetherPactUpdates;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -29,6 +30,7 @@ public class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
         return amount;
     }
 
+    @Unique
     PlayerEntity me() {
         return (PlayerEntity) (Object) this;
     }
