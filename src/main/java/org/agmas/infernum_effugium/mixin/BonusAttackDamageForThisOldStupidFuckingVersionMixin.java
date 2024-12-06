@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import org.agmas.infernum_effugium.item.BedrockSickle;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
@@ -20,6 +21,7 @@ public class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
         return amount;
     }
 
+    @Unique
     PlayerEntity me() {
         return (PlayerEntity) (Object) this;
     }
