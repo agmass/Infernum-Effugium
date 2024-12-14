@@ -24,7 +24,7 @@ public class NetherPactItem extends Item {
         if (!world.isClient) {
             user.addStatusEffect(new StatusEffectInstance(Infernum_effugium.NETHER_PACT, Integer.MAX_VALUE, 0));
             user.sendMessage(Text.literal("You have made a deal with hell.").formatted(Formatting.RED));
-            user.sendMessage(Text.literal("Dying to powdered snow will clear you of your pact.").formatted(Formatting.RED));
+            user.sendMessage(Text.literal("Use /un_nether_pact to cure yourself.").formatted(Formatting.RED));
 
             StateSaverAndLoader.getPlayerState(user).netherPacted = true;
             if (!user.getAbilities().creativeMode) {
