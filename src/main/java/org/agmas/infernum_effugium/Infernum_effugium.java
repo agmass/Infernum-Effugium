@@ -4,6 +4,7 @@ import eu.pb4.polymer.networking.api.PolymerNetworking;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -43,6 +45,20 @@ public class Infernum_effugium implements ModInitializer {
         ModEffects.init();
 
 
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            dispatcher.register(CommandManager.literal("un_nether_pact").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).executes(context -> {
+                if (context.getSource().getPlayer() != null) {
+                    if (StateSaverAndLoader.getPlayerState(context.getSource().getPlayer()).netherPacted) {
+                        context.getSource().getPlayer().sendMessage(Text.literal("You are no longer bound by the nether pact.").formatted(Formatting.BLUE), false);
+                        NetherPactUpdates.sendHumanModeUpdate(context.getSource().getPlayer());
+                    }
+                    StateSaverAndLoader.getPlayerState(context.getSource().getPlayer()).netherPacted = false;
+                    context.getSource().getPlayer().removeStatusEffect(ModEffects.NETHER_PACT);
+                }
+                return 1;
+            }));
+        });
+
         ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
             serverWorld.getPlayers().forEach((p)->{
                 if (StateSaverAndLoader.getPlayerState(p).netherPacted) {
@@ -54,20 +70,6 @@ public class Infernum_effugium implements ModInitializer {
                     p.damage(serverWorld, p.getDamageSources().drown(), 1);
                 }
             });
-        }));
-
-        ServerLivingEntityEvents.ALLOW_DEATH.register(((livingEntity, damageSource, v) -> {
-            if (damageSource.isOf(DamageTypes.FREEZE)) {
-                if (StateSaverAndLoader.getPlayerState(livingEntity).netherPacted) {
-                    if (livingEntity instanceof PlayerEntity player) {
-                        player.sendMessage(Text.literal("You are no longer bound by the nether pact.").formatted(Formatting.BLUE), false);
-                        NetherPactUpdates.sendHumanModeUpdate(player);
-                    }
-                    StateSaverAndLoader.getPlayerState(livingEntity).netherPacted = false;
-                    livingEntity.removeStatusEffect(ModEffects.NETHER_PACT);
-                }
-            }
-            return true;
         }));
         PolymerResourcePackUtils.addModAssets("infernum_effugium");
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((t)->{
