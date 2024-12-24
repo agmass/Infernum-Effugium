@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 
-public class MagmaPebbleItem extends Item {
+public class MagmaPebbleItem extends PebbleItem {
     public MagmaPebbleItem(Settings settings) {
         super(settings);
     }

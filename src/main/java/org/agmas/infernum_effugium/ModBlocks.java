@@ -26,6 +26,16 @@ public class ModBlocks {
             "bedrock_bricks",
             true
     );
+    public static final Block BLACKSTONE_PILLAR = register(
+            new PillarBlock(AbstractBlock.Settings.copy(Blocks.BLACKSTONE)),
+            "blackstone_pillar",
+            true
+    );
+    public static final Block GILDED_BLACKSTONE_PILLAR = register(
+            new PillarBlock(AbstractBlock.Settings.copy(Blocks.BLACKSTONE).sounds(BlockSoundGroup.GILDED_BLACKSTONE)),
+            "gilded_blackstone_pillar",
+            true
+    );
     public static final Block CORRUPTED_BEDROCK_BRICKS = register(
             new Block(AbstractBlock.Settings.create().strength(-1.0F, 3600000.0F).sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).dropsNothing().allowsSpawning(Blocks::never)),
             "corrupted_bedrock_bricks",
@@ -54,6 +64,15 @@ public class ModBlocks {
     public static final Block ROCKY_BUSH_BUT_ITS_ACTUALLY_A_DISPENSER = register(
             new BedrockDispenser(AbstractBlock.Settings.create().sounds(BlockSoundGroup.STONE).pistonBehavior(PistonBehavior.BLOCK).mapColor(MapColor.STONE_GRAY).instrument(Instrument.BASEDRUM).noCollision().breakInstantly().allowsSpawning(Blocks::never)),
             "rocky_bush_but_its_actually_a_dispenser",
+            true
+    );
+    public static final Block BLACKSTONE_MAGMA_BLOCK = register(
+            new MagmaBlock(AbstractBlock.Settings.create().mapColor(MapColor.DARK_RED).instrument(Instrument.BASEDRUM).requiresTool().luminance((state) -> {
+                return 3;
+            }).strength(0.5F).allowsSpawning((state, world, pos, entityType) -> {
+                return entityType.isFireImmune();
+            }).postProcess(Blocks::always).emissiveLighting(Blocks::always)),
+            "blackstone_magma_block",
             true
     );
 

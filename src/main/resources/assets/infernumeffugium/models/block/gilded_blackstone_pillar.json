@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "minecraft:block/gilded_blackstone",
+    "side": "infernumeffugium:block/gilded_blackstone_pillar"
+  }
+}

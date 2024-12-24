@@ -47,6 +47,7 @@ public class MagmaPebbleEntity extends PebbleEntity {
                         .get(RegistryKeys.DAMAGE_TYPE)
                         .entryOf(PEBBLE_DAMAGE));
         entityHitResult.getEntity().damage(damageSource, 1);
+        entityHitResult.getEntity().timeUntilRegen = 0;
         entityHitResult.getEntity().setVelocity(0,0,0);
         entityHitResult.getEntity().setFireTicks(120);
         entityHitResult.getEntity().velocityDirty = true;

@@ -4,6 +4,10 @@
     "infernumeffugium:bedrock_bricks",
     "infernumeffugium:corrupted_bedrock_bricks",
     "infernumeffugium:chiseled_bedrock",
-    "minecraft:iron_bars"
+    "minecraft:iron_bars",
+    "minecraft:blackstone",
+    "minecraft:cobblestone",
+    "minecraft:stone",
+    "minecraft:deepslate"
   ]
 }
