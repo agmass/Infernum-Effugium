@@ -40,7 +40,7 @@ public class ModItems {
             "death_whistle"
     );
     public static final Item PEBBLE_CANNON = register(
-            new PebbleCannonItem(new FabricItemSettings().maxDamage(800).maxCount(1)),
+            new PebbleCannonItem(new FabricItemSettings().maxDamage(800)),
             "pebble_cannon"
     );
 
