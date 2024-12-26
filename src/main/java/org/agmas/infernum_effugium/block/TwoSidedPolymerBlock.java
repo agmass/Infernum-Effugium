@@ -16,13 +16,16 @@ import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import xyz.nucleoid.packettweaker.PacketContext;
 
 public class TwoSidedPolymerBlock extends SimplePolymerBlock implements PolymerKeepModel, PolymerClientDecoded {
 
+    BlockState polymerState = null;
     public TwoSidedPolymerBlock(Settings settings, Block polymerBlock, String modelName) {
         super(settings, polymerBlock);
+        polymerState = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(Identifier.of(Infernum_effugium.MOD_ID, modelName)));
     }
 
 
@@ -32,6 +35,9 @@ public class TwoSidedPolymerBlock extends SimplePolymerBlock implements PolymerK
         if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return blockState;
         } else {
+            if (PolymerResourcePackUtils.hasMainPack(packetContext.getPlayer())) {
+                return polymerState;
+            }
             return super.getPolymerBlockState(blockState,packetContext);
         }
     }

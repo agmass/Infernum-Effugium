@@ -40,6 +40,11 @@ public class ModItems {
             new NetherPactItem(new Item.Settings().registryKey(keyOf("nether_pact")).useItemPrefixedTranslationKey()),
             "nether_pact"
     );
+    public static final Item PEBBLE_CANNON = register(
+            new PebbleCannonItem(new Item.Settings().registryKey(keyOf("pebble_cannon")).maxDamage(800)),
+            "pebble_cannon"
+    );
+
 
 
     private static RegistryKey<Item> keyOf(String id) {

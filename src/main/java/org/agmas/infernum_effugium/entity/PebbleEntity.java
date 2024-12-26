@@ -72,6 +72,7 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
             entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getEntityWorld(), damageSource, 1);
             entityHitResult.getEntity().setVelocity(0, 0, 0);
             entityHitResult.getEntity().velocityDirty = true;
+            entityHitResult.getEntity().timeUntilRegen = 0;
             entityHitResult.getEntity().velocityModified = true;
         }
         super.onEntityHit(entityHitResult);

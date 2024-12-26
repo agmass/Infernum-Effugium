@@ -39,10 +39,11 @@ public class Infernum_effugium implements ModInitializer {
     public void onInitialize() {
         ModBlocks.init();
         ModItems.initialize();
-        PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
-        PolymerNetworking.registerS2CVersioned(NetherPactUpdates.NetherPactModePayload.ID, 1, NetherPactUpdates.NetherPactModePayload.CODEC);
         ModEntities.init();
         ModEffects.init();
+        PolymerResourcePackUtils.addModAssets("infernum_effugium");
+        PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
+        PolymerNetworking.registerS2CVersioned(NetherPactUpdates.NetherPactModePayload.ID, 1, NetherPactUpdates.NetherPactModePayload.CODEC);
 
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -71,7 +72,6 @@ public class Infernum_effugium implements ModInitializer {
                 }
             });
         }));
-        PolymerResourcePackUtils.addModAssets("infernum_effugium");
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register((t)->{
             t.add(ModItems.BLACKSTONE_PEBBLE);
         });

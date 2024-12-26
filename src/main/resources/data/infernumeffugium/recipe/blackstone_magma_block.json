@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#M#",
+    "###"
+  ],
+  "key": {
+    "#": [
+      "infernumeffugium:blackstone_pebble"
+    ],
+    "M": [
+      "minecraft:magma_block"
+    ]
+  },
+  "result": {
+    "id": "infernumeffugium:blackstone_magma_block",
+    "count": 1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "infernumeffugium:blackstone_pillar",
+      "infernumeffugium:gilded_blackstone_pillar",
+      "infernumeffugium:blackstone_magma_block"
+    ]
+  },
+  "criteria": {
+    "has_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+          "item": "minecraft:blackstone"
+        }]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick"
+    ]
+  ]
+}

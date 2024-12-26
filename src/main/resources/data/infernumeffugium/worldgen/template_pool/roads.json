@@ -65,6 +65,33 @@
       }
     },
     {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infernumeffugium:tower",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infernumeffugium:sign",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infernumeffugium:hot_tub",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
       "weight": 10,
       "element": {
         "element_type": "minecraft:single_pool_element",

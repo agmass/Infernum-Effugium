@@ -6,9 +6,7 @@ import eu.pb4.polymer.core.api.item.PolymerBlockItem;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -68,6 +66,29 @@ public class ModBlocks {
             "rocky_bush_but_its_actually_a_dispenser",
             true,
             Items.DEAD_BUSH
+    );
+
+    public static final Block BLACKSTONE_MAGMA_BLOCK = register(
+            new TwoSidedPolymerMagmaBlock(AbstractBlock.Settings.create().registryKey(keyOf("blackstone_magma_block")).mapColor(MapColor.DARK_RED).instrument(NoteBlockInstrument.BASEDRUM).requiresTool().luminance((state) -> {
+                return 3;
+            }).strength(0.5F).allowsSpawning((state, world, pos, entityType) -> {
+                return entityType.isFireImmune();
+            }).postProcess(Blocks::always).emissiveLighting(Blocks::always), Blocks.MAGMA_BLOCK, "blackstone_magma_block"),
+            "blackstone_magma_block",
+            true,
+            Items.MAGMA_BLOCK
+    );
+    public static final Block BLACKSTONE_PILLAR = register(
+            new TwoSidedPillarPolymerBlock(AbstractBlock.Settings.copy(Blocks.BLACKSTONE).registryKey(keyOf("blackstone_pillar")),Blocks.BLACKSTONE,"blackstone_pillar"),
+            "blackstone_pillar",
+            true,
+            Items.BLACKSTONE
+    );
+    public static final Block GILDED_BLACKSTONE_PILLAR = register(
+            new TwoSidedPillarPolymerBlock(AbstractBlock.Settings.copy(Blocks.BLACKSTONE).registryKey(keyOf("gilded_blackstone_pillar")).sounds(BlockSoundGroup.GILDED_BLACKSTONE), Blocks.BLACKSTONE,"gilded_blackstone_pillar"),
+            "gilded_blackstone_pillar",
+            true,
+            Items.GILDED_BLACKSTONE
     );
 
 

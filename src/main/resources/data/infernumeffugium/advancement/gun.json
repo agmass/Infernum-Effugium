@@ -1,0 +1,24 @@
+
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "infernumeffugium:pebble_cannon"
+    ]
+  },
+  "criteria": {
+    "has_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{
+          "item": "minecraft:iron_ingot"
+        }]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick"
+    ]
+  ]
+}

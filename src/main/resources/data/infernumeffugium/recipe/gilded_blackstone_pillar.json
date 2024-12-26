@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#M#",
+    "###"
+  ],
+  "key": {
+    "#": [
+      "minecraft:gold_nugget"
+    ],
+    "M": [
+      "infernumeffugium:blackstone_pillar"
+    ]
+  },
+  "result": {
+    "id": "infernumeffugium:gilded_blackstone_pillar",
+    "count": 1
+  }
+}

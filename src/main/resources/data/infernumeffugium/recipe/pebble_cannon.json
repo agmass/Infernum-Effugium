@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " iG",
+    "/T "
+  ],
+  "key": {
+    "i": [
+      "minecraft:iron_ingot"
+    ],
+    "G": [
+      "minecraft:gunpowder"
+    ],
+    "/": [
+      "minecraft:stick"
+    ],
+    "T": [
+      "minecraft:tripwire_hook"
+    ]
+  },
+  "result": {
+    "id": "infernumeffugium:pebble_cannon",
+    "count": 1
+  }
+}

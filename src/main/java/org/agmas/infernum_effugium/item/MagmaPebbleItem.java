@@ -27,7 +27,7 @@ import org.agmas.infernum_effugium.entity.PebbleEntity;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
-public class MagmaPebbleItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
+public class MagmaPebbleItem extends PebbleItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
 
     public MagmaPebbleItem(Settings settings) {
@@ -45,7 +45,7 @@ public class MagmaPebbleItem extends Item implements PolymerItem, PolymerKeepMod
             MagmaPebbleEntity pebbleEntity = new MagmaPebbleEntity(world, user);
             pebbleEntity.setItem(itemStack);
             pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.75F, 1.0F);
-            pebbleEntity.setPosition(user.getEyePos());
+            pebbleEntity.setPosition(user.getEyePos().add(user.getRotationVector()));
             world.spawnEntity(pebbleEntity);
         }
 
