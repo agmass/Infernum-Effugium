@@ -17,13 +17,14 @@ import java.util.List;
 public class BedrockSickle extends SwordItem {
 
     public BedrockSickle(Settings settings, int attackDamage) {
-        super(ToolMaterials.DIAMOND, attackDamage, -1F, settings);
+        super(ToolMaterials.DIAMOND, attackDamage, -1.25F, settings);
     }
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         tooltip.add(Text.literal("Requires the same type of sickle to"));
         tooltip.add(Text.literal("be in your offhand to do full damage."));
+        tooltip.add(Text.literal("Ignores invulnerability ticks when fully charged."));
         super.appendTooltip(stack, world, tooltip, context);
     }
 
