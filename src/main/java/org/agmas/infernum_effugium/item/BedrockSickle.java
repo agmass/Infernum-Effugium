@@ -27,7 +27,7 @@ public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeep
 
     String modelName;
     public BedrockSickle(Settings settings, float attackDamage, String modelName) {
-        super(ToolMaterial.DIAMOND, attackDamage, -1f, settings);
+        super(ToolMaterial.DIAMOND, attackDamage, -1.25f, settings);
         this.modelName = modelName;
     }
 
@@ -35,6 +35,7 @@ public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeep
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.literal("Requires the same type of sickle to"));
         tooltip.add(Text.literal("be in your offhand to do full damage."));
+        tooltip.add(Text.literal("Ignores invulnerability ticks when fully charged."));
         super.appendTooltip(stack, context, tooltip, type);
     }
 
@@ -52,6 +53,7 @@ public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeep
     public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return;
     }
+
 
 
     @Override
