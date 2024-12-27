@@ -10,7 +10,7 @@ import org.agmas.infernum_effugium.item.*;
 public class ModItems {
 
     public static final Item BEDROCK_SICKLES = register(
-            new BedrockSickle(new FabricItemSettings().fireproof(), 3),
+            new BedrockSickle(new FabricItemSettings().fireproof(), 2),
             "bedrock_sickles"
     );
     public static final Item BLACKSTONE_PEBBLE = register(
@@ -31,7 +31,7 @@ public class ModItems {
     );
 
     public static final Item NETHERITE_INFUSED_BEDROCK_SICKLES = register(
-            new BedrockSickle(new FabricItemSettings().fireproof(), 5),
+            new BedrockSickle(new FabricItemSettings().fireproof(), 4),
             "netherite_infused_bedrock_sickles"
     );
 
