@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockModel;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
+import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.core.api.block.SimplePolymerBlock;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
@@ -24,7 +25,7 @@ import net.minecraft.util.math.Direction;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import xyz.nucleoid.packettweaker.PacketContext;
 
-public class TwoSidedPillarPolymerBlock extends SimplePolymerBlock implements PolymerKeepModel, PolymerClientDecoded {
+public class TwoSidedPillarPolymerBlock extends SimplePolymerBlock implements PolymerKeepModel, PolymerClientDecoded, PolymerTexturedBlock {
 
     public static final MapCodec<PillarBlock> CODEC = createCodec(PillarBlock::new);
     public static final EnumProperty<Direction.Axis> AXIS;
@@ -34,11 +35,16 @@ public class TwoSidedPillarPolymerBlock extends SimplePolymerBlock implements Po
     }
 
     BlockState polymerState = null;
+    BlockState polymerStateX = null;
+    BlockState polymerStateZ = null;
+
 
     public TwoSidedPillarPolymerBlock(Settings settings, Block polymerBlock, String modelName) {
         super(settings, polymerBlock);
 
-        polymerState = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(Identifier.of(Infernum_effugium.MOD_ID, modelName)));
+        polymerState = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(Identifier.of(Infernum_effugium.MOD_ID, "block/" +modelName)));
+        polymerState = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(Identifier.of(Infernum_effugium.MOD_ID, "block/" +modelName)));
+        polymerState = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(Identifier.of(Infernum_effugium.MOD_ID, "block/" +modelName)));
         this.setDefaultState((BlockState)this.getDefaultState().with(AXIS, Direction.Axis.Y));
     }
 

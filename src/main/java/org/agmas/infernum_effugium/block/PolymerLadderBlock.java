@@ -25,11 +25,11 @@ public class PolymerLadderBlock extends LadderBlock implements PolymerBlock, Pol
 
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Blocks.LADDER.getDefaultState();
+        if (packetContext.getPlayer() == null) return Blocks.LADDER.getStateWithProperties(blockState);
         if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return blockState;
         } else {
-            return Blocks.LADDER.getDefaultState();
+            return Blocks.LADDER.getStateWithProperties(blockState);
         }
     }
 }

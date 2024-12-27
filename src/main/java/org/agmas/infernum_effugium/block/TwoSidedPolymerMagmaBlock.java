@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockModel;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
+import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.core.api.block.SimplePolymerBlock;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
@@ -24,7 +25,7 @@ import net.minecraft.world.tick.ScheduledTickView;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import xyz.nucleoid.packettweaker.PacketContext;
 
-public class TwoSidedPolymerMagmaBlock extends TwoSidedPolymerBlock implements PolymerKeepModel, PolymerClientDecoded {
+public class TwoSidedPolymerMagmaBlock extends TwoSidedPolymerBlock implements PolymerKeepModel, PolymerClientDecoded, PolymerTexturedBlock {
 
     private static final int SCHEDULED_TICK_DELAY = 20;
     public TwoSidedPolymerMagmaBlock(Settings settings, Block polymerBlock, String modelName) {
