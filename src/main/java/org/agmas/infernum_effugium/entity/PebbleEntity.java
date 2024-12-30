@@ -25,6 +25,7 @@ import java.util.Random;
 public class PebbleEntity extends ThrownItemEntity {
 
     public static final RegistryKey<DamageType> PEBBLE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(Infernum_effugium.MOD_ID, "pebble"));
+    public boolean shotFromCannon = false;
 
     public PebbleEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
@@ -63,7 +64,7 @@ public class PebbleEntity extends ThrownItemEntity {
                 entityHitResult.getEntity().getEntityWorld().getRegistryManager()
                         .get(RegistryKeys.DAMAGE_TYPE)
                         .entryOf(PEBBLE_DAMAGE));
-        entityHitResult.getEntity().damage(damageSource, 1);
+        entityHitResult.getEntity().damage(damageSource, shotFromCannon ? 3.5f : 1);
         entityHitResult.getEntity().timeUntilRegen = 0;
         entityHitResult.getEntity().setVelocity(0,0,0);
         entityHitResult.getEntity().velocityDirty = true;

@@ -52,6 +52,7 @@ public class PebbleCannonItem extends Item {
                     if (!world.isClient) {
                         PebbleEntity pebbleEntity = new PebbleEntity(world, user);
                         pebbleEntity.setItem(pebble);
+                        pebbleEntity.shotFromCannon = true;
                         pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.5F, 0.0F);
                         world.spawnEntity(pebbleEntity);
                         stack.damage(1,user,(e)->{
