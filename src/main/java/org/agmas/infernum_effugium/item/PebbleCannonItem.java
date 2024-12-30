@@ -62,6 +62,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
 
                         PebbleEntity pebbleEntity = new PebbleEntity(world, user);
                         pebbleEntity.setItem(pebble);
+                        pebbleEntity.shotFromCannon = true;
                         pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.75F, 1.0F);
                         pebbleEntity.setPosition(user.getEyePos().add(user.getRotationVector()));
                         world.spawnEntity(pebbleEntity);

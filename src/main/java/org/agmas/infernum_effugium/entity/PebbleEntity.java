@@ -33,6 +33,7 @@ import java.util.Random;
 public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, PolymerKeepModel, PolymerClientDecoded {
 
     public static final RegistryKey<DamageType> PEBBLE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Infernum_effugium.MOD_ID, "pebble"));
+    public boolean shotFromCannon = false;
 
     public PebbleEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
@@ -69,7 +70,7 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
                     entityHitResult.getEntity().getEntityWorld().getRegistryManager()
                             .getOrThrow(RegistryKeys.DAMAGE_TYPE)
                             .getEntry(PEBBLE_DAMAGE.getValue()).get());
-            entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getEntityWorld(), damageSource, 1);
+            entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getEntityWorld(), damageSource, shotFromCannon ? 3.5f : 1);
             entityHitResult.getEntity().setVelocity(0, 0, 0);
             entityHitResult.getEntity().velocityDirty = true;
             entityHitResult.getEntity().timeUntilRegen = 0;
