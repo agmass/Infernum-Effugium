@@ -83,6 +83,7 @@ public class Infernum_effugium implements ModInitializer {
             t.add(ModItems.BEDROCK_SICKLES);
             t.add(ModItems.INFERNUM_MACE);
             t.add(ModItems.NETHERITE_INFUSED_BEDROCK_SICKLES);
+            t.add(ModItems.PEBBLE_CANNON);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register((t)->{
             t.add(ModItems.DEATH_WHISTLE);
@@ -93,6 +94,8 @@ public class Infernum_effugium implements ModInitializer {
             t.add(ModBlocks.BEDROCK_LADDER);
             t.add(ModBlocks.BEDROCK_DISPENSER);
             t.add(ModBlocks.CORRUPTED_BEDROCK_BRICKS);
+            t.add(ModBlocks.BLACKSTONE_PILLAR);
+            t.add(ModBlocks.GILDED_BLACKSTONE_PILLAR);
             t.add(ModBlocks.ROCKY_BUSH);
         });
 

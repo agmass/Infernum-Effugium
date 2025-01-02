@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
@@ -58,7 +59,17 @@ public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeep
 
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of("infernumeffugium", modelName);
+        if (context.getPlayer() == null) return Identifier.of("minecraft", modelName.equals("netherite_infused_bedrock_sickles") ? "netherite_hoe" : "diamond_hoe");
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+            return Identifier.of(Infernum_effugium.MOD_ID, modelName);
+        } else {
+            if (PolymerResourcePackUtils.hasMainPack(context)) {
+                return Identifier.of(Infernum_effugium.MOD_ID, modelName);
+
+            } else {
+                return Identifier.of("minecraft", modelName.equals("netherite_infused_bedrock_sickles") ? "netherite_hoe" : "diamond_hoe");
+            }
+        }
     }
 
     @Override

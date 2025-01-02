@@ -59,9 +59,18 @@ public class PebbleItem extends Item implements PolymerItem, PolymerKeepModel, P
 
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of(Infernum_effugium.MOD_ID, "blackstone_pebble");
-    }
+        if (context.getPlayer() == null) return Identifier.of("minecraft", "polished_blackstone_button");
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+            return Identifier.of(Infernum_effugium.MOD_ID, "blackstone_pebble");
+        } else {
+            if (PolymerResourcePackUtils.hasMainPack(context)) {
+                return Identifier.of(Infernum_effugium.MOD_ID, "blackstone_pebble");
 
+            } else {
+                return Identifier.of("minecraft", "polished_blackstone_button");
+            }
+        }
+    }
     @Override
     public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
         if (packetContext.getPlayer() == null) return Items.BLACKSTONE_SLAB;

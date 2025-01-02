@@ -107,9 +107,18 @@ public class InfernumMaceItem extends MaceItem implements PolymerItem, PolymerKe
 
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of(Infernum_effugium.MOD_ID, "infernum_mace");
-    }
+        if (context.getPlayer() == null) return Identifier.of("minecraft", "mace");
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+            return Identifier.of(Infernum_effugium.MOD_ID, "infernum_mace");
+        } else {
+            if (PolymerResourcePackUtils.hasMainPack(context)) {
+                return Identifier.of(Infernum_effugium.MOD_ID, "infernum_mace");
 
+            } else {
+                return Identifier.of("minecraft", "mace");
+            }
+        }
+    }
     private static double getKnockback(PlayerEntity player, LivingEntity attacked, Vec3d distance) {
         return (3.5 - distance.length())
                 * 0.7F

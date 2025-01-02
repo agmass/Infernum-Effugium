@@ -59,7 +59,17 @@ public class MagmaPebbleItem extends PebbleItem implements PolymerItem, PolymerK
 
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of(Infernum_effugium.MOD_ID, "magma_pebble");
+        if (context.getPlayer() == null) return Identifier.of("minecraft", "magma_cream");
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+            return Identifier.of(Infernum_effugium.MOD_ID, "magma_pebble");
+        } else {
+            if (PolymerResourcePackUtils.hasMainPack(context)) {
+                return Identifier.of(Infernum_effugium.MOD_ID, "magma_pebble");
+
+            } else {
+                return Identifier.of("minecraft", "magma_cream");
+            }
+        }
     }
 
     @Override

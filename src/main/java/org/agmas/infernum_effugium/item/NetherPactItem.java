@@ -54,10 +54,19 @@ public class NetherPactItem extends Item implements PolymerItem, PolymerKeepMode
         return ActionResult.CONSUME;
     }
 
-
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of(Infernum_effugium.MOD_ID, "nether_pact");
+        if (context.getPlayer() == null) return Identifier.of("minecraft", "map");
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+            return Identifier.of(Infernum_effugium.MOD_ID, "nether_pact");
+        } else {
+            if (PolymerResourcePackUtils.hasMainPack(context)) {
+                return Identifier.of(Infernum_effugium.MOD_ID, "nether_pact");
+
+            } else {
+                return Identifier.of("minecraft", "map");
+            }
+        }
     }
 
     @Override

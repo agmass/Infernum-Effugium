@@ -52,9 +52,20 @@ public class DeathWhistleItem extends Item implements PolymerItem, PolymerKeepMo
         }
     }
 
+
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        return Identifier.of(Infernum_effugium.MOD_ID, "death_whistle");
+        if (context.getPlayer() == null) return Identifier.of("minecraft", "goat_horn");
+        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+            return Identifier.of(Infernum_effugium.MOD_ID, "death_whistle");
+        } else {
+            if (PolymerResourcePackUtils.hasMainPack(context)) {
+                return Identifier.of(Infernum_effugium.MOD_ID, "death_whistle");
+
+            } else {
+                return Identifier.of("minecraft", "goat_horn");
+            }
+        }
     }
 
 }
