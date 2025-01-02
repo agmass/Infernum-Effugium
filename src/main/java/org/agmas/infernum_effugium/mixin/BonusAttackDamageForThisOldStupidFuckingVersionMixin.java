@@ -41,7 +41,7 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);
         if (getAttackCooldownProgress(0.5F) == 1.0F) {
             if (itemStack.getItem().equals(itemStack2.getItem()) && (itemStack.getItem() instanceof BedrockSickle)) {
-                target.timeUntilRegen = target.timeUntilRegen / 2;
+                target.timeUntilRegen = 0;
             }
         }
     }
