@@ -17,7 +17,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModItems;
-import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
+import org.agmas.infernum_effugium.entity.PebbleEntity;
 
 public class InfernumMaceItem extends SwordItem {
 
@@ -50,7 +50,7 @@ public class InfernumMaceItem extends SwordItem {
                 target.addStatusEffect(new StatusEffectInstance(Infernum_effugium.EXTREME_FIRE, (int) totalDamage, 0));
 
                 for (int i = 0; i < spe.fallDistance*2; i++) {
-                    MagmaPebbleEntity pebbleEntity = new MagmaPebbleEntity(target.getWorld(), attacker);
+                    PebbleEntity pebbleEntity = new PebbleEntity(target.getWorld(), attacker);
                     pebbleEntity.setItem(ModItems.MAGMA_PEBBLE.getDefaultStack());
                     pebbleEntity.setVelocity(0,1.5,0,Math.min(spe.fallDistance/9,3),20);
                     pebbleEntity.setPosition(target.getPos().add(0,2,0));

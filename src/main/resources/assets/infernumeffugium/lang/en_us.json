@@ -11,6 +11,7 @@
   "sound.infernumeffugium.whistle": "Death Whistle",
   "item.infernumeffugium.magma_pebble": "Magma Pebble",
   "item.infernumeffugium.pebble_cannon": "Pebble Cannon",
+  "item.infernumeffugium.market_gardener": "Market Gardener",
   "block.infernumeffugium.rocky_bush_but_its_actually_a_dispenser": "Rocky Bush (but it's actually a dispenser)",
   "block.infernumeffugium.bedrock_bricks": "Bedrock Bricks",
   "block.infernumeffugium.greed_vault": "Greed Vault",
@@ -22,5 +23,17 @@
   "death.attack.pebble": "%1$s was pebbled",
   "death.attack.pebble.player": "%1$s was pebbled by %2$s",
   "effect.infernumeffugium.extreme_fire": "Extreme Fire",
-  "effect.infernumeffugium.nether_pact": "Nether Pact"
+  "effect.infernumeffugium.nether_pact": "Nether Pact",
+  "effect.infernumeffugium.airborne": "Airborne",
+  "enchantment.infernumeffugium.airblast": "Airblast",
+  "enchantment.infernumeffugium.backburner": "Backburner",
+  "enchantment.infernumeffugium.ender": "Ender",
+  "enchantment.infernumeffugium.flamethrower": "Flamethrower",
+  "enchantment.infernumeffugium.shotgun": "Shotgun",
+
+  "enchantment.infernumeffugium.airblast.desc": "Replaces the Pebble Cannon's main attack with an airblast, shooting away enemies and launching back the user while temporarily applying better air movement to the user",
+  "enchantment.infernumeffugium.backburner.desc": "Deals Extreme Burns to any victim if the shot pebble hits their back.",
+  "enchantment.infernumeffugium.ender.desc": "Increases speed and removes gravity of pebbles but greatly increases reload time. Best paired with Shotgun.",
+  "enchantment.infernumeffugium.flamethrower.desc": "Turns all given pebbles into Magma Pebbles.",
+  "enchantment.infernumeffugium.shotgun.desc": "Fires 6 pebbles at once and disables Gun Jamming, but increases reload time."
 }

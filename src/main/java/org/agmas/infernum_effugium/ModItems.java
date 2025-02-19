@@ -22,8 +22,12 @@ public class ModItems {
             "nether_pact"
     );
     public static final Item MAGMA_PEBBLE = register(
-            new MagmaPebbleItem(new FabricItemSettings()),
+            new PebbleItem(new FabricItemSettings()),
             "magma_pebble"
+    );
+    public static final Item MARKET_GARDENER = register(
+            new MarketGardenerItem(new FabricItemSettings(), 1),
+            "market_gardener"
     );
     public static final Item INFERNUM_MACE = register(
             new InfernumMaceItem(new FabricItemSettings(), 2),

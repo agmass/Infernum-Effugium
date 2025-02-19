@@ -3,7 +3,8 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "infernumeffugium:pebble_cannon"
+      "infernumeffugium:pebble_cannon",
+      "infernumeffugium:market_gardener"
     ]
   },
   "criteria": {

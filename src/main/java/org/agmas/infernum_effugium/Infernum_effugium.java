@@ -24,6 +24,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.state.StateSaverAndLoader;
+import org.agmas.infernum_effugium.status_effects.AirborneStatusEffect;
 import org.agmas.infernum_effugium.status_effects.ExtremeFireStatusEffect;
 import org.agmas.infernum_effugium.status_effects.NetherPactStatusEffect;
 
@@ -31,6 +32,7 @@ public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
     public static final StatusEffect EXTREME_FIRE = new ExtremeFireStatusEffect();
+    public static final StatusEffect AIRBORNE = new AirborneStatusEffect();
     public static final StatusEffect NETHER_PACT = new NetherPactStatusEffect();
     public static final Identifier NETHER_PACT_MODE = new Identifier(MOD_ID, "nether_pact_mode");
 
@@ -38,9 +40,11 @@ public class Infernum_effugium implements ModInitializer {
     @Override
     public void onInitialize() {
         ModBlocks.init();
+        ModEnchantments.init();
         ModItems.initialize();
         ModEntities.init();
         Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "extreme_fire"), EXTREME_FIRE);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "airborne"), AIRBORNE);
         Registry.register(Registries.STATUS_EFFECT, new Identifier(MOD_ID, "nether_pact"), NETHER_PACT);
 
         Registry.register(Registries.SOUND_EVENT, Identifier.of(MOD_ID, "whistle"),
@@ -66,6 +70,7 @@ public class Infernum_effugium implements ModInitializer {
             t.add(ModItems.BLACKSTONE_PEBBLE);
             t.add(ModItems.NETHER_PACT);
             t.add(ModItems.PEBBLE_CANNON);
+            t.add(ModItems.MARKET_GARDENER);
         });
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register((t)->{
             t.add(ModItems.BEDROCK_SICKLES);
