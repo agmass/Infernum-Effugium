@@ -18,7 +18,6 @@ import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.block.blockEntities.BedrockDispenserBlockEntity;
 import org.agmas.infernum_effugium.block.blockEntities.BushBedrockDispenserBlockEntity;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
-import org.agmas.infernum_effugium.entity.MagmaPebbleEntity;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 
 public class ModEntities {
@@ -26,10 +25,6 @@ public class ModEntities {
     public static final EntityType<PebbleEntity> PEBBLE = register(
             "pebble",
             EntityType.Builder.<PebbleEntity>create(PebbleEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
-    );
-    public static final EntityType<MagmaPebbleEntity> MAGMA_PEBBLE = register(
-            "magmapebble",
-            EntityType.Builder.<MagmaPebbleEntity>create(MagmaPebbleEntity::new, SpawnGroup.MISC).dimensions(0.25F, 0.25F).maxTrackingRange(4).trackingTickInterval(10)
     );
     public static final BlockEntityType<GreedVaultBlockEntity> GREED_VAULT = blockEntityRegister(
             "greed_vault",
@@ -58,7 +53,7 @@ public class ModEntities {
 
 
     public static void init() {
-        PolymerEntityUtils.registerType(MAGMA_PEBBLE, PEBBLE);
+        PolymerEntityUtils.registerType(PEBBLE);
         PolymerBlockUtils.registerBlockEntity(BEDROCK_DISPENSER_BLOCK_ENTITY, BUSHBEDROCK_DISPENSER_BLOCK_ENTITY, GREED_VAULT);
     }
 

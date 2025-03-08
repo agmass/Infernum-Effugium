@@ -1,0 +1,25 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.infernumeffugium.shotgun"
+  },
+  "effects": {
+    "minecraft:damage": [
+    ]
+  },
+  "max_cost": {
+    "base": 7,
+    "per_level_above_first": 11
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 11
+  },
+  "primary_items": "infernumeffugium:pebble_cannon",
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "infernumeffugium:pebble_cannon",
+  "weight": 10
+}

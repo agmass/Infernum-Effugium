@@ -5,11 +5,13 @@ import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -17,6 +19,8 @@ import net.minecraft.item.Items;
 import net.minecraft.item.consume.UseAction;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -24,8 +28,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEffects;
+import org.agmas.infernum_effugium.ModEnchants;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 import org.jetbrains.annotations.Nullable;
@@ -93,6 +100,20 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
     @Override
     public ActionResult use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
+        if (itemStack.hasEnchantments()) {
+            Registry<Enchantment> enchantRegistry = world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
+            if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.AIRBLAST)), itemStack) != 0) {
+                if (!user.hasStatusEffect(ModEffects.AIRBORNE)) {
+                    user.getItemCooldownManager().set(itemStack, 25);
+                    user.getWorld().getOtherEntities(user, new Box(user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(-4, -4, -4), user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(4, 4, 4))).forEach((e) -> {
+                        e.setVelocity(e.getPos().add(user.getPos().multiply(-1)).add(0, 1, 0).multiply(0.5));
+                    });
+                    user.addStatusEffect(new StatusEffectInstance(ModEffects.AIRBORNE, 20*30,0 ));
+                    user.setVelocity(user.getRotationVec(0f).multiply(-2f));
+                }
+                return ActionResult.SUCCESS;
+            }
+        }
 
         boolean bl = user.getAbilities().creativeMode;
 
@@ -125,18 +146,18 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
 
     @Override
     public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Items.BOW;
+        if (packetContext.getPlayer() == null) return Items.CROSSBOW;
         if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
-            return Items.BOW;
+            return Items.CROSSBOW;
         }
     }
 
 
     @Override
     public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        if (context.getPlayer() == null) return Identifier.of("minecraft", "bow");
+        if (context.getPlayer() == null) return Identifier.of("minecraft", "crossbow");
         if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
             return Identifier.of(Infernum_effugium.MOD_ID, "pebble_cannon");
         } else {
@@ -144,7 +165,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                 return Identifier.of(Infernum_effugium.MOD_ID, "pebble_cannon");
 
             } else {
-                return Identifier.of("minecraft", "bow");
+                return Identifier.of("minecraft", "crossbow");
             }
         }
     }

@@ -4,6 +4,7 @@
   "package": "org.agmas.infernum_effugium.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AirborneMixin",
     "BonusAttackDamageForThisOldStupidFuckingVersionMixin",
     "SickleKnockbackMixin",
     "SkinUpdateMixin"
