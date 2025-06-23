@@ -2,6 +2,7 @@ package org.agmas.infernum_effugium.block;
 
 import com.mojang.serialization.MapCodec;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
+import eu.pb4.polymer.core.api.block.PolymerBlockUtils;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.core.mixin.block.BlockEntityUpdateS2CPacketAccessor;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.packet.c2s.play.UpdateSignC2SPacket;
 import net.minecraft.particle.ParticleTypes;
@@ -37,6 +39,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.RotationPropertyHelper;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
+import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +55,7 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
 
     @Override
     protected MapCodec<? extends BlockWithEntity> getCodec() {
-        return null;
+        return createCodec(GreedVault::new);
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -77,9 +80,7 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
             if (blockEntity instanceof GreedVaultBlockEntity greedVaultBlockEntity) {
 
                 if (greedVaultBlockEntity.itemsLeft.get(greedVaultBlockEntity.currentStage).equals(player.getMainHandStack().getItem())) {
-                    greedVaultBlockEntity.currentStage++;
-                    greedVaultBlockEntity.markDirty();
-                    world.updateListeners(pos, state, state, 0);
+                    greedVaultBlockEntity.incrementStage();
                     player.getMainHandStack().decrement(1);
                     if (greedVaultBlockEntity.currentStage >= greedVaultBlockEntity.itemsLeft.size()) {
                         world.setBlockState(pos, Blocks.AIR.getDefaultState());
@@ -109,8 +110,9 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
         return BlockRenderType.MODEL;
     }
 
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new GreedVaultBlockEntity(pos, state);
+    @Override
+    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new GreedVaultBlockEntity(pos,state);
     }
 
     @Override
@@ -122,4 +124,5 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
             return Blocks.VAULT.getDefaultState();
         }
     }
+
 }

@@ -13,6 +13,8 @@ base {
 loom {
     splitEnvironmentSourceSets()
 
+    accessWidenerPath = file("src/main/resources/infernumeffugium.accesswidener")
+
     mods {
         "infernum_effugium" {
             sourceSet sourceSets.main

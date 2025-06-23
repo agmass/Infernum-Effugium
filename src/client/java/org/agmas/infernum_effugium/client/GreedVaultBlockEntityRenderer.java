@@ -15,17 +15,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.ItemDisplayContext;
+import net.minecraft.item.ModelTransformationMode;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
 import org.agmas.infernum_effugium.ModBlocks;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 
 @Environment(EnvType.CLIENT)
-public class GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedVaultBlockEntity> {
+public class    GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedVaultBlockEntity> {
     private final ItemRenderer itemRenderer;
     ItemEntity entity;
 
@@ -34,8 +33,7 @@ public class GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedV
     }
 
 
-    @Override
-    public void render(GreedVaultBlockEntity greedVaultBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, int overlay, Vec3d cameraPos) {
+    public void render(GreedVaultBlockEntity greedVaultBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
         matrixStack.push();
         matrixStack.translate(0.5F, 0.5F, 0.5F);
         float g = 0.7f;
@@ -48,23 +46,12 @@ public class GreedVaultBlockEntityRenderer implements BlockEntityRenderer<GreedV
             }
         }
         if (greedVaultBlockEntity.itemsLeft.size() > greedVaultBlockEntity.currentStage) {
-            this.itemRenderer.renderItem(greedVaultBlockEntity.itemsLeft.get(greedVaultBlockEntity.currentStage).getDefaultStack(), ItemDisplayContext.FIXED, 0, 0, matrixStack, vertexConsumerProvider, greedVaultBlockEntity.getWorld(), 0);
+            this.itemRenderer.renderItem(greedVaultBlockEntity.itemsLeft.get(greedVaultBlockEntity.currentStage).getDefaultStack(), ModelTransformationMode.FIXED, 0, 0, matrixStack, vertexConsumerProvider, greedVaultBlockEntity.getWorld(), 0);
+
         }
         matrixStack.pop();
     }
 
-    @Override
-    public boolean rendersOutsideBoundingBox() {
-        return BlockEntityRenderer.super.rendersOutsideBoundingBox();
-    }
 
-    @Override
-    public int getRenderDistance() {
-        return BlockEntityRenderer.super.getRenderDistance();
-    }
 
-    @Override
-    public boolean isInRenderDistance(GreedVaultBlockEntity blockEntity, Vec3d pos) {
-        return BlockEntityRenderer.super.isInRenderDistance(blockEntity, pos);
-    }
 }
