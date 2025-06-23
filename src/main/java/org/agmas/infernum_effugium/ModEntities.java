@@ -3,6 +3,7 @@ package org.agmas.infernum_effugium;
 import eu.pb4.polymer.core.api.block.PolymerBlockUtils;
 import eu.pb4.polymer.core.api.entity.PolymerEntity;
 import eu.pb4.polymer.core.api.entity.PolymerEntityUtils;
+import eu.pb4.polymer.rsm.api.RegistrySyncUtils;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityType;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.entity.BlockEntityType;
@@ -28,7 +29,7 @@ public class ModEntities {
     );
     public static final BlockEntityType<GreedVaultBlockEntity> GREED_VAULT = blockEntityRegister(
             "greed_vault",
-            FabricBlockEntityTypeBuilder.create(GreedVaultBlockEntity::new, ModBlocks.GREED_VAULT).build(null)
+            FabricBlockEntityTypeBuilder.create(GreedVaultBlockEntity::new, ModBlocks.GREED_VAULT).build()
     );
 
 
@@ -54,7 +55,8 @@ public class ModEntities {
 
     public static void init() {
         PolymerEntityUtils.registerType(PEBBLE);
-        PolymerBlockUtils.registerBlockEntity(BEDROCK_DISPENSER_BLOCK_ENTITY, BUSHBEDROCK_DISPENSER_BLOCK_ENTITY, GREED_VAULT);
+        PolymerBlockUtils.registerBlockEntity(BEDROCK_DISPENSER_BLOCK_ENTITY, BUSHBEDROCK_DISPENSER_BLOCK_ENTITY);
+        RegistrySyncUtils.setServerEntry(Registries.BLOCK_ENTITY_TYPE, GREED_VAULT);
     }
 
 }
