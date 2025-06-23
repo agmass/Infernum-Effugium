@@ -1,9 +1,12 @@
 package org.agmas.infernum_effugium;
 
+import com.mojang.serialization.Codec;
 import eu.pb4.polymer.networking.api.PolymerNetworking;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -24,7 +27,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.agmas.infernum_effugium.status_effects.ExtremeFireStatusEffect;
 import org.agmas.infernum_effugium.status_effects.NetherPactStatusEffect;
 import org.agmas.infernum_effugium.util.NetherPactUpdates;
@@ -33,6 +35,10 @@ public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
     public static Identifier REGISTER_PACKET = Identifier.of("infernumeffugium", "register_packet");
+    public static final AttachmentType<Boolean> PERSISTENT = AttachmentRegistry.createPersistent(
+            Identifier.of(MOD_ID, "persistent"),
+            Codec.BOOL
+    );
 
 
     @Override
@@ -101,6 +107,7 @@ public class Infernum_effugium implements ModInitializer {
             t.add(ModBlocks.GILDED_BLACKSTONE_PILLAR);
             t.add(ModBlocks.ROCKY_BUSH);
         });
+
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SEARCH).register((t)->{
             t.add(ModItems.BLACKSTONE_PEBBLE);
             t.add(ModItems.NETHER_PACT);

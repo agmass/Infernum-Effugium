@@ -24,25 +24,20 @@ import xyz.nucleoid.packettweaker.PacketContext;
 import java.util.List;
 import java.util.Objects;
 
-public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
+public class BedrockSickle extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
     String modelName;
-    public BedrockSickle(Settings settings, float attackDamage, String modelName) {
-        super(ToolMaterial.DIAMOND, attackDamage, -1.25f, settings);
+    public BedrockSickle(Item.Settings settings, float attackDamage, String modelName) {
+        super(settings.sword(ToolMaterial.DIAMOND,attackDamage,-1.25F));
         this.modelName = modelName;
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void modifyClientTooltip(List<Text> tooltip, ItemStack stack, PacketContext context) {
         tooltip.add(Text.literal("Requires the same type of sickle to"));
         tooltip.add(Text.literal("be in your offhand to do full damage."));
         tooltip.add(Text.literal("Ignores invulnerability ticks when fully charged."));
-        super.appendTooltip(stack, context, tooltip, type);
-    }
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return true;
+        PolymerItem.super.modifyClientTooltip(tooltip, stack, context);
     }
 
     @Override
