@@ -101,6 +101,23 @@ public class Infernum_effugium implements ModInitializer {
             t.add(ModBlocks.GILDED_BLACKSTONE_PILLAR);
             t.add(ModBlocks.ROCKY_BUSH);
         });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.SEARCH).register((t)->{
+            t.add(ModItems.BLACKSTONE_PEBBLE);
+            t.add(ModItems.NETHER_PACT);
+            t.add(ModBlocks.CHISELED_BEDROCK);
+            t.add(ModBlocks.BEDROCK_BRICKS);
+            t.add(ModBlocks.BEDROCK_LADDER);
+            t.add(ModBlocks.BEDROCK_DISPENSER);
+            t.add(ModBlocks.CORRUPTED_BEDROCK_BRICKS);
+            t.add(ModBlocks.BLACKSTONE_PILLAR);
+            t.add(ModBlocks.GILDED_BLACKSTONE_PILLAR);
+            t.add(ModBlocks.ROCKY_BUSH);
+            t.add(ModItems.DEATH_WHISTLE);
+            t.add(ModItems.BEDROCK_SICKLES);
+            t.add(ModItems.INFERNUM_MACE);
+            t.add(ModItems.NETHERITE_INFUSED_BEDROCK_SICKLES);
+            t.add(ModItems.PEBBLE_CANNON);
+        });
 
 
     }
