@@ -7,7 +7,6 @@ import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -19,8 +18,10 @@ import net.minecraft.item.Items;
 import net.minecraft.item.consume.UseAction;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -40,24 +41,26 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
     public PebbleCannonItem(Settings settings) {
         super(settings);
     }
 
-
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerEntity user) {
-            if (user.getActiveItem().equals(stack)) {
+            if (user.getActiveItem().equals(stack) && !user.getItemCooldownManager().isCoolingDown(stack)) {
                 boolean bl = user.getAbilities().creativeMode;
 
                 ItemStack pebble = null;
+                int pebbleAmount = 64;
                 for (int i = 0; i < user.getInventory().size(); i++) {
                     ItemStack itemStack2 = user.getInventory().getStack(i);
                     if (itemStack2.getItem() instanceof PebbleItem) {
                         pebble = itemStack2;
+                        pebbleAmount = itemStack2.getCount();
                     }
                 }
                 if (pebble == null && bl) {
@@ -68,16 +71,60 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                             null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F)
                     );
                     if (!world.isClient) {
+                        boolean immuneToJamming = false;
+                        int usedPebbles = 1;
+                        boolean firstPebble = true;
+                        user.getItemCooldownManager().set(stack,2);
+                        Registry<Enchantment> enchantRegistry = world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
+                        if (stack.hasEnchantments()) {
+                            if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
+                                immuneToJamming = true;
+                                usedPebbles = Math.min(8, pebbleAmount);
+                                user.getItemCooldownManager().set(stack,10);
+                            }
+                            if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), stack) != 0) {
+                                user.getItemCooldownManager().set(stack,70);
 
-                        PebbleEntity pebbleEntity = new PebbleEntity(world, user);
-                        pebbleEntity.setItem(pebble);
-                        pebbleEntity.shotFromCannon = true;
-                        pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.75F, 1.0F);
-                        pebbleEntity.setPosition(user.getEyePos().add(user.getRotationVector()));
-                        world.spawnEntity(pebbleEntity);
+                            }
+                        }
+                        for (int i = 0; i < usedPebbles; i++) {
+                            PebbleEntity pebbleEntity = new PebbleEntity(world, user);
+                            pebbleEntity.setItem(pebble);
+                            pebbleEntity.shotFromCannon = true;
+                            pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 1.5F, 0.0F);
+                            pebbleEntity.setPosition(user.getEyePos().add(user.getRotationVector()));
+                            if (stack.hasEnchantments()) {
+                                if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.FLAMETHROWER)), stack) != 0) {
+                                    pebbleEntity.setItem(ModItems.MAGMA_PEBBLE.getDefaultStack());
+                                    world.playSound(
+                                            null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.5F, 0.9F + (world.getRandom().nextFloat() * 0.2f)
+                                    );
+                                }
+                                if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.BACKBURNER)), stack) != 0) {
+                                    pebbleEntity.shotFromBackburner = true;
+                                    pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F, 0.0F);
+                                }
+                            }
+                            if (!firstPebble) {
+                                pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.15F, 1.5F, 0.9F);
+                            }
+
+                            if (stack.hasEnchantments()) {
+                                if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), stack) != 0) {
+                                    pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 4F, 0.0F);
+                                    pebbleEntity.setNoGravity(true);
+                                }
+                            }
+                            world.spawnEntity(pebbleEntity);
+                            pebbleEntity.setYaw(user.getYaw() + 90);
+                            firstPebble = false;
+                        }
                         stack.damage(1,user,EquipmentSlot.MAINHAND);
-                        pebble.decrement(1);
-                        if (new Random().nextInt(0,500) == 0) {
+                        pebble.decrement(usedPebbles);
+                        if (new Random().nextInt(0,500) == 0 && !immuneToJamming) {
+                            if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.FLAMETHROWER)), stack) != 0) {
+                                user.setFireTicks(user.getFireTicks()+10);
+                            }
                             user.getItemCooldownManager().set(stack, 20*12);
                             user.stopUsingItem();
                         }
@@ -89,6 +136,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
         }
         super.inventoryTick(stack, world, entity, slot, selected);
     }
+
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
@@ -107,9 +155,21 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                     user.getItemCooldownManager().set(itemStack, 25);
                     user.getWorld().getOtherEntities(user, new Box(user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(-4, -4, -4), user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(4, 4, 4))).forEach((e) -> {
                         e.setVelocity(e.getPos().add(user.getPos().multiply(-1)).add(0, 1, 0).multiply(0.5));
+                        e.velocityModified = true;
+                        e.velocityDirty = true;
+                        if (e instanceof ServerPlayerEntity spe) {
+                            spe.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(spe));
+                        }
                     });
-                    user.addStatusEffect(new StatusEffectInstance(ModEffects.AIRBORNE, 20*30,0 ));
-                    user.setVelocity(user.getRotationVec(0f).multiply(-2f));
+                    if (!user.isSneaking()) {
+                        user.addStatusEffect(new StatusEffectInstance(ModEffects.AIRBORNE, 20 * 30, 0));
+                        user.setVelocity(user.getRotationVec(0f).multiply(-2f));
+                        user.velocityModified = true;
+                        user.velocityDirty = true;
+                        if (user instanceof ServerPlayerEntity spe) {
+                            spe.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(spe));
+                        }
+                    }
                 }
                 return ActionResult.SUCCESS;
             }

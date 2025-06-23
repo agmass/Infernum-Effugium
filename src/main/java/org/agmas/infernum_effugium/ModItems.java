@@ -41,7 +41,7 @@ public class ModItems {
             "nether_pact"
     );
     public static final Item PEBBLE_CANNON = register(
-            new PebbleCannonItem(new Item.Settings().registryKey(keyOf("pebble_cannon")).maxDamage(800)),
+            new PebbleCannonItem(new Item.Settings().registryKey(keyOf("pebble_cannon")).maxDamage(800).enchantable(4)),
             "pebble_cannon"
     );
 

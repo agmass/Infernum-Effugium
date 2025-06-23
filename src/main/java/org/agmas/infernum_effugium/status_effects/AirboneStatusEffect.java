@@ -7,6 +7,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
@@ -25,6 +26,8 @@ public class AirboneStatusEffect extends StatusEffect implements PolymerStatusEf
         // In our case, we just make it return true so that it applies the effect every tick
         return true;
     }
+
+
 
     @Override
     public @Nullable StatusEffect getPolymerReplacement(PacketContext context) {

@@ -67,6 +67,9 @@ public class Infernum_effugium implements ModInitializer {
                         p.addStatusEffect(new StatusEffectInstance(ModEffects.NETHER_PACT, Integer.MAX_VALUE, 0));
                     }
                 }
+                if (p.isOnGround() && p.hasStatusEffect(ModEffects.AIRBORNE)) {
+                    p.removeStatusEffect(ModEffects.AIRBORNE);
+                }
                 if (p.isTouchingWaterOrRain() && p.hasStatusEffect(ModEffects.NETHER_PACT)) {
                     p.damage(serverWorld, p.getDamageSources().drown(), 1);
                 }
