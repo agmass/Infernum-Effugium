@@ -87,7 +87,10 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                             }
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), stack) != 0) {
                                 user.getItemCooldownManager().set(stack,70);
-
+                                if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
+                                    user.getItemCooldownManager().set(stack,100);
+                                    immuneToJamming = false;
+                                }
                             }
                         }
                         for (int i = 0; i < usedPebbles; i++) {
@@ -105,7 +108,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                                 }
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.BACKBURNER)), stack) != 0) {
                                     pebbleEntity.shotFromBackburner = true;
-                                    pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2.5F, 0.0F);
+                                    pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2F, 0.0F);
                                 }
                             }
                             if (!firstPebble) {
@@ -116,6 +119,9 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), stack) != 0) {
                                     pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 4F, 0.0F);
                                     pebbleEntity.setNoGravity(true);
+                                    if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
+                                        pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 2F, 0.0F);
+                                    }
                                 }
                             }
                             world.spawnEntity(pebbleEntity);
