@@ -24,7 +24,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEffects;
-import org.agmas.infernum_effugium.state.StateSaverAndLoader;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
@@ -46,7 +45,7 @@ public class NetherPactItem extends Item implements PolymerItem, PolymerKeepMode
             user.sendMessage(Text.literal("You have made a deal with hell.").formatted(Formatting.RED), false);
             user.sendMessage(Text.literal("Use /un_nether_pact to cure yourself.").formatted(Formatting.RED), false);
 
-            StateSaverAndLoader.getPlayerState(user).netherPacted = true;
+            user.setAttached(Infernum_effugium.netherPacted, true);
             if (!user.getAbilities().creativeMode) {
                 itemStack.decrement(1);
             }

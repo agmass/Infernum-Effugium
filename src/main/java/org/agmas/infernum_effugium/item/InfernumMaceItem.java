@@ -49,13 +49,13 @@ public class InfernumMaceItem extends MaceItem implements PolymerItem, PolymerKe
     }
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public void postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         if (attacker instanceof ServerPlayerEntity spe) {
             if (shouldSetOnFire(spe)) {
                 target.setVelocity(new Vec3d(0, spe.fallDistance*0.075,0));
 
 
-                float totalDamage;
+                double totalDamage;
                 if (spe.fallDistance <= 3.0F) {
                     totalDamage = 4.0F + spe.fallDistance;
                 } else if (spe.fallDistance <= 8.0F) {
@@ -69,7 +69,7 @@ public class InfernumMaceItem extends MaceItem implements PolymerItem, PolymerKe
                 for (int i = 0; i < spe.fallDistance*2; i++) {
                     PebbleEntity pebbleEntity = new PebbleEntity(target.getWorld(), attacker);
                     pebbleEntity.setItem(ModItems.MAGMA_PEBBLE.getDefaultStack());
-                    pebbleEntity.setVelocity(0,1.5,0,Math.min(spe.fallDistance/9,3),20);
+                    pebbleEntity.setVelocity(0,1.5,0,(float)Math.min(spe.fallDistance/9,3),20);
                     pebbleEntity.setPosition(target.getPos().add(0,2,0));
                     target.getWorld().spawnEntity(pebbleEntity);
                 }
@@ -93,7 +93,6 @@ public class InfernumMaceItem extends MaceItem implements PolymerItem, PolymerKe
                 spe.fallDistance = 0;
             }
         }
-        return true;
     }
 
     @Override

@@ -6,9 +6,10 @@ import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.DeadBushBlock;
+import net.minecraft.block.DryVegetationBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtInt;
@@ -26,13 +27,13 @@ import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 import xyz.nucleoid.packettweaker.PacketContext;
 
-public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
+public class DeadBedrockBush extends DryVegetationBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
     public DeadBedrockBush(Settings settings) {
         super(settings);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
         if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
             entity.slowMovement(state, new Vec3d(0.8F, 0.75, 0.8F));
             if (!world.isClient && (entity.lastRenderX != entity.getX() || entity.lastRenderZ != entity.getZ())) {

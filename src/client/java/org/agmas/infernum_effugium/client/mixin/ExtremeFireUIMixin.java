@@ -32,6 +32,9 @@ public abstract class ExtremeFireUIMixin {
     @Shadow protected abstract LivingEntity getRiddenEntity();
 
     @Shadow @Final private MinecraftClient client;
+
+    @Shadow protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
+
     @Unique
     private static final Identifier FIRE_VIGNETTE_TEXTURE = Identifier.of("infernumeffugium", "textures/misc/extreme_fire_vignette.png");
 
@@ -39,7 +42,7 @@ public abstract class ExtremeFireUIMixin {
     public void shellVignette(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (client.getCameraEntity() instanceof LivingEntity le) {
             if (le.hasStatusEffect(ModEffects.EXTREME_FIRE)) {
-                context.drawTexture(RenderLayer::getGuiTexturedOverlay,FIRE_VIGNETTE_TEXTURE, 0, 0, 0.0F, 0.0F,  context.getScaledWindowWidth(), context.getScaledWindowHeight(), context.getScaledWindowWidth(), context.getScaledWindowHeight());
+                renderOverlay(context,FIRE_VIGNETTE_TEXTURE,1.0f);
                 ci.cancel();
             }
         }

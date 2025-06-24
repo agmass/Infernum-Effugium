@@ -32,14 +32,13 @@ public class NetherPactStatusEffect extends StatusEffect implements PolymerStatu
         // In our case, we just make it return true so that it applies the effect every tick
         return true;
     }
-
     @Override
-    public @Nullable StatusEffect getPolymerReplacement(PacketContext context) {
-        if (context.getPlayer() == null) return PolymerStatusEffect.super.getPolymerReplacement(context);
+    public @Nullable StatusEffect getPolymerReplacement(StatusEffect potion, PacketContext context) {
+        if (context.getPlayer() == null) return PolymerStatusEffect.super.getPolymerReplacement(potion,context);
         if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
             return this;
         } else {
-            return PolymerStatusEffect.super.getPolymerReplacement(context);
+            return PolymerStatusEffect.super.getPolymerReplacement(potion,context);
         }
     }
 

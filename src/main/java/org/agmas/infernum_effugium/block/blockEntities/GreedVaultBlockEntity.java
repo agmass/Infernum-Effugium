@@ -18,6 +18,8 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
@@ -49,16 +51,17 @@ public class GreedVaultBlockEntity extends BlockEntity implements PolymerSyncedO
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        nbt.putInt("stage", currentStage);
-        super.writeNbt(nbt, registryLookup);
+    protected void writeData(WriteView view) {
+        view.putInt("stage", currentStage);
+        super.writeData(view);
     }
 
     @Override
-    protected void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        super.readNbt(nbt, registryLookup);
-        currentStage = nbt.getInt("stage");
+    protected void readData(ReadView view) {
+        super.readData(view);
+        currentStage = view.getInt("stage", 0);
     }
+
     public void incrementStage() {
         currentStage++;
         Log.info(LogCategory.GENERAL, getCurrentStage()+"");
@@ -84,12 +87,7 @@ public class GreedVaultBlockEntity extends BlockEntity implements PolymerSyncedO
     }
 
     @Override
-    public boolean canSyncRawToClient(PacketContext context) {
-        return true;
-    }
-
-    @Override
-    public BlockEntity getPolymerReplacement(PacketContext packetContext) {
+    public BlockEntity getPolymerReplacement(BlockEntity blockEntity, PacketContext packetContext) {
         if (packetContext.getPlayer() == null) return null;
         if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
@@ -97,4 +95,10 @@ public class GreedVaultBlockEntity extends BlockEntity implements PolymerSyncedO
             return null;
         }
     }
+
+    @Override
+    public boolean canSyncRawToClient(PacketContext context) {
+        return true;
+    }
+
 }

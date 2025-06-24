@@ -30,13 +30,14 @@ public class AirboneStatusEffect extends StatusEffect implements PolymerStatusEf
 
 
     @Override
-    public @Nullable StatusEffect getPolymerReplacement(PacketContext context) {
-        if (context.getPlayer() == null) return PolymerStatusEffect.super.getPolymerReplacement(context);
+    public @Nullable StatusEffect getPolymerReplacement(StatusEffect potion, PacketContext context) {
+        if (context.getPlayer() == null) return PolymerStatusEffect.super.getPolymerReplacement(potion,context);
         if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
             return this;
         } else {
-            return PolymerStatusEffect.super.getPolymerReplacement(context);
+            return PolymerStatusEffect.super.getPolymerReplacement(potion,context);
         }
     }
+
 
 }

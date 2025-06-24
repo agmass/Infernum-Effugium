@@ -86,9 +86,9 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        if (entityHitResult.getEntity().getEntityWorld() instanceof ServerWorld) {
+        if (entityHitResult.getEntity().getWorld() instanceof ServerWorld) {
             DamageSource damageSource = new DamageSource(
-                    entityHitResult.getEntity().getEntityWorld().getRegistryManager()
+                    entityHitResult.getEntity().getWorld().getRegistryManager()
                             .getOrThrow(RegistryKeys.DAMAGE_TYPE)
                             .getEntry(PEBBLE_DAMAGE.getValue()).get());
             if (shotFromBackburner) {
@@ -105,7 +105,7 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
                     }
                 }
             }
-            entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getEntityWorld(), damageSource, shotFromCannon ? 3.5f : 1);
+            entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getWorld(), damageSource, shotFromCannon ? 3.5f : 1);
             entityHitResult.getEntity().setVelocity(0, 0, 0);
             if (getStack().isOf(ModItems.MAGMA_PEBBLE)) {
                 entityHitResult.getEntity().setFireTicks(120);

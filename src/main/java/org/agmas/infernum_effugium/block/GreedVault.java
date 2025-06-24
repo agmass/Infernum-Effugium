@@ -11,6 +11,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.DispenserBlockEntity;
 import net.minecraft.block.entity.DropperBlockEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.decoration.DisplayEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -85,7 +86,7 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
                     if (greedVaultBlockEntity.currentStage >= greedVaultBlockEntity.itemsLeft.size()) {
                         world.setBlockState(pos, Blocks.AIR.getDefaultState());
                         world.spawnEntity(new ItemEntity(world,pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5, ModItems.NETHER_PACT.getDefaultStack(),0,0.35,0));
-                        world.playSoundAtBlockCenter(pos, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS,1,0.5f,true);
+                        world.playSound(null,pos, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS,1,0.5f);
                     }
                 }
                 if (player instanceof ServerPlayerEntity spe) {

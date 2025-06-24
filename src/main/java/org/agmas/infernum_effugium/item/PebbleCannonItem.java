@@ -5,6 +5,7 @@ import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -22,6 +23,7 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -42,6 +44,7 @@ import xyz.nucleoid.packettweaker.PacketContext;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
     public PebbleCannonItem(Settings settings) {
@@ -49,7 +52,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(ItemStack stack, ServerWorld world, Entity entity, @Nullable EquipmentSlot slot) {
         if (entity instanceof PlayerEntity user) {
             if (user.getActiveItem().equals(stack) && !user.getItemCooldownManager().isCoolingDown(stack)) {
                 boolean bl = user.getAbilities().creativeMode;
@@ -134,15 +137,15 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                 }
             }
         }
-        super.inventoryTick(stack, world, entity, slot, selected);
+        super.inventoryTick(stack, world, entity, slot);
     }
 
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void modifyClientTooltip(List<Text> tooltip, ItemStack stack, PacketContext context) {
         tooltip.add(Text.of("Uses blackstone pebbles as a projectile."));
         tooltip.add(Text.of("Small chance to get jammed on use."));
-        super.appendTooltip(stack, context, tooltip, type);
+        PolymerItem.super.modifyClientTooltip(tooltip, stack, context);
     }
 
     @Override

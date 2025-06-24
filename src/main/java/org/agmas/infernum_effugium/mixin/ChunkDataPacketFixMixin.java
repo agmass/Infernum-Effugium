@@ -1,6 +1,7 @@
 package org.agmas.infernum_effugium.mixin;
 
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
+import io.netty.channel.ChannelFutureListener;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.PacketCallbacks;
 import net.minecraft.network.packet.Packet;
@@ -25,8 +26,8 @@ import java.util.BitSet;
 @Mixin(ServerCommonNetworkHandler.class)
 public class ChunkDataPacketFixMixin {
 
-    @Inject(method = "send(Lnet/minecraft/network/packet/Packet;Lnet/minecraft/network/PacketCallbacks;)V", at = @At("HEAD"))
-    private void skipPolymerEntriesForBedrock(Packet<?> packet, PacketCallbacks callbacks, CallbackInfo ci)  {
+    @Inject(method = "send", at = @At("HEAD"))
+    private void skipPolymerEntriesForBedrock(Packet<?> packet, ChannelFutureListener channelFutureListener, CallbackInfo ci)  {
         PacketContext context = PacketContext.create((ServerCommonNetworkHandler) (Object) this);
         if (context.getPlayer() != null) {
             if (packet instanceof ChunkDataS2CPacket chunkDataS2CPacket) {

@@ -35,10 +35,8 @@ public class Infernum_effugium implements ModInitializer {
 
     public static String MOD_ID = "infernumeffugium";
     public static Identifier REGISTER_PACKET = Identifier.of("infernumeffugium", "register_packet");
-    public static final AttachmentType<Boolean> PERSISTENT = AttachmentRegistry.createPersistent(
-            Identifier.of(MOD_ID, "persistent"),
-            Codec.BOOL
-    );
+    public static final AttachmentType<Boolean> netherPacted = AttachmentRegistry.create(Identifier.of(MOD_ID, "nether_pact"),
+            AttachmentRegistry.Builder::copyOnDeath);
 
 
     @Override
@@ -51,15 +49,14 @@ public class Infernum_effugium implements ModInitializer {
         PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
         PolymerNetworking.registerS2CVersioned(NetherPactUpdates.NetherPactModePayload.ID, 1, NetherPactUpdates.NetherPactModePayload.CODEC);
 
-
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             dispatcher.register(CommandManager.literal("un_nether_pact").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).executes(context -> {
                 if (context.getSource().getPlayer() != null) {
-                    if (StateSaverAndLoader.getPlayerState(context.getSource().getPlayer()).netherPacted) {
+                    if (context.getSource().getPlayer().hasAttached(netherPacted)) {
                         context.getSource().getPlayer().sendMessage(Text.literal("You are no longer bound by the nether pact.").formatted(Formatting.BLUE), false);
                         NetherPactUpdates.sendHumanModeUpdate(context.getSource().getPlayer());
                     }
-                    StateSaverAndLoader.getPlayerState(context.getSource().getPlayer()).netherPacted = false;
+                    context.getSource().getPlayer().removeAttached(netherPacted);
                     context.getSource().getPlayer().removeStatusEffect(ModEffects.NETHER_PACT);
                 }
                 return 1;
@@ -68,7 +65,7 @@ public class Infernum_effugium implements ModInitializer {
 
         ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
             serverWorld.getPlayers().forEach((p)->{
-                if (StateSaverAndLoader.getPlayerState(p).netherPacted) {
+                if (p.hasAttached(netherPacted)) {
                     if (!p.hasStatusEffect(ModEffects.NETHER_PACT)) {
                         p.addStatusEffect(new StatusEffectInstance(ModEffects.NETHER_PACT, Integer.MAX_VALUE, 0));
                     }

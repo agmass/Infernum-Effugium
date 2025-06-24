@@ -67,7 +67,7 @@ public abstract class SickleKnockbackMixin {
             }
         }
     }
-    @Inject(method = "damage", at= @At(value = "INVOKE", target = "Lnet/minecraft/entity/LimbAnimator;setSpeed(F)V"))
+    @Inject(method = "damage", at= @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;applyDamage(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/damage/DamageSource;F)V"))
     public void fireaspect(ServerWorld world, DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (source.getAttacker() instanceof LivingEntity le) {
             if (le.hasStatusEffect(ModEffects.NETHER_PACT)) {
