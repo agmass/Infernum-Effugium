@@ -45,6 +45,11 @@ public class NetherPactItem extends Item implements PolymerItem, PolymerKeepMode
             user.addStatusEffect(new StatusEffectInstance(ModEffects.NETHER_PACT, Integer.MAX_VALUE, 0));
             user.sendMessage(Text.literal("You have made a deal with hell.").formatted(Formatting.RED), false);
             user.sendMessage(Text.literal("Use /un_nether_pact to cure yourself.").formatted(Formatting.RED), false);
+            if (PolymerServerNetworking.getMetadata(((ServerPlayerEntity) user).networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != NbtInt.of(1)) {
+                user.sendMessage(Text.literal("!! NOTE !!").formatted(Formatting.DARK_RED), false);
+                user.sendMessage(Text.literal("Some features of the Nether Pact (walking on lava, redder skin) only work with the mod installed.").formatted(Formatting.GRAY), false);
+                user.sendMessage(Text.literal("Install the mod on modrinth at https://modrinth.com/mod/infernum-effugium.").formatted(Formatting.BLUE), false);
+            }
 
             StateSaverAndLoader.getPlayerState(user).netherPacted = true;
             if (!user.getAbilities().creativeMode) {

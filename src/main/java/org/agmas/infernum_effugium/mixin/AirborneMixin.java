@@ -1,10 +1,12 @@
 package org.agmas.infernum_effugium.mixin;
 
 import net.fabricmc.loader.impl.lib.sat4j.core.Vec;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.MathHelper;
@@ -31,6 +33,17 @@ public abstract class AirborneMixin {
 
     @Shadow public abstract boolean hasStatusEffect(RegistryEntry<StatusEffect> effect);
 
+    @Inject(method = "canWalkOnFluid", at = @At("HEAD"), cancellable = true)
+    public void lavaWalker(FluidState state, CallbackInfoReturnable<Boolean> cir) {
+        if (hasStatusEffect(ModEffects.NETHER_PACT)) {
+            if (state.isOf(Fluids.LAVA) || state.isOf(Fluids.FLOWING_LAVA)) {
+                if ((((Entity) (Object) this).getWorld().getBlockState(((Entity) (Object) this).getBlockPos().add(0,-1,0)).isOf(Blocks.LAVA) && ((Entity) (Object) this).getWorld().getBlockState(((Entity) (Object) this).getBlockPos()).isOf(Blocks.AIR))|| !(((Entity) (Object) this).getWorld().getBlockState(((Entity) (Object) this).getBlockPos()).isOf(Blocks.LAVA) && (((Entity) (Object) this).getY()-Math.floor(((Entity) (Object) this).getY()) < 0.5) || ((Entity) (Object) this).getWorld().getBlockState(((Entity) (Object) this).getBlockPos().add(0,1,0)).isOf(Blocks.LAVA))) {
+                    cir.setReturnValue(true);
+                    cir.cancel();
+                }
+            }
+        }
+    }
     @Inject(method = "travelMidAir", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V", ordinal = 1, shift = At.Shift.AFTER))
     public void airborne(Vec3d movementInput, CallbackInfo ci) {
         if (hasStatusEffect(ModEffects.AIRBORNE)) {
