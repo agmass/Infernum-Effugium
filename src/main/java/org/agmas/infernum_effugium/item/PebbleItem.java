@@ -46,6 +46,7 @@ public class PebbleItem extends Item implements PolymerItem, PolymerKeepModel, P
             pebbleEntity.setItem(itemStack);
             pebbleEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 0.75F, 1.0F);
             pebbleEntity.setPosition(user.getEyePos().add(user.getRotationVector()));
+            pebbleEntity.setOwner(user);
             world.spawnEntity(pebbleEntity);
         }
 

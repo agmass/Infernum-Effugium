@@ -90,7 +90,7 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
             DamageSource damageSource = new DamageSource(
                     entityHitResult.getEntity().getEntityWorld().getRegistryManager()
                             .getOrThrow(RegistryKeys.DAMAGE_TYPE)
-                            .getEntry(PEBBLE_DAMAGE.getValue()).get());
+                            .getEntry(PEBBLE_DAMAGE.getValue()).get(),getOwner());
             if (shotFromBackburner) {
                 Vec3d directionHit = getPos().relativize(entityHitResult.getEntity().getPos()).normalize();
                 if (directionHit.subtract(entityHitResult.getEntity().getRotationVec(0f)).length() <= 1.2f) {

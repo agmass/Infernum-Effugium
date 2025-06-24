@@ -121,6 +121,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                                     }
                                 }
                             }
+                            pebbleEntity.setOwner(user);
                             world.spawnEntity(pebbleEntity);
                             pebbleEntity.setYaw(user.getYaw() + 90);
                             firstPebble = false;
