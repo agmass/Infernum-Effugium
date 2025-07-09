@@ -7,13 +7,19 @@
   ],
   "key": {
     "#": [
-      "minecraft:stone"
+      {
+        "item": "minecraft:stone"
+      }
     ],
     "N": [
-      "minecraft:nether_star"
+      {
+        "item": "minecraft:nether_star"
+      }
     ],
     "/": [
-      "minecraft:blaze_rod"
+      {
+        "item": "minecraft:blaze_rod"
+      }
     ]
   },
   "result": {

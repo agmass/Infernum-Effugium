@@ -6,16 +6,24 @@
   ],
   "key": {
     "i": [
-      "minecraft:iron_ingot"
+      {
+        "item": "minecraft:iron_ingot"
+      }
     ],
     "G": [
-      "minecraft:gunpowder"
+      {
+        "item": "minecraft:gunpowder"
+      }
     ],
     "/": [
-      "minecraft:stick"
+      {
+        "item": "minecraft:stick"
+      }
     ],
     "T": [
-      "minecraft:tripwire_hook"
+      {
+        "item": "minecraft:tripwire_hook"
+      }
     ]
   },
   "result": {

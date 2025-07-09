@@ -4,7 +4,9 @@ import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
+import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -15,20 +17,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.consume.UseAction;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.*;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
@@ -37,21 +37,22 @@ import org.agmas.infernum_effugium.ModEnchants;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.entity.PebbleEntity;
 import org.jetbrains.annotations.Nullable;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
+
+    PolymerModelData modelData;
     public PebbleCannonItem(Settings settings) {
         super(settings);
+        modelData = PolymerResourcePackUtils.requestModel(Items.BLACKSTONE_SLAB, Identifier.of(Infernum_effugium.MOD_ID, "item/pebble_cannon"));
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity instanceof PlayerEntity user) {
-            if (user.getActiveItem().equals(stack) && !user.getItemCooldownManager().isCoolingDown(stack)) {
+            if (user.getActiveItem().equals(stack) && !user.getItemCooldownManager().isCoolingDown(this)) {
                 boolean bl = user.getAbilities().creativeMode;
 
                 ItemStack pebble = null;
@@ -74,18 +75,18 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                         boolean immuneToJamming = false;
                         int usedPebbles = 1;
                         boolean firstPebble = true;
-                        user.getItemCooldownManager().set(stack,2);
-                        Registry<Enchantment> enchantRegistry = world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
+                        user.getItemCooldownManager().set(this,2);
+                        Registry<Enchantment> enchantRegistry = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
                         if (stack.hasEnchantments()) {
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
                                 immuneToJamming = true;
                                 usedPebbles = Math.min(8, pebbleAmount);
-                                user.getItemCooldownManager().set(stack,10);
+                                user.getItemCooldownManager().set(this,10);
                             }
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), stack) != 0) {
-                                user.getItemCooldownManager().set(stack,70);
+                                user.getItemCooldownManager().set(this,70);
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
-                                    user.getItemCooldownManager().set(stack,100);
+                                    user.getItemCooldownManager().set(this,100);
                                     immuneToJamming = false;
                                 }
                             }
@@ -132,7 +133,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.FLAMETHROWER)), stack) != 0) {
                                 user.setFireTicks(user.getFireTicks()+10);
                             }
-                            user.getItemCooldownManager().set(stack, 20*12);
+                            user.getItemCooldownManager().set(this, 20*12);
                             user.stopUsingItem();
                         }
                     }
@@ -153,13 +154,23 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantability() {
+        return 4;
+    }
+
+    @Override
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         if (itemStack.hasEnchantments()) {
-            Registry<Enchantment> enchantRegistry = world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
+            Registry<Enchantment> enchantRegistry = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.AIRBLAST)), itemStack) != 0) {
                 if (!user.hasStatusEffect(ModEffects.AIRBORNE)) {
-                    user.getItemCooldownManager().set(itemStack, 25);
+                    user.getItemCooldownManager().set(itemStack.getItem(), 25);
                     user.getWorld().getOtherEntities(user, new Box(user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(-4, -4, -4), user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(4, 4, 4))).forEach((e) -> {
                         e.setVelocity(e.getPos().add(user.getPos().multiply(-1)).add(0, 1, 0).multiply(0.5));
                         e.velocityModified = true;
@@ -178,7 +189,7 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
                         }
                     }
                 }
-                return ActionResult.SUCCESS;
+                return TypedActionResult.success(itemStack);
             }
         }
 
@@ -196,9 +207,9 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
         if (pebble != null || bl) {
             user.incrementStat(Stats.USED.getOrCreateStat(this));
             user.setCurrentHand(hand);
-            return ActionResult.CONSUME;
+            return TypedActionResult.success(itemStack);
         }
-        return ActionResult.FAIL;
+        return TypedActionResult.success(itemStack);
     }
 
     @Override
@@ -211,29 +222,22 @@ public class PebbleCannonItem extends Item implements PolymerItem, PolymerKeepMo
         return 72000;
     }
 
+
+
     @Override
-    public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Items.CROSSBOW;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, RegistryWrapper.WrapperLookup lookup, @Nullable ServerPlayerEntity player) {
+        var itemStack1 = PolymerItem.super.getPolymerItemStack(itemStack, tooltipType, lookup, player);
+        itemStack1.set(DataComponentTypes.CUSTOM_MODEL_DATA, modelData.asComponent());
+        return itemStack1;
+    }
+
+    @Override
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return Items.CROSSBOW;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
             return Items.CROSSBOW;
-        }
-    }
-
-
-    @Override
-    public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        if (context.getPlayer() == null) return Identifier.of("minecraft", "crossbow");
-        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
-            return Identifier.of(Infernum_effugium.MOD_ID, "pebble_cannon");
-        } else {
-            if (PolymerResourcePackUtils.hasMainPack(context)) {
-                return Identifier.of(Infernum_effugium.MOD_ID, "pebble_cannon");
-
-            } else {
-                return Identifier.of("minecraft", "crossbow");
-            }
         }
     }
 }

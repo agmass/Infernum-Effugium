@@ -1,13 +1,19 @@
 {
   "type": "minecraft:smithing_transform",
   "template": [
-    "minecraft:netherite_upgrade_smithing_template"
+    {
+      "item": "minecraft:netherite_upgrade_smithing_template"
+    }
   ],
   "base": [
-    "infernumeffugium:bedrock_sickles"
+    {
+      "item": "infernumeffugium:bedrock_sickles"
+    }
   ],
   "addition": [
-    "minecraft:netherite_ingot"
+    {
+      "item": "minecraft:netherite_ingot"
+    }
   ],
   "result": {
     "id": "infernumeffugium:netherite_infused_bedrock_sickles"

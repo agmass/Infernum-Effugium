@@ -45,13 +45,13 @@ public class ModEntities {
 
 
 
+
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> type) {
-        return Registry.register(Registries.ENTITY_TYPE, Identifier.of(Infernum_effugium.MOD_ID, id), type.build(RegistryKey.of(Registries.ENTITY_TYPE.getKey(), Identifier.of(Infernum_effugium.MOD_ID,id))));
+        return Registry.register(Registries.ENTITY_TYPE, Identifier.of(Infernum_effugium.MOD_ID, id), type.build(id));
     }
     public static <T extends BlockEntityType<?>> T blockEntityRegister(String path, T blockEntityType) {
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, Identifier.of(Infernum_effugium.MOD_ID, path), blockEntityType);
     }
-
 
     public static void init() {
         PolymerEntityUtils.registerType(PEBBLE);

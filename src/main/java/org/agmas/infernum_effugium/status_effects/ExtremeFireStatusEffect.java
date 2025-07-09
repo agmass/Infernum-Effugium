@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
@@ -28,22 +29,22 @@ public class ExtremeFireStatusEffect extends StatusEffect implements PolymerStat
     }
 
     @Override
-    public @Nullable StatusEffect getPolymerReplacement(PacketContext context) {
-        if (context.getPlayer() == null) return PolymerStatusEffect.super.getPolymerReplacement(context);
-        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+    public @Nullable StatusEffect getPolymerReplacement(ServerPlayerEntity player) {
+        if (player == null) return PolymerStatusEffect.super.getPolymerReplacement(player);
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
             return this;
         } else {
-            return PolymerStatusEffect.super.getPolymerReplacement(context);
+            return PolymerStatusEffect.super.getPolymerReplacement(player);
         }
     }
 
-    // Called when the effect is applied
     @Override
-    public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
+    public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.timeUntilRegen = 0;
         entity.removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
-        entity.damage(world, entity.getDamageSources().magic(), 1);
+        entity.damage(entity.getDamageSources().magic(), 1);
         entity.setFireTicks(5);
         return true;
     }
+
 }

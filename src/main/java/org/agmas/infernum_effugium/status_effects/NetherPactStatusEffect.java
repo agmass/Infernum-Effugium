@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import org.agmas.infernum_effugium.Infernum_effugium;
@@ -34,21 +35,22 @@ public class NetherPactStatusEffect extends StatusEffect implements PolymerStatu
     }
 
     @Override
-    public @Nullable StatusEffect getPolymerReplacement(PacketContext context) {
-        if (context.getPlayer() == null) return PolymerStatusEffect.super.getPolymerReplacement(context);
-        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
+    public @Nullable StatusEffect getPolymerReplacement(ServerPlayerEntity player) {
+        if (player == null) return PolymerStatusEffect.super.getPolymerReplacement(player);
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
             return this;
         } else {
-            return PolymerStatusEffect.super.getPolymerReplacement(context);
+            return PolymerStatusEffect.super.getPolymerReplacement(player);
         }
     }
 
+
     @Override
-    public void onEntityRemoval(ServerWorld world, LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
+    public void onEntityRemoval(LivingEntity entity, int amplifier, Entity.RemovalReason reason) {
         if (entity instanceof PlayerEntity p) {
             NetherPactUpdates.sendHumanModeUpdate(p);
         }
-        super.onEntityRemoval(world, entity, amplifier, reason);
+        super.onEntityRemoval(entity, amplifier, reason);
     }
 
     @Override

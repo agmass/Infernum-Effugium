@@ -44,7 +44,7 @@ public abstract class AirborneMixin {
             }
         }
     }
-    @Inject(method = "travelMidAir", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V", ordinal = 1, shift = At.Shift.AFTER))
+    @Inject(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V", ordinal = 3, shift = At.Shift.AFTER))
     public void airborne(Vec3d movementInput, CallbackInfo ci) {
         if (hasStatusEffect(ModEffects.AIRBORNE)) {
             ((Entity) (Object) this).setVelocity(((Entity) (Object) this).getVelocity().add(airMovement(movementInput,getHeadYaw()).multiply(0.05)));

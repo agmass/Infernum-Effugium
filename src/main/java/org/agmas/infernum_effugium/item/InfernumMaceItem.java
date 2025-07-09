@@ -4,6 +4,7 @@ import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
+import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -38,8 +39,11 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 public class InfernumMaceItem extends MaceItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
+    PolymerModelData modelData;
     public InfernumMaceItem(Settings settings, int attackDamage) {
         super(settings);
+        modelData = PolymerResourcePackUtils.requestModel(Items.MACE, Identifier.of(Infernum_effugium.MOD_ID, "item/infernum_mace"));
+
     }
 
     @Override
@@ -102,34 +106,27 @@ public class InfernumMaceItem extends MaceItem implements PolymerItem, PolymerKe
     }
 
     public static boolean shouldSetOnFire(LivingEntity attacker) {
-        return attacker.fallDistance > 1.5F && !attacker.isGliding();
+        return attacker.fallDistance > 1.5F && !attacker.isFallFlying();
     }
 
-    @Override
-    public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        if (context.getPlayer() == null) return Identifier.of("minecraft", "mace");
-        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
-            return Identifier.of(Infernum_effugium.MOD_ID, "infernum_mace");
-        } else {
-            if (PolymerResourcePackUtils.hasMainPack(context)) {
-                return Identifier.of(Infernum_effugium.MOD_ID, "infernum_mace");
-
-            } else {
-                return Identifier.of("minecraft", "mace");
-            }
-        }
-    }
     private static double getKnockback(PlayerEntity player, LivingEntity attacked, Vec3d distance) {
         return (3.5 - distance.length())
                 * 0.7F
                 * (double)(player.fallDistance > 5.0F ? 2 : 1)
-                * (1.0 - attacked.getAttributeValue(EntityAttributes.KNOCKBACK_RESISTANCE));
+                * (1.0 - attacked.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE));
     }
 
+
     @Override
-    public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Items.MACE;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, RegistryWrapper.WrapperLookup lookup, @Nullable ServerPlayerEntity player) {
+        var itemStack1 = PolymerItem.super.getPolymerItemStack(itemStack, tooltipType, lookup, player);
+        itemStack1.set(DataComponentTypes.CUSTOM_MODEL_DATA, modelData.asComponent());
+        return itemStack1;
+    }
+    @Override
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return Items.MACE;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
             return Items.MACE;

@@ -7,10 +7,15 @@
   ],
   "key": {
     "#": [
-      "infernumeffugium:blackstone_pebble"
+      {
+        "item": "infernumeffugium:blackstone_pebble"
+      }
     ],
     "M": [
-      "minecraft:magma_block"
+      {
+        "item": "minecraft:magma_block"
+      }
+
     ]
   },
   "result": {

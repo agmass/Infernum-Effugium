@@ -115,14 +115,20 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
         return new GreedVaultBlockEntity(pos,state);
     }
 
+
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Blocks.VAULT.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return blockState;
+    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
+        if (player == null) return Blocks.BARREL.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return state;
         } else {
-            return Blocks.VAULT.getDefaultState();
+            return Blocks.BARREL.getDefaultState();
         }
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(BlockState blockState) {
+        return Blocks.BARREL.getDefaultState();
     }
 
 }

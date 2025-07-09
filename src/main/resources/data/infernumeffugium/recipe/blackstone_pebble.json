@@ -6,7 +6,9 @@
   ],
   "key": {
     "#": [
-      "infernumeffugium:blackstone_pebble"
+      {
+        "item": "infernumeffugium:blackstone_pebble"
+      }
     ]
   },
   "result": {

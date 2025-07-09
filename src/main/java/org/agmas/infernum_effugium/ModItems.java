@@ -2,6 +2,7 @@ package org.agmas.infernum_effugium;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -12,36 +13,36 @@ import org.agmas.infernum_effugium.item.*;
 public class ModItems {
 
     public static final Item BEDROCK_SICKLES = register(
-            new BedrockSickle(new Item.Settings().fireproof().registryKey(keyOf("bedrock_sickles")).useItemPrefixedTranslationKey(), 2, "bedrock_sickles"),
+            new BedrockSickle(new Item.Settings().fireproof().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 2, -1)), 2, "bedrock_sickles"),
             "bedrock_sickles"
     );
     public static final Item BLACKSTONE_PEBBLE = register(
-            new PebbleItem(new Item.Settings().registryKey(keyOf("blackstone_pebble")).useItemPrefixedTranslationKey()),
+            new PebbleItem(new Item.Settings()),
             "blackstone_pebble"
     );
     public static final Item MAGMA_PEBBLE = register(
-            new MagmaPebbleItem(new Item.Settings().registryKey(keyOf("magma_pebble")).useItemPrefixedTranslationKey()),
+            new MagmaPebbleItem(new Item.Settings()),
             "magma_pebble"
     );
     public static final Item INFERNUM_MACE = register(
-            new InfernumMaceItem(new Item.Settings().registryKey(keyOf("infernum_mace")).maxCount(1).useItemPrefixedTranslationKey().attributeModifiers(InfernumMaceItem.createAttributeModifiers()), 2),
+            new InfernumMaceItem(new Item.Settings().maxCount(1).attributeModifiers(InfernumMaceItem.createAttributeModifiers()), 2),
             "infernum_mace"
     );
 
     public static final Item NETHERITE_INFUSED_BEDROCK_SICKLES = register(
-            new BedrockSickle(new Item.Settings().fireproof().registryKey(keyOf("netherite_infused_bedrock_sickles")).useItemPrefixedTranslationKey(), 4, "netherite_infused_bedrock_sickles"),
+            new BedrockSickle(new Item.Settings().fireproof().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -1)), 4, "netherite_infused_bedrock_sickles"),
             "netherite_infused_bedrock_sickles"
     );
     public static final Item DEATH_WHISTLE = register(
-            new DeathWhistleItem(new Item.Settings().registryKey(keyOf("death_whistle")).useItemPrefixedTranslationKey()),
+            new DeathWhistleItem(new Item.Settings()),
             "death_whistle"
     );
     public static final Item NETHER_PACT = register(
-            new NetherPactItem(new Item.Settings().registryKey(keyOf("nether_pact")).useItemPrefixedTranslationKey()),
+            new NetherPactItem(new Item.Settings()),
             "nether_pact"
     );
     public static final Item PEBBLE_CANNON = register(
-            new PebbleCannonItem(new Item.Settings().registryKey(keyOf("pebble_cannon")).maxDamage(800).enchantable(4)),
+            new PebbleCannonItem(new Item.Settings().maxDamage(800)),
             "pebble_cannon"
     );
 

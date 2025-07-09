@@ -8,8 +8,8 @@
     ]
   },
   "max_cost": {
-    "base": 7,
-    "per_level_above_first": 11
+    "base": 300,
+    "per_level_above_first": 0
   },
   "max_level": 1,
   "min_cost": {

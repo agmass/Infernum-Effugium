@@ -4,6 +4,7 @@ import eu.pb4.polymer.core.api.item.PolymerItem;
 import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
 import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
 import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
+import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -26,10 +27,13 @@ import java.util.Objects;
 
 public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
 
+    PolymerModelData modelData;
     String modelName;
     public BedrockSickle(Settings settings, float attackDamage, String modelName) {
-        super(ToolMaterial.DIAMOND, attackDamage, -1.25f, settings);
+        super(ToolMaterials.DIAMOND, settings);
         this.modelName = modelName;
+        modelData = PolymerResourcePackUtils.requestModel(Items.STONE_HOE, Identifier.of(Infernum_effugium.MOD_ID, "item/" + modelName));
+
     }
 
     @Override
@@ -56,30 +60,19 @@ public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeep
     }
 
 
-
     @Override
-    public @Nullable Identifier getPolymerItemModel(ItemStack stack, PacketContext context) {
-        if (context.getPlayer() == null) return Identifier.of("minecraft", modelName.equals("netherite_infused_bedrock_sickles") ? "netherite_hoe" : "diamond_hoe");
-        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != null) {
-            return Identifier.of(Infernum_effugium.MOD_ID, modelName);
-        } else {
-            if (PolymerResourcePackUtils.hasMainPack(context)) {
-                return Identifier.of(Infernum_effugium.MOD_ID, modelName);
-
-            } else {
-                return Identifier.of("minecraft", modelName.equals("netherite_infused_bedrock_sickles") ? "netherite_hoe" : "diamond_hoe");
-            }
-        }
+    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, RegistryWrapper.WrapperLookup lookup, @Nullable ServerPlayerEntity player) {
+        var itemStack1 = PolymerItem.super.getPolymerItemStack(itemStack, tooltipType, lookup, player);
+        itemStack1.set(DataComponentTypes.CUSTOM_MODEL_DATA, modelData.asComponent());
+        return itemStack1;
     }
-
     @Override
-    public Item getPolymerItem(ItemStack itemStack, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Items.STONE_HOE;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return Items.STONE_HOE;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
             return Items.STONE_HOE;
         }
     }
-
 }

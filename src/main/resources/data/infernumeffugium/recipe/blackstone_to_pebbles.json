@@ -5,7 +5,9 @@
   ],
   "key": {
     "#": [
-      "minecraft:blackstone"
+      {
+        "item": "minecraft:blackstone"
+      }
     ]
   },
   "result": {

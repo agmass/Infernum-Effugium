@@ -27,7 +27,7 @@ public class ChunkDataPacketFixMixin {
 
     @Inject(method = "send(Lnet/minecraft/network/packet/Packet;Lnet/minecraft/network/PacketCallbacks;)V", at = @At("HEAD"))
     private void skipPolymerEntriesForBedrock(Packet<?> packet, PacketCallbacks callbacks, CallbackInfo ci)  {
-        PacketContext context = PacketContext.create((ServerCommonNetworkHandler) (Object) this);
+        PacketContext context = PacketContext.of((ServerCommonNetworkHandler) (Object) this);
         if (context.getPlayer() != null) {
             if (packet instanceof ChunkDataS2CPacket chunkDataS2CPacket) {
                 if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != NbtInt.of(1)) {

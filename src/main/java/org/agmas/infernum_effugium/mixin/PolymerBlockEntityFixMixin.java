@@ -23,7 +23,7 @@ public class PolymerBlockEntityFixMixin {
     private static void injected2(ServerCommonNetworkHandler handler, Packet<?> packet, CallbackInfoReturnable<Boolean> cir) {
         if (packet instanceof BlockEntityUpdateS2CPacket be) {
             if (handler.getClass() == ServerPlayNetworkHandler.class && be.getBlockEntityType().equals(ModEntities.GREED_VAULT)) {
-                var player = PacketContext.create(handler);
+                var player = PacketContext.of(handler);
                 if (PolymerServerNetworking.getMetadata(player.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
                     cir.setReturnValue(false);
                     cir.cancel();

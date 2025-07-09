@@ -89,7 +89,7 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
         if (entityHitResult.getEntity().getEntityWorld() instanceof ServerWorld) {
             DamageSource damageSource = new DamageSource(
                     entityHitResult.getEntity().getEntityWorld().getRegistryManager()
-                            .getOrThrow(RegistryKeys.DAMAGE_TYPE)
+                            .get(RegistryKeys.DAMAGE_TYPE)
                             .getEntry(PEBBLE_DAMAGE.getValue()).get(),getOwner());
             if (shotFromBackburner) {
                 Vec3d directionHit = getPos().relativize(entityHitResult.getEntity().getPos()).normalize();
@@ -105,7 +105,7 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
                     }
                 }
             }
-            entityHitResult.getEntity().damage((ServerWorld) entityHitResult.getEntity().getEntityWorld(), damageSource, shotFromCannon ? 3.5f : 1);
+            entityHitResult.getEntity().damage(damageSource, shotFromCannon ? 3.5f : 1);
             entityHitResult.getEntity().setVelocity(0, 0, 0);
             if (getStack().isOf(ModItems.MAGMA_PEBBLE)) {
                 entityHitResult.getEntity().setFireTicks(120);
@@ -124,19 +124,19 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
 
 
 
-    @Override
-    public EntityType<?> getPolymerEntityType(PacketContext packetContext) {
 
+    @Override
+    public EntityType<?> getPolymerEntityType(ServerPlayerEntity serverPlayerEntity) {
         if (getStack().isOf(ModItems.MAGMA_PEBBLE)) {
-            if (packetContext.getPlayer() == null) return EntityType.SMALL_FIREBALL;
-            if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            if (serverPlayerEntity == null) return EntityType.SMALL_FIREBALL;
+            if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
                 return ModEntities.PEBBLE;
             } else {
                 return EntityType.SMALL_FIREBALL;
             }
         }
-        if (packetContext.getPlayer() == null) return EntityType.EGG;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+        if (serverPlayerEntity == null) return EntityType.EGG;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return ModEntities.PEBBLE;
         } else {
             return EntityType.EGG;

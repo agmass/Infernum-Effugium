@@ -12,9 +12,11 @@ import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.nbt.NbtInt;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
@@ -50,17 +52,18 @@ public class TwoSidedPillarPolymerBlock extends SimplePolymerBlock implements Po
 
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return super.getPolymerBlockState(blockState,packetContext);;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return blockState;
+    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
+        if (player == null) return super.getPolymerBlockState(state,player);
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return state;
         } else {
-            if (PolymerResourcePackUtils.hasMainPack(packetContext.getPlayer())) {
+            if (PolymerResourcePackUtils.hasMainPack(player)) {
                 return polymerState;
             }
-            return super.getPolymerBlockState(blockState,packetContext);
+            return super.getPolymerBlockState(state,player);
         }
     }
+
 
     protected BlockState rotate(BlockState state, BlockRotation rotation) {
         return changeRotation(state, rotation);

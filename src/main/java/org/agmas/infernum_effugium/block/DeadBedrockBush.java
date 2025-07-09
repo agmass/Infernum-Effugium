@@ -39,7 +39,7 @@ public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, Poly
                 double d = Math.abs(entity.getX() - entity.lastRenderX);
                 double e = Math.abs(entity.getZ() - entity.lastRenderZ);
                 if (d >= 0.003F || e >= 0.003F) {
-                    entity.damage((ServerWorld) world, world.getDamageSources().sweetBerryBush(), 2.0F);
+                    entity.damage(world.getDamageSources().sweetBerryBush(), 2.0F);
                 }
             }
         }
@@ -52,12 +52,17 @@ public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, Poly
 
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return Blocks.DEAD_BUSH.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return blockState;
+    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
+        if (player == null) return Blocks.DEAD_BUSH.getDefaultState();
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return state;
         } else {
             return Blocks.DEAD_BUSH.getDefaultState();
         }
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(BlockState blockState) {
+        return Blocks.DEAD_BUSH.getDefaultState();
     }
 }

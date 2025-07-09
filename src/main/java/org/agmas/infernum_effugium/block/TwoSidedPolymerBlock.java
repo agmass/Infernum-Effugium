@@ -31,15 +31,15 @@ public class TwoSidedPolymerBlock extends SimplePolymerBlock implements PolymerK
 
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return super.getPolymerBlockState(blockState,packetContext);;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return blockState;
+    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
+        if (player == null) return super.getPolymerBlockState(state,player);
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+            return state;
         } else {
-            if (PolymerResourcePackUtils.hasMainPack(packetContext.getPlayer())) {
+            if (PolymerResourcePackUtils.hasMainPack(player)) {
                 return polymerState;
             }
-            return super.getPolymerBlockState(blockState,packetContext);
+            return super.getPolymerBlockState(state,player);
         }
     }
 

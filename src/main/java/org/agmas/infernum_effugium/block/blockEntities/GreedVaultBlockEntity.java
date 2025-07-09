@@ -18,6 +18,7 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
@@ -84,14 +85,14 @@ public class GreedVaultBlockEntity extends BlockEntity implements PolymerSyncedO
     }
 
     @Override
-    public boolean canSyncRawToClient(PacketContext context) {
+    public boolean canSyncRawToClient(@Nullable ServerPlayerEntity player) {
         return true;
     }
 
     @Override
-    public BlockEntity getPolymerReplacement(PacketContext packetContext) {
-        if (packetContext.getPlayer() == null) return null;
-        if (PolymerServerNetworking.getMetadata(packetContext.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public BlockEntity getPolymerReplacement(ServerPlayerEntity serverPlayerEntity) {
+        if (serverPlayerEntity == null) return null;
+        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
             return null;

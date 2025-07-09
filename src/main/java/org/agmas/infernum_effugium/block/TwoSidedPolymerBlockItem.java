@@ -24,12 +24,12 @@ public class TwoSidedPolymerBlockItem extends PolymerBlockItem implements Polyme
     }
 
     @Override
-    public Item getPolymerItem(ItemStack itemStack, PacketContext context) {
-        if (context.getPlayer() == null) return super.getPolymerItem(itemStack,context);
-        if (PolymerServerNetworking.getMetadata(context.getPlayer().networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
+    public Item getPolymerItem(ItemStack itemStack, ServerPlayerEntity player) {
+        if (player == null) return super.getPolymerItem(itemStack,player);
+        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
             return this;
         } else {
-            return super.getPolymerItem(itemStack,context);
+            return super.getPolymerItem(itemStack,player);
         }
     }
 
