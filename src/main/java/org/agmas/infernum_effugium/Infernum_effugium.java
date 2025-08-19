@@ -42,6 +42,7 @@ public class Infernum_effugium implements ModInitializer {
         ModEntities.init();
         ModEffects.init();
         PolymerResourcePackUtils.addModAssets("infernum_effugium");
+
         PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
         PolymerNetworking.registerS2CVersioned(NetherPactUpdates.NetherPactModePayload.ID, 1, NetherPactUpdates.NetherPactModePayload.CODEC);
 

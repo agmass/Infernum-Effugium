@@ -31,35 +31,41 @@ public class NetherPactUpdates {
     public static void sendHumanModeUpdate(PlayerEntity player) {
 
         MinecraftServer server = player.getServer();
-        server.execute(() -> {
-            server.getPlayerManager().getPlayerList().forEach((p)->{
-                PolymerServerNetworking.send(p.networkHandler,new NetherPactModePayload(player.getUuid(), false));
+        if (server != null) {
+            server.execute(() -> {
+                server.getPlayerManager().getPlayerList().forEach((p) -> {
+                    PolymerServerNetworking.send(p.networkHandler, new NetherPactModePayload(player.getUuid(), false));
+                });
             });
-        });
+        }
     }
 
     public static void refreskSkinsOnClient(ServerPlayerEntity player) {
 
         MinecraftServer server = player.getServer();
 
-        server.execute(() -> {
-            server.getPlayerManager().getPlayerList().forEach((p)->{
-                if (p.hasStatusEffect(ModEffects.NETHER_PACT)) {
-                    PolymerServerNetworking.send(player.networkHandler,new NetherPactModePayload(p.getUuid(), true));
-                }
+        if (server != null) {
+            server.execute(() -> {
+                server.getPlayerManager().getPlayerList().forEach((p) -> {
+                    if (p.hasStatusEffect(ModEffects.NETHER_PACT)) {
+                        PolymerServerNetworking.send(player.networkHandler, new NetherPactModePayload(p.getUuid(), true));
+                    }
+                });
             });
-        });
+        }
     }
 
 
     public static void sendNetherModeUpdate(PlayerEntity player) {
         MinecraftServer server = player.getServer();
 
-        server.execute(() -> {
-            server.getPlayerManager().getPlayerList().forEach((p)->{
-                PolymerServerNetworking.send(p.networkHandler,new NetherPactModePayload(player.getUuid(), true));
+        if (server != null) {
+            server.execute(() -> {
+                server.getPlayerManager().getPlayerList().forEach((p) -> {
+                    PolymerServerNetworking.send(p.networkHandler, new NetherPactModePayload(player.getUuid(), true));
+                });
             });
-        });
+        }
     }
 
     public record NetherPactModePayload(UUID playerToAdd, boolean nethered) implements CustomPayload {
