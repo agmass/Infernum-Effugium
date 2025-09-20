@@ -1,8 +1,5 @@
 package org.agmas.infernum_effugium.block.blockEntities;
 
-import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.core.api.utils.PolymerSyncedObject;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.block.Block;
@@ -23,11 +20,10 @@ import net.minecraft.util.math.BlockPos;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 import org.jetbrains.annotations.Nullable;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.ArrayList;
 
-public class GreedVaultBlockEntity extends BlockEntity implements PolymerSyncedObject<BlockEntity>, PolymerClientDecoded {
+public class GreedVaultBlockEntity extends BlockEntity {
     public ArrayList<Item> itemsLeft = new ArrayList<Item>();
     public int currentStage = 0;
     public GreedVaultBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -84,18 +80,4 @@ public class GreedVaultBlockEntity extends BlockEntity implements PolymerSyncedO
         return nbtCompound;
     }
 
-    @Override
-    public boolean canSyncRawToClient(@Nullable ServerPlayerEntity player) {
-        return true;
-    }
-
-    @Override
-    public BlockEntity getPolymerReplacement(ServerPlayerEntity serverPlayerEntity) {
-        if (serverPlayerEntity == null) return null;
-        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return this;
-        } else {
-            return null;
-        }
-    }
 }

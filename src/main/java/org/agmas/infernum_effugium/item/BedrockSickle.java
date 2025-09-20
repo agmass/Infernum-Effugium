@@ -1,11 +1,5 @@
 package org.agmas.infernum_effugium.item;
 
-import eu.pb4.polymer.core.api.item.PolymerItem;
-import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
-import eu.pb4.polymer.resourcepack.api.PolymerModelData;
-import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;
@@ -20,19 +14,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.jetbrains.annotations.Nullable;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 import java.util.Objects;
 
-public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeepModel, PolymerClientDecoded {
+public class BedrockSickle extends SwordItem{
 
-    PolymerModelData modelData;
     String modelName;
     public BedrockSickle(Settings settings, float attackDamage, String modelName) {
         super(ToolMaterials.DIAMOND, settings);
         this.modelName = modelName;
-        modelData = PolymerResourcePackUtils.requestModel(Items.STONE_HOE, Identifier.of(Infernum_effugium.MOD_ID, "item/" + modelName));
 
     }
 
@@ -59,20 +50,4 @@ public class BedrockSickle extends SwordItem implements PolymerItem, PolymerKeep
         return;
     }
 
-
-    @Override
-    public ItemStack getPolymerItemStack(ItemStack itemStack, TooltipType tooltipType, RegistryWrapper.WrapperLookup lookup, @Nullable ServerPlayerEntity player) {
-        var itemStack1 = PolymerItem.super.getPolymerItemStack(itemStack, tooltipType, lookup, player);
-        itemStack1.set(DataComponentTypes.CUSTOM_MODEL_DATA, modelData.asComponent());
-        return itemStack1;
-    }
-    @Override
-    public Item getPolymerItem(ItemStack itemStack, @Nullable ServerPlayerEntity serverPlayerEntity) {
-        if (serverPlayerEntity == null) return Items.STONE_HOE;
-        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return this;
-        } else {
-            return Items.STONE_HOE;
-        }
-    }
 }

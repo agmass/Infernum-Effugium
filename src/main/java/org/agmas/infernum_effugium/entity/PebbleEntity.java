@@ -1,9 +1,5 @@
 package org.agmas.infernum_effugium.entity;
 
-import eu.pb4.polymer.core.api.entity.PolymerEntity;
-import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -36,11 +32,10 @@ import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEffects;
 import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.ModItems;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.Random;
 
-public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, PolymerKeepModel, PolymerClientDecoded {
+public class PebbleEntity extends ThrownItemEntity {
 
     public static final RegistryKey<DamageType> PEBBLE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(Infernum_effugium.MOD_ID, "pebble"));
     public boolean shotFromCannon = false;
@@ -122,24 +117,4 @@ public class PebbleEntity extends ThrownItemEntity implements PolymerEntity, Pol
         return ModItems.BLACKSTONE_PEBBLE;
     }
 
-
-
-
-    @Override
-    public EntityType<?> getPolymerEntityType(ServerPlayerEntity serverPlayerEntity) {
-        if (getStack().isOf(ModItems.MAGMA_PEBBLE)) {
-            if (serverPlayerEntity == null) return EntityType.SMALL_FIREBALL;
-            if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-                return ModEntities.PEBBLE;
-            } else {
-                return EntityType.SMALL_FIREBALL;
-            }
-        }
-        if (serverPlayerEntity == null) return EntityType.EGG;
-        if (PolymerServerNetworking.getMetadata(serverPlayerEntity.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return ModEntities.PEBBLE;
-        } else {
-            return EntityType.EGG;
-        }
-    }
 }

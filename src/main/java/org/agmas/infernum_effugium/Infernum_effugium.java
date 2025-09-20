@@ -1,13 +1,11 @@
 package org.agmas.infernum_effugium;
 
-import eu.pb4.polymer.networking.api.PolymerNetworking;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
-import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.effect.StatusEffect;
@@ -37,16 +35,11 @@ public class Infernum_effugium implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        PayloadTypeRegistry.playS2C().register(NetherPactUpdates.NetherPactModePayload.ID, NetherPactUpdates.NetherPactModePayload.CODEC);
         ModBlocks.init();
         ModItems.initialize();
         ModEntities.init();
         ModEffects.init();
-        PolymerResourcePackUtils.addModAssets("infernum_effugium");
-
-        PolymerServerNetworking.setServerMetadata(REGISTER_PACKET, NbtInt.of(1));
-        PolymerNetworking.registerS2CVersioned(NetherPactUpdates.NetherPactModePayload.ID, 1, NetherPactUpdates.NetherPactModePayload.CODEC);
-
-
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             dispatcher.register(CommandManager.literal("un_nether_pact").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).executes(context -> {
                 if (context.getSource().getPlayer() != null) {

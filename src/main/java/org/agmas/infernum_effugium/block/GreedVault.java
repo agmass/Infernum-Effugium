@@ -1,12 +1,6 @@
 package org.agmas.infernum_effugium.block;
 
 import com.mojang.serialization.MapCodec;
-import eu.pb4.polymer.core.api.block.PolymerBlock;
-import eu.pb4.polymer.core.api.block.PolymerBlockUtils;
-import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
-import eu.pb4.polymer.core.mixin.block.BlockEntityUpdateS2CPacketAccessor;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.DispenserBlockEntity;
@@ -43,9 +37,7 @@ import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.ModItems;
 import org.agmas.infernum_effugium.block.blockEntities.GreedVaultBlockEntity;
 import org.jetbrains.annotations.Nullable;
-import xyz.nucleoid.packettweaker.PacketContext;
-
-public class GreedVault extends BlockWithEntity implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
+public class GreedVault extends BlockWithEntity {
     public static final EnumProperty<Direction> FACING;
 
     public GreedVault(Settings settings) {
@@ -88,11 +80,6 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
                         world.playSoundAtBlockCenter(pos, SoundEvents.ENTITY_GENERIC_EXPLODE.value(), SoundCategory.BLOCKS,1,0.5f,true);
                     }
                 }
-                if (player instanceof ServerPlayerEntity spe) {
-                    if (PolymerServerNetworking.getMetadata(spe.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) != NbtInt.of(1)) {
-                        spe.sendMessage(Text.literal("This vault requires a ").append(greedVaultBlockEntity.itemsLeft.get(greedVaultBlockEntity.currentStage).getName()));
-                    }
-                }
             }
 
             return ActionResult.CONSUME;
@@ -113,22 +100,6 @@ public class GreedVault extends BlockWithEntity implements PolymerBlock, Polymer
     @Override
     public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new GreedVaultBlockEntity(pos,state);
-    }
-
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
-        if (player == null) return Blocks.BARREL.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return state;
-        } else {
-            return Blocks.BARREL.getDefaultState();
-        }
-    }
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.BARREL.getDefaultState();
     }
 
 }

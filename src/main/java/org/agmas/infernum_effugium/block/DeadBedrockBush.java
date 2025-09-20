@@ -1,9 +1,5 @@
 package org.agmas.infernum_effugium.block;
 
-import eu.pb4.polymer.core.api.block.PolymerBlock;
-import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DeadBushBlock;
@@ -24,9 +20,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
-import xyz.nucleoid.packettweaker.PacketContext;
-
-public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
+public class DeadBedrockBush extends DeadBushBlock {
     public DeadBedrockBush(Settings settings) {
         super(settings);
     }
@@ -50,19 +44,4 @@ public class DeadBedrockBush extends DeadBushBlock implements PolymerBlock, Poly
         return floor.isIn(TagKey.of(RegistryKeys.BLOCK, Identifier.of("infernumeffugium", "rocky_bush_plantable"))) || super.canPlantOnTop(floor,world,pos);
     }
 
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
-        if (player == null) return Blocks.DEAD_BUSH.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return state;
-        } else {
-            return Blocks.DEAD_BUSH.getDefaultState();
-        }
-    }
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.DEAD_BUSH.getDefaultState();
-    }
 }

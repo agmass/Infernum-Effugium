@@ -1,6 +1,5 @@
 package org.agmas.infernum_effugium.client;
 
-import eu.pb4.polymer.networking.api.client.PolymerClientNetworking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -27,7 +26,6 @@ public class Infernum_effugiumClient implements ClientModInitializer {
     public static int netherSkinColor = new Color(255, 194,194,255).getRGB();
     @Override
     public void onInitializeClient() {
-        PolymerClientNetworking.setClientMetadata(Infernum_effugium.REGISTER_PACKET, NbtInt.of(1));
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BEDROCK_LADDER, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ROCKY_BUSH, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ROCKY_BUSH_BUT_ITS_ACTUALLY_A_DISPENSER, RenderLayer.getCutout());
@@ -36,14 +34,14 @@ public class Infernum_effugiumClient implements ClientModInitializer {
         BlockEntityRendererFactories.register(ModEntities.GREED_VAULT, GreedVaultBlockEntityRenderer::new);
 
 
-        PolymerClientNetworking.registerPlayHandler(NetherPactUpdates.NetherPactModePayload.class, ((client, handler, packet) -> {
-            if (packet.nethered()) {
-                if (!pactPlayers.contains(packet.playerToAdd()))
-                    pactPlayers.add(packet.playerToAdd());
+        ClientPlayNetworking.registerGlobalReceiver(NetherPactUpdates.NetherPactModePayload.ID, (payload, context) -> {
+            if (payload.nethered()) {
+                if (!pactPlayers.contains(payload.playerToAdd()))
+                    pactPlayers.add(payload.playerToAdd());
             } else {
-                pactPlayers.remove(packet.playerToAdd());
+                pactPlayers.remove(payload.playerToAdd());
             }
-        }));
+        });
         ClientPlayConnectionEvents.DISCONNECT.register(((clientPlayNetworkHandler, minecraftClient) -> {
             pactPlayers.clear();
         }));

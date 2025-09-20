@@ -1,10 +1,6 @@
 package org.agmas.infernum_effugium.block;
 
 import com.mojang.serialization.MapCodec;
-import eu.pb4.polymer.core.api.block.PolymerBlock;
-import eu.pb4.polymer.core.api.utils.PolymerClientDecoded;
-import eu.pb4.polymer.core.api.utils.PolymerKeepModel;
-import eu.pb4.polymer.networking.api.server.PolymerServerNetworking;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -38,9 +34,7 @@ import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEntities;
 import org.agmas.infernum_effugium.block.blockEntities.BedrockDispenserBlockEntity;
 import org.agmas.infernum_effugium.block.blockEntities.BushBedrockDispenserBlockEntity;
-import xyz.nucleoid.packettweaker.PacketContext;
-
-public class BedrockDispenserBush extends DispenserBlock implements PolymerBlock, PolymerKeepModel, PolymerClientDecoded {
+public class BedrockDispenserBush extends DispenserBlock {
     public BedrockDispenserBush(Settings settings) {
         super(settings);
     }
@@ -108,18 +102,4 @@ public class BedrockDispenserBush extends DispenserBlock implements PolymerBlock
     }
 
 
-    @Override
-    public BlockState getPolymerBlockState(BlockState state, ServerPlayerEntity player) {
-        if (player == null) return Blocks.DEAD_BUSH.getDefaultState();
-        if (PolymerServerNetworking.getMetadata(player.networkHandler, Infernum_effugium.REGISTER_PACKET, NbtInt.TYPE) == NbtInt.of(1)) {
-            return state;
-        } else {
-            return Blocks.DEAD_BUSH.getDefaultState();
-        }
-    }
-
-    @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
-        return Blocks.DEAD_BUSH.getDefaultState();
-    }
 }

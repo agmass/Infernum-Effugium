@@ -5,11 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AirborneMixin",
-    "BlockEntityDataAccessor",
     "BonusAttackDamageForThisOldStupidFuckingVersionMixin",
-    "ChunkDataMixin",
-    "ChunkDataPacketFixMixin",
-    "PolymerBlockEntityFixMixin",
     "SickleKnockbackMixin",
     "SkinUpdateMixin"
   ],
