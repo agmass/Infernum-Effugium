@@ -14,6 +14,8 @@ import net.minecraft.item.Items;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -24,6 +26,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.agmas.infernum_effugium.Infernum_effugium;
 import org.agmas.infernum_effugium.ModEffects;
@@ -67,18 +70,18 @@ public class PebbleCannonItem extends Item{
                         boolean immuneToJamming = false;
                         int usedPebbles = 1;
                         boolean firstPebble = true;
-                        user.getItemCooldownManager().set(this,2);
+                        user.getItemCooldownManager().set(this,3);
                         Registry<Enchantment> enchantRegistry = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
                         if (stack.hasEnchantments()) {
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
                                 immuneToJamming = true;
                                 usedPebbles = Math.min(8, pebbleAmount);
-                                user.getItemCooldownManager().set(this,10);
+                                user.getItemCooldownManager().set(this,15);
                             }
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), stack) != 0) {
                                 user.getItemCooldownManager().set(this,70);
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
-                                    user.getItemCooldownManager().set(this,100);
+                                    user.getItemCooldownManager().set(this,120);
                                     immuneToJamming = false;
                                 }
                             }
@@ -121,13 +124,6 @@ public class PebbleCannonItem extends Item{
                         }
                         stack.damage(1,user,EquipmentSlot.MAINHAND);
                         pebble.decrement(usedPebbles);
-                        if (new Random().nextInt(0,500) == 0 && !immuneToJamming) {
-                            if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.FLAMETHROWER)), stack) != 0) {
-                                user.setFireTicks(user.getFireTicks()+10);
-                            }
-                            user.getItemCooldownManager().set(this, 20*12);
-                            user.stopUsingItem();
-                        }
                     }
 
                     user.incrementStat(Stats.USED.getOrCreateStat(this));
@@ -141,7 +137,7 @@ public class PebbleCannonItem extends Item{
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.of("Uses blackstone pebbles as a projectile."));
-        tooltip.add(Text.of("Small chance to get jammed on use."));
+        tooltip.add(Text.of("Gets jammed when attacked while firing."));
         super.appendTooltip(stack, context, tooltip, type);
     }
 
@@ -162,7 +158,13 @@ public class PebbleCannonItem extends Item{
             Registry<Enchantment> enchantRegistry = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.AIRBLAST)), itemStack) != 0) {
                 if (!user.hasStatusEffect(ModEffects.AIRBORNE)) {
-                    user.getItemCooldownManager().set(itemStack.getItem(), 25);
+                    user.getItemCooldownManager().set(itemStack.getItem(), 20);
+                    Vec3d velocity = user.getRotationVec(0).multiply(1.4f);
+                    for (int i = 0; i < user.getRandom().nextBetween(20,30); i++) {
+                        Vec3d position = user.getEyePos().add(user.getRandom().nextBetween(-100,100)/100f,user.getRandom().nextBetween(-100,100)/100f,user.getRandom().nextBetween(-100,100)/100f);
+                        user.getWorld().addParticle(ParticleTypes.CLOUD, position.x, position.y, position.z, velocity.x, velocity.y, velocity.z);
+                    }
+                    user.getWorld().playSound(null,user.getX(),user.getY(),user.getZ(),SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST.value(),SoundCategory.MASTER,1f,1f);
                     user.getWorld().getOtherEntities(user, new Box(user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(-4, -4, -4), user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(4, 4, 4))).forEach((e) -> {
                         e.setVelocity(e.getPos().add(user.getPos().multiply(-1)).add(0, 1, 0).multiply(0.5));
                         e.velocityModified = true;
@@ -172,8 +174,9 @@ public class PebbleCannonItem extends Item{
                         }
                     });
                     if (!user.isSneaking()) {
+                        user.getItemCooldownManager().set(itemStack.getItem(), 100);
                         user.addStatusEffect(new StatusEffectInstance(ModEffects.AIRBORNE, 20 * 30, 0));
-                        user.setVelocity(user.getRotationVec(0f).multiply(-2f));
+                        user.setVelocity(user.getRotationVec(0f).multiply(-1.4f));
                         user.velocityModified = true;
                         user.velocityDirty = true;
                         if (user instanceof ServerPlayerEntity spe) {

@@ -18,7 +18,10 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.server.command.CommandManager;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
@@ -53,6 +56,17 @@ public class Infernum_effugium implements ModInitializer {
                 return 1;
             }));
         });
+
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(((livingEntity, damageSource, v, v1, b) -> {
+            if (livingEntity.isHolding(ModItems.PEBBLE_CANNON)) {
+                if (livingEntity instanceof ServerPlayerEntity player) {
+                    if (player.getItemCooldownManager().getCooldownProgress(ModItems.PEBBLE_CANNON, 0) <= 40 && player.isUsingItem()) {
+                        player.getItemCooldownManager().set(ModItems.PEBBLE_CANNON, 40);
+                        player.getWorld().playSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_DISPENSER_FAIL, SoundCategory.MASTER, 1, 1,true);
+                    }
+                }
+            }
+        }));
 
         ServerTickEvents.START_WORLD_TICK.register((serverWorld -> {
             serverWorld.getPlayers().forEach((p)->{

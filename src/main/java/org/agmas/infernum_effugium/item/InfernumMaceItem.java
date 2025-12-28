@@ -54,10 +54,12 @@ public class InfernumMaceItem extends MaceItem {
                 if (spe.fallDistance <= 3.0F) {
                     totalDamage = 4.0F + spe.fallDistance;
                 } else if (spe.fallDistance <= 8.0F) {
-                    totalDamage = 12.0F + 2.0F * (spe.fallDistance - 3.0F);
+                    totalDamage = 12.0F + (spe.fallDistance - 3.0F);
                 } else {
                     totalDamage = 22.0F + spe.fallDistance - 8.0F;
                 }
+
+                totalDamage /= 0.75f;
 
                 target.addStatusEffect(new StatusEffectInstance(ModEffects.EXTREME_FIRE, (int) totalDamage, 0));
 
