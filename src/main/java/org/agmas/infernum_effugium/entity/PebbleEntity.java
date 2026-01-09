@@ -96,11 +96,11 @@ public class PebbleEntity extends ThrownItemEntity {
                         }
                     }
                     if (entityHitResult.getEntity() instanceof LivingEntity le) {
-                        le.addStatusEffect(new StatusEffectInstance(ModEffects.EXTREME_FIRE, 10, 1));
+                        le.addStatusEffect(new StatusEffectInstance(ModEffects.EXTREME_FIRE, 5, 1));
                     }
                 }
             }
-            entityHitResult.getEntity().damage(damageSource, shotFromCannon ? 3.5f : 1);
+            entityHitResult.getEntity().damage(damageSource, shotFromCannon ? 2f : 1);
             entityHitResult.getEntity().setVelocity(0, 0, 0);
             if (getStack().isOf(ModItems.MAGMA_PEBBLE)) {
                 entityHitResult.getEntity().setFireTicks(120);

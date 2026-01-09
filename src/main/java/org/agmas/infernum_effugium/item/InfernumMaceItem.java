@@ -1,5 +1,6 @@
 package org.agmas.infernum_effugium.item;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -37,6 +38,14 @@ public class InfernumMaceItem extends MaceItem {
 
     }
 
+
+    public static AttributeModifiersComponent createAttributeModifiers() {
+        if (FabricLoader.getInstance().isModLoaded("enchancement")) {
+            return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, (double)5.0F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, (double)-3.2F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
+        }
+        return AttributeModifiersComponent.builder().add(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(BASE_ATTACK_DAMAGE_MODIFIER_ID, (double)5.0F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).add(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(BASE_ATTACK_SPEED_MODIFIER_ID, (double)-3.4F, EntityAttributeModifier.Operation.ADD_VALUE), AttributeModifierSlot.MAINHAND).build();
+    }
+
     @Override
     public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         stack.damage(1, attacker, EquipmentSlot.MAINHAND);
@@ -59,8 +68,12 @@ public class InfernumMaceItem extends MaceItem {
                     totalDamage = 22.0F + spe.fallDistance - 8.0F;
                 }
 
-                totalDamage /= 0.75f;
+                if (FabricLoader.getInstance().isModLoaded("enchancement")) {
+                    totalDamage = (float) (4 * Math.log(spe.fallDistance+1) );
+                }
+                totalDamage *= 0.5f;
 
+                target.setAttacker(attacker);
                 target.addStatusEffect(new StatusEffectInstance(ModEffects.EXTREME_FIRE, (int) totalDamage, 0));
 
                 for (int i = 0; i < spe.fallDistance*2; i++) {
@@ -101,6 +114,8 @@ public class InfernumMaceItem extends MaceItem {
     public static boolean shouldSetOnFire(LivingEntity attacker) {
         return attacker.fallDistance > 1.5F && !attacker.isFallFlying();
     }
+
+
 
     private static double getKnockback(PlayerEntity player, LivingEntity attacked, Vec3d distance) {
         return (3.5 - distance.length())

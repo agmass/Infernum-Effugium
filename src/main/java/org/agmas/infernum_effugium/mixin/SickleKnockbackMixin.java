@@ -1,9 +1,12 @@
 package org.agmas.infernum_effugium.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,14 +42,15 @@ public abstract class SickleKnockbackMixin {
         }
         return hand;
     }
-    @Redirect(method = "takeKnockback", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isOnGround()Z"))
-    private boolean injected(LivingEntity instance) {
+    @WrapOperation(method = "takeKnockback", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isOnGround()Z"))
+    private boolean injected(LivingEntity instance, Operation<Boolean> original) {
+        boolean value = original.call(instance);
         if (instance.getAttacker() != null) {
             if (instance.getAttacker().getStackInHand(Hand.MAIN_HAND).getItem() instanceof BedrockSickle) {
                 return true;
             }
         }
-        return instance.isOnGround();
+        return value;
     }
 
 

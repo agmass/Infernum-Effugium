@@ -29,9 +29,9 @@ public class BedrockSickle extends SwordItem{
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        tooltip.add(Text.literal("Requires the same type of sickle to"));
-        tooltip.add(Text.literal("be in your offhand to do full damage."));
-        tooltip.add(Text.literal("Ignores invulnerability ticks when fully charged."));
+        tooltip.add(Text.literal("Requires both sickles in hand to do damage"));
+        tooltip.add(Text.literal("Damage depends on distance from target"));
+        tooltip.add(Text.literal("Always deals upward knockback"));
         super.appendTooltip(stack, context, tooltip, type);
     }
 

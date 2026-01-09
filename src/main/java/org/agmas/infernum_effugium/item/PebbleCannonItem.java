@@ -64,17 +64,16 @@ public class PebbleCannonItem extends Item{
                 }
                 if (pebble != null || bl) {
                     world.playSound(
-                            null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F)
+                            null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.5F, 0.9F + (world.getRandom().nextFloat() * 0.2f)
                     );
                     if (!world.isClient) {
-                        boolean immuneToJamming = false;
                         int usedPebbles = 1;
                         boolean firstPebble = true;
                         user.getItemCooldownManager().set(this,3);
                         Registry<Enchantment> enchantRegistry = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
+
                         if (stack.hasEnchantments()) {
                             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
-                                immuneToJamming = true;
                                 usedPebbles = Math.min(8, pebbleAmount);
                                 user.getItemCooldownManager().set(this,15);
                             }
@@ -82,7 +81,6 @@ public class PebbleCannonItem extends Item{
                                 user.getItemCooldownManager().set(this,70);
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), stack) != 0) {
                                     user.getItemCooldownManager().set(this,120);
-                                    immuneToJamming = false;
                                 }
                             }
                         }
@@ -95,9 +93,6 @@ public class PebbleCannonItem extends Item{
                             if (stack.hasEnchantments()) {
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.FLAMETHROWER)), stack) != 0) {
                                     pebbleEntity.setItem(ModItems.MAGMA_PEBBLE.getDefaultStack());
-                                    world.playSound(
-                                            null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.PLAYERS, 0.5F, 0.9F + (world.getRandom().nextFloat() * 0.2f)
-                                    );
                                 }
                                 if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.BACKBURNER)), stack) != 0) {
                                     pebbleEntity.shotFromBackburner = true;
@@ -157,30 +152,31 @@ public class PebbleCannonItem extends Item{
         if (itemStack.hasEnchantments()) {
             Registry<Enchantment> enchantRegistry = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT);
             if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.AIRBLAST)), itemStack) != 0) {
-                if (!user.hasStatusEffect(ModEffects.AIRBORNE)) {
-                    user.getItemCooldownManager().set(itemStack.getItem(), 20);
-                    Vec3d velocity = user.getRotationVec(0).multiply(1.4f);
-                    for (int i = 0; i < user.getRandom().nextBetween(20,30); i++) {
-                        Vec3d position = user.getEyePos().add(user.getRandom().nextBetween(-100,100)/100f,user.getRandom().nextBetween(-100,100)/100f,user.getRandom().nextBetween(-100,100)/100f);
-                        user.getWorld().addParticle(ParticleTypes.CLOUD, position.x, position.y, position.z, velocity.x, velocity.y, velocity.z);
-                    }
-                    user.getWorld().playSound(null,user.getX(),user.getY(),user.getZ(),SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST.value(),SoundCategory.MASTER,1f,1f);
-                    user.getWorld().getOtherEntities(user, new Box(user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(-4, -4, -4), user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(4, 4, 4))).forEach((e) -> {
-                        e.setVelocity(e.getPos().add(user.getPos().multiply(-1)).add(0, 1, 0).multiply(0.5));
-                        e.velocityModified = true;
-                        e.velocityDirty = true;
-                        if (e instanceof ServerPlayerEntity spe) {
-                            spe.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(spe));
-                        }
-                    });
-                    if (!user.isSneaking()) {
+                if (!world.isClient) {
+                    if (!user.hasStatusEffect(ModEffects.AIRBORNE)) {
                         user.getItemCooldownManager().set(itemStack.getItem(), 100);
-                        user.addStatusEffect(new StatusEffectInstance(ModEffects.AIRBORNE, 20 * 30, 0));
-                        user.setVelocity(user.getRotationVec(0f).multiply(-1.4f));
-                        user.velocityModified = true;
-                        user.velocityDirty = true;
-                        if (user instanceof ServerPlayerEntity spe) {
-                            spe.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(spe));
+                        Vec3d velocity = user.getRotationVec(0).multiply(1.4f);
+                        for (int i = 0; i < user.getRandom().nextBetween(20, 30); i++) {
+                            Vec3d position = user.getEyePos().add(user.getRandom().nextBetween(-100, 100) / 100f, user.getRandom().nextBetween(-100, 100) / 100f, user.getRandom().nextBetween(-100, 100) / 100f);
+                            user.getWorld().addParticle(ParticleTypes.CLOUD, position.x, position.y, position.z, velocity.x, velocity.y, velocity.z);
+                        }
+                        user.getWorld().playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST.value(), SoundCategory.MASTER, 1f, 1f);
+                        user.getWorld().getOtherEntities(user, new Box(user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(-4, -4, -4), user.getEyePos().add(user.getRotationVec(0f).multiply(4)).add(4, 4, 4))).forEach((e) -> {
+                            e.setVelocity(e.getPos().add(user.getPos().multiply(-1)).add(0, 1, 0).multiply(0.5));
+                            e.velocityModified = true;
+                            e.velocityDirty = true;
+                            if (e instanceof ServerPlayerEntity spe) {
+                                spe.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(spe));
+                            }
+                        });
+                        if (!user.isSneaking()) {
+                            user.addStatusEffect(new StatusEffectInstance(ModEffects.AIRBORNE, 20 * 30, 0));
+                            user.setVelocity(user.getRotationVec(0f).multiply(-1.4f));
+                            user.velocityModified = true;
+                            user.velocityDirty = true;
+                            if (user instanceof ServerPlayerEntity spe) {
+                                spe.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(spe));
+                            }
                         }
                     }
                 }

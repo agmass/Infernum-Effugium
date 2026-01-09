@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.effect.StatusEffect;
@@ -17,6 +19,7 @@ import net.minecraft.nbt.NbtInt;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
@@ -61,6 +64,15 @@ public class Infernum_effugium implements ModInitializer {
             if (livingEntity.isHolding(ModItems.PEBBLE_CANNON)) {
                 if (livingEntity instanceof ServerPlayerEntity player) {
                     if (player.getItemCooldownManager().getCooldownProgress(ModItems.PEBBLE_CANNON, 0) <= 40 && player.isUsingItem()) {
+
+                        Registry<Enchantment> enchantRegistry = player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT);
+
+                        if (player.getActiveItem().hasEnchantments()) {
+                            if (EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.SHOTGUN)), player.getActiveItem()) != 0 ||
+                                    EnchantmentHelper.getLevel(enchantRegistry.getEntry(enchantRegistry.get(ModEnchants.ENDER)), player.getActiveItem()) != 0) {
+                                return;
+                            }
+                        }
                         player.getItemCooldownManager().set(ModItems.PEBBLE_CANNON, 40);
                         player.getWorld().playSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_DISPENSER_FAIL, SoundCategory.MASTER, 1, 1,true);
                     }

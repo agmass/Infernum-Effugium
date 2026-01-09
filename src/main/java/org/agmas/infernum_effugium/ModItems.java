@@ -13,7 +13,7 @@ import org.agmas.infernum_effugium.item.*;
 public class ModItems {
 
     public static final Item BEDROCK_SICKLES = register(
-            new BedrockSickle(new Item.Settings().fireproof().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 2, -1)), 2, "bedrock_sickles"),
+            new BedrockSickle(new Item.Settings().fireproof().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 3, -1)), 2, "bedrock_sickles"),
             "bedrock_sickles"
     );
     public static final Item BLACKSTONE_PEBBLE = register(
@@ -30,7 +30,7 @@ public class ModItems {
     );
 
     public static final Item NETHERITE_INFUSED_BEDROCK_SICKLES = register(
-            new BedrockSickle(new Item.Settings().fireproof().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 4, -1)), 4, "netherite_infused_bedrock_sickles"),
+            new BedrockSickle(new Item.Settings().fireproof().attributeModifiers(BedrockSickle.createAttributeModifiers(ToolMaterials.DIAMOND, 5, -1)), 4, "netherite_infused_bedrock_sickles"),
             "netherite_infused_bedrock_sickles"
     );
     public static final Item DEATH_WHISTLE = register(

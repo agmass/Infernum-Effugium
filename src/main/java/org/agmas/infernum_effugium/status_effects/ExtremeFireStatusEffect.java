@@ -29,7 +29,7 @@ public class ExtremeFireStatusEffect extends StatusEffect {
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         entity.timeUntilRegen = 0;
         entity.removeStatusEffect(StatusEffects.FIRE_RESISTANCE);
-        entity.damage(entity.getDamageSources().magic(), 1);
+        entity.damage(entity.getDamageSources().generic(), 0.5f);
         entity.setFireTicks(5);
         return true;
     }
