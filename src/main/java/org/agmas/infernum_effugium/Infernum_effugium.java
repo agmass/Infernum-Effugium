@@ -47,7 +47,7 @@ public class Infernum_effugium implements ModInitializer {
         ModEntities.init();
         ModEffects.init();
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(CommandManager.literal("un_nether_pact").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2)).executes(context -> {
+            dispatcher.register(CommandManager.literal("un_nether_pact").executes(context -> {
                 if (context.getSource().getPlayer() != null) {
                     if (StateSaverAndLoader.getPlayerState(context.getSource().getPlayer()).netherPacted) {
                         context.getSource().getPlayer().sendMessage(Text.literal("You are no longer bound by the nether pact.").formatted(Formatting.BLUE), false);

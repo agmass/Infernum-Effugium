@@ -55,7 +55,7 @@ public abstract class ExtremeFireUIMixin {
         if (client.getCameraEntity() instanceof ClientPlayerEntity le) {
             if (le.getMainHandStack().getItem() instanceof BedrockSickle) {
                 if (client.targetedEntity != null) {
-                    float distance = le.distanceTo(client.targetedEntity);
+                    float distance = (float) le.getPos().multiply(1,0,1).distanceTo(client.targetedEntity.getPos().multiply(1,0,1));
                     float value = 1;
                     if (distance <= 1) value = 0;
                     if (distance > 1) {

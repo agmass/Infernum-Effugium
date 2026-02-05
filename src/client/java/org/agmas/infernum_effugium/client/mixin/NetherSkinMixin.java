@@ -13,9 +13,7 @@ public abstract class NetherSkinMixin {
 
     @ModifyArg(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;III)V"), index = 4)
     public int visibilityMixin3(int par3, @Local(argsOnly = true) LivingEntity livingEntity) {
-        if (Infernum_effugiumClient.pactPlayers.contains(livingEntity.getUuid())) {
-            return Infernum_effugiumClient.netherSkinColor;
-        }
+        
         return par3;
     }
 }
