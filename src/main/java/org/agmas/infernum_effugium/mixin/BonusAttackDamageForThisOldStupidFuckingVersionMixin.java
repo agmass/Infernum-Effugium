@@ -51,7 +51,7 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
             return 0;
         }
         if (itemStack.getItem() instanceof BedrockSickle) {
-            float targetDistance = me().distanceTo(target);
+            float targetDistance =(float) me().getPos().multiply(1,0,1).distanceTo(target.getPos().multiply(1,0,1));
             if (targetDistance <= 1) {
                 return amount;
             }
