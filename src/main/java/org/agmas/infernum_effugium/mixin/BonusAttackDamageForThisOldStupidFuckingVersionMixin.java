@@ -26,6 +26,9 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
     private float infernumeffugium$noDamage(float amount, @Local DamageSource damageSource, @Local(argsOnly = true) Entity target) {
         ItemStack itemStack = me().getStackInHand(Hand.MAIN_HAND);
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);
+        if (me().blockedByShield(damageSource)) {
+            return 0f;
+        }
         if (!itemStack.getItem().equals(itemStack2.getItem()) && (itemStack.getItem() instanceof BedrockSickle)) {
             return 0;
         }
@@ -42,9 +45,6 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
                 }
             }
         }
-        if (me().blockedByShield(damageSource)) {
-            return 0f;
-        }
         return amount;
     }
     @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
@@ -53,6 +53,9 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);
         if (!itemStack.getItem().equals(itemStack2.getItem()) && (itemStack.getItem() instanceof BedrockSickle)) {
             return 0;
+        }
+        if (me().blockedByShield(damageSource)) {
+            return 0f;
         }
         if (itemStack.getItem() instanceof BedrockSickle) {
             float targetDistance =(float) me().getPos().multiply(1,0,1).distanceTo(target.getPos().multiply(1,0,1));
@@ -66,9 +69,6 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
                     return (float) MathHelper.lerp((targetDistance - 1) / 1.5, amount * 0.777777778, amount * 0.1);
                 }
             }
-        }
-        if (me().blockedByShield(damageSource)) {
-            return 0f;
         }
         return amount;
     }
