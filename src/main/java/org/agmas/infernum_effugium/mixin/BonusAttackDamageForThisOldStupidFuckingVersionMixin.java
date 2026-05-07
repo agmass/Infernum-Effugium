@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.fabricmc.loader.impl.util.log.Log;
 import net.fabricmc.loader.impl.util.log.LogCategory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -22,7 +23,7 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
     @Shadow public abstract float getAttackCooldownProgress(float baseTime);
 
     @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-    private float infernumeffugium$noDamage(float amount, @Local(argsOnly = true) Entity target) {
+    private float infernumeffugium$noDamage(float amount, @Local DamageSource damageSource, @Local(argsOnly = true) Entity target) {
         ItemStack itemStack = me().getStackInHand(Hand.MAIN_HAND);
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);
         if (!itemStack.getItem().equals(itemStack2.getItem()) && (itemStack.getItem() instanceof BedrockSickle)) {
@@ -41,10 +42,13 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
                 }
             }
         }
+        if (me().blockedByShield(damageSource)) {
+            return 0f;
+        }
         return amount;
     }
     @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
-    private float infernumeffugium$noSweepDamage(float amount, @Local(argsOnly = true) Entity target) {
+    private float infernumeffugium$noSweepDamage(float amount, @Local DamageSource damageSource, @Local(argsOnly = true) Entity target) {
         ItemStack itemStack = me().getStackInHand(Hand.MAIN_HAND);
         ItemStack itemStack2 = me().getStackInHand(Hand.OFF_HAND);
         if (!itemStack.getItem().equals(itemStack2.getItem()) && (itemStack.getItem() instanceof BedrockSickle)) {
@@ -62,6 +66,9 @@ public abstract class BonusAttackDamageForThisOldStupidFuckingVersionMixin {
                     return (float) MathHelper.lerp((targetDistance - 1) / 1.5, amount * 0.777777778, amount * 0.1);
                 }
             }
+        }
+        if (me().blockedByShield(damageSource)) {
+            return 0f;
         }
         return amount;
     }
